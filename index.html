@@ -374,6 +374,34 @@ updateGreeting();
             </button>
         `;
     }
+    function saveMedicine() {
+        var name = document.getElementById("medicineName").value;
+        var dosage = document.getElementById("medicineDosage").value;
+        var time = document.getElementById("medicineTime").value;
+        var notes = document.getElementById("medicineNotes").value;
+
+        if (name === "") {
+            alert("Please enter medicine name 💊");
+            return;
+        }
+
+        var medicine = {
+            name: name,
+            dosage: dosage,
+            time: time,
+            notes: notes
+        };
+
+        var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
+
+        medicines.push(medicine);
+
+        localStorage.setItem("medicines", JSON.stringify(medicines));
+
+        alert("Medicine saved successfully ✅");
+
+        openMedicines();
+    }
 </script>
 
 </body>

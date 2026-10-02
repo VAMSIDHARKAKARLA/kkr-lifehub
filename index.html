@@ -165,7 +165,7 @@
         </div>
 
         <div class="welcome">
-            <h1 id="greeting">Good Night 🌙</h1>
+            <h1 id="greeting">Hello 👋</h1>
             <p>Welcome to your personal life hub.</p>
         </div>
 
@@ -241,29 +241,29 @@
         </div>
 
         <div class="footer">
-            KKR LifeHub • Your life, organized.
-        </div>
+    KKR LifeHub • Your life, organized.
+</div>
 
-    </div>
-    
-        <script>
-        function updateGreeting() {
-            const hour = new Date().getHours();
-            const greeting = document.getElementById("greeting");
+</div>
 
-            if (hour >= 5 && hour < 12) {
-                greeting.textContent = "Good Morning 🌅";
-            } else if (hour >= 12 && hour < 17) {
-                greeting.textContent = "Good Afternoon ☀️";
-            } else if (hour >= 17 && hour < 21) {
-                greeting.textContent = "Good Evening 🌆";
-            } else {
-                greeting.textContent = "Good Night 🌙";
-            }
-        }
+<script>
+function updateGreeting() {
+    var hour = new Date().getHours();
+    var greeting = document.getElementById("greeting");
 
-        updateGreeting();
-        </script>
+    if (hour >= 5 && hour < 12) {
+        greeting.innerHTML = "Good Morning 🌅";
+    } else if (hour >= 12 && hour < 17) {
+        greeting.innerHTML = "Good Afternoon ☀️";
+    } else if (hour >= 17 && hour < 21) {
+        greeting.innerHTML = "Good Evening 🌆";
+    } else {
+        greeting.innerHTML = "Good Night 🌙";
+    }
+}
+
+updateGreeting();
+</script>
 
 </body>
 </html>

@@ -3,46 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111827">
 
     <title>KKR LifeHub</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #222;
+            background: #f4f6f8;
+            color: #111827;
         }
 
         .header {
             background: #111827;
             color: white;
-            padding: 30px 20px;
-            text-align: center;
+            padding: 25px 20px 30px;
+            border-radius: 0 0 25px 25px;
         }
 
-        .header h1 {
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .menu {
+            font-size: 25px;
+        }
+
+        .welcome {
+            margin-top: 25px;
+        }
+
+        .welcome h1 {
             margin: 0;
-            font-size: 30px;
+            font-size: 25px;
         }
 
-        .header p {
-            margin-top: 8px;
+        .welcome p {
+            margin: 8px 0 0;
             color: #d1d5db;
         }
 
         .container {
-            padding: 25px 20px;
             max-width: 700px;
             margin: auto;
+            padding: 20px;
         }
 
-        .welcome {
-            margin-bottom: 20px;
+        .emergency {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-        .welcome h2 {
-            margin-bottom: 5px;
+        .emergency h3 {
+            margin: 0 0 5px;
+        }
+
+        .emergency p {
+            margin: 0 0 15px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .emergency button {
+            width: 100%;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            background: #111827;
+            color: white;
+            font-size: 15px;
+        }
+
+        .title {
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .grid {
@@ -53,31 +103,54 @@
 
         .card {
             background: white;
-            padding: 25px 15px;
-            border-radius: 15px;
+            padding: 22px 15px;
+            border-radius: 18px;
             text-align: center;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
         }
 
         .icon {
-            font-size: 35px;
+            font-size: 32px;
         }
 
         .card h3 {
             margin: 10px 0 5px;
+            font-size: 17px;
         }
 
         .card p {
             margin: 0;
-            color: #666;
-            font-size: 14px;
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .bottom {
+            margin-top: 25px;
+            background: white;
+            border-radius: 18px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .bottom div {
+            text-align: center;
+            font-size: 13px;
+            color: #4b5563;
+        }
+
+        .bottom span {
+            display: block;
+            font-size: 22px;
+            margin-bottom: 4px;
         }
 
         .footer {
             text-align: center;
-            margin-top: 30px;
-            color: #777;
-            font-size: 13px;
+            margin: 25px 0 10px;
+            color: #9ca3af;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -85,15 +158,29 @@
 <body>
 
     <div class="header">
-        <h1>KKR LifeHub</h1>
-        <p>One place for everything that matters in life.</p>
+
+        <div class="top">
+            <div class="logo">KKR LifeHub</div>
+            <div class="menu">☰</div>
+        </div>
+
+        <div class="welcome">
+            <h1>Good Morning 👋</h1>
+            <p>Welcome to your personal life hub.</p>
+        </div>
+
     </div>
 
     <div class="container">
 
-        <div class="welcome">
-            <h2>Welcome to KKR LifeHub 👋</h2>
-            <p>Your personal life management portal.</p>
+        <div class="emergency">
+            <h3>🚨 Emergency</h3>
+            <p>Quick access to your emergency information.</p>
+            <button>Open Emergency</button>
+        </div>
+
+        <div class="title">
+            Your Services
         </div>
 
         <div class="grid">
@@ -101,27 +188,56 @@
             <div class="card">
                 <div class="icon">💊</div>
                 <h3>Health</h3>
-                <p>Manage medicines and health information</p>
+                <p>Medicines & health</p>
             </div>
 
             <div class="card">
                 <div class="icon">📄</div>
                 <h3>Documents</h3>
-                <p>Keep important documents organized</p>
+                <p>Important documents</p>
             </div>
 
             <div class="card">
                 <div class="icon">⏰</div>
                 <h3>Reminders</h3>
-                <p>Never forget important tasks</p>
+                <p>Never forget</p>
             </div>
 
             <div class="card">
                 <div class="icon">👨‍👩‍👧</div>
                 <h3>Family</h3>
-                <p>Manage family information</p>
+                <p>Family information</p>
             </div>
 
+            <div class="card">
+                <div class="icon">💰</div>
+                <h3>Money</h3>
+                <p>Expenses & goals</p>
+            </div>
+
+            <div class="card">
+                <div class="icon">🤖</div>
+                <h3>AI Assistant</h3>
+                <p>Your smart assistant</p>
+            </div>
+
+        </div>
+
+        <div class="bottom">
+            <div>
+                <span>🏠</span>
+                Home
+            </div>
+
+            <div>
+                <span>🔔</span>
+                Alerts
+            </div>
+
+            <div>
+                <span>⚙️</span>
+                Settings
+            </div>
         </div>
 
         <div class="footer">

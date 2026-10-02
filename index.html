@@ -264,7 +264,40 @@ function updateGreeting() {
 
 updateGreeting();
     function openHealth() {
-    alert("Health section coming soon 💊");
+    document.querySelector(".container").innerHTML = `
+        <div class="header">
+            <h2>💊 Health</h2>
+            <p>Manage your health in one place</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">💊</div>
+            <h3>Medicines</h3>
+            <p>Add and manage your medicines</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">🩺</div>
+            <h3>Health Records</h3>
+            <p>Keep your important health details</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📅</div>
+            <h3>Appointments</h3>
+            <p>Track your doctor appointments</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">❤️</div>
+            <h3>Health Summary</h3>
+            <p>View your health information</p>
+        </div>
+
+        <button onclick="location.reload()">
+            ← Back to Home
+        </button>
+    `;
     }
 </script>
 

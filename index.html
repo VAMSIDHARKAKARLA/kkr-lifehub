@@ -341,22 +341,95 @@ updateGreeting();
             </div>
 
             <div class="card">
-                <label>Medicine Name</label>
-                <input type="text" id="medicineName" placeholder="Example: Paracetamol">
 
-                <label>Dosage</label>
-                <input type="text" id="medicineDosage" placeholder="Example: 500 mg">
+    <label style="display:block; margin-bottom:6px; font-weight:600;">
+        💊 Medicine Name
+    </label>
 
-                <label>Time</label>
-                <input type="time" id="medicineTime">
+    <input type="text"
+           id="medicineName"
+           placeholder="Example: Paracetamol"
+           style="
+               width:100%;
+               box-sizing:border-box;
+               padding:14px;
+               margin-bottom:16px;
+               border:1px solid #d1d5db;
+               border-radius:12px;
+               font-size:15px;
+               background:#f9fafb;
+           ">
 
-                <label>Notes</label>
-                <textarea id="medicineNotes" placeholder="Example: After food"></textarea>
+    <label style="display:block; margin-bottom:6px; font-weight:600;">
+        🔢 Dosage
+    </label>
 
-                <button onclick="saveMedicine()">
-                    💾 Save Medicine
-                </button>
-            </div>
+    <input type="text"
+           id="medicineDosage"
+           placeholder="Example: 500 mg"
+           style="
+               width:100%;
+               box-sizing:border-box;
+               padding:14px;
+               margin-bottom:16px;
+               border:1px solid #d1d5db;
+               border-radius:12px;
+               font-size:15px;
+               background:#f9fafb;
+           ">
+
+    <label style="display:block; margin-bottom:6px; font-weight:600;">
+        ⏰ Time
+    </label>
+
+    <input type="time"
+           id="medicineTime"
+           style="
+               width:100%;
+               box-sizing:border-box;
+               padding:14px;
+               margin-bottom:16px;
+               border:1px solid #d1d5db;
+               border-radius:12px;
+               font-size:15px;
+               background:#f9fafb;
+           ">
+
+    <label style="display:block; margin-bottom:6px; font-weight:600;">
+        📝 Notes
+    </label>
+
+    <textarea
+        id="medicineNotes"
+        placeholder="Example: After food"
+        style="
+            width:100%;
+            box-sizing:border-box;
+            padding:14px;
+            margin-bottom:16px;
+            border:1px solid #d1d5db;
+            border-radius:12px;
+            font-size:15px;
+            background:#f9fafb;
+            min-height:90px;
+            resize:vertical;
+        "></textarea>
+
+    <button onclick="saveMedicine()" style="
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:12px;
+        background:#111827;
+        color:white;
+        font-size:16px;
+        font-weight:600;
+        cursor:pointer;
+    ">
+        💾 Save Medicine
+    </button>
+
+</div>
 
             <button onclick="openMedicines()" style="
                 width: 100%;

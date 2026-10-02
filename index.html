@@ -307,7 +307,7 @@ updateGreeting();
                 <p>Manage your medicines</p>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="openAddMedicine()">
                 <h3>➕ Add Medicine</h3>
                 <p>Add a medicine and set its details.</p>
             </div>
@@ -331,6 +331,47 @@ updateGreeting();
 ">
     ← Back to Health
 </button>
+        `;
+    }
+    function openAddMedicine() {
+        document.querySelector(".container").innerHTML = `
+            <div class="header">
+                <h2>➕ Add Medicine</h2>
+                <p>Enter your medicine details</p>
+            </div>
+
+            <div class="card">
+                <label>Medicine Name</label>
+                <input type="text" id="medicineName" placeholder="Example: Paracetamol">
+
+                <label>Dosage</label>
+                <input type="text" id="medicineDosage" placeholder="Example: 500 mg">
+
+                <label>Time</label>
+                <input type="time" id="medicineTime">
+
+                <label>Notes</label>
+                <textarea id="medicineNotes" placeholder="Example: After food"></textarea>
+
+                <button onclick="saveMedicine()">
+                    💾 Save Medicine
+                </button>
+            </div>
+
+            <button onclick="openMedicines()" style="
+                width: 100%;
+                padding: 14px;
+                margin-top: 20px;
+                border: none;
+                border-radius: 12px;
+                background: #111827;
+                color: white;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+            ">
+                ← Back to Medicines
+            </button>
         `;
     }
 </script>

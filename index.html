@@ -299,6 +299,29 @@ updateGreeting();
         </button>
     `;
     }
+        
+    function openMedicines() {
+        document.querySelector(".container").innerHTML = `
+            <div class="header">
+                <h2>💊 Medicines</h2>
+                <p>Manage your medicines</p>
+            </div>
+
+            <div class="card">
+                <h3>➕ Add Medicine</h3>
+                <p>Add a medicine and set its details.</p>
+            </div>
+
+            <div class="card">
+                <h3>📋 Medicine List</h3>
+                <p>Your saved medicines will appear here.</p>
+            </div>
+
+            <button onclick="openHealth()">
+                ← Back to Health
+            </button>
+        `;
+    }
 </script>
 
 </body>

@@ -165,7 +165,7 @@
         </div>
 
         <div class="welcome">
-            <h1>Good Morning 👋</h1>
+            <h1 id="Greeting">Hello 👋</h1>
             <p>Welcome to your personal life hub.</p>
         </div>
 
@@ -245,6 +245,24 @@
         </div>
 
     </div>
+    <script>
+    function updateGreeting() {
+        const hour = new Date().getHours();
+        const greeting = document.getElementById("greeting");
+
+        if (hour >= 5 && hour < 12) {
+            greeting.textContent = "Good Morning 🌅";
+        } else if (hour >= 12 && hour < 17) {
+            greeting.textContent = "Good Afternoon ☀️";
+        } else if (hour >= 17 && hour < 21) {
+            greeting.textContent = "Good Evening 🌆";
+        } else {
+            greeting.textContent = "Good Night 🌙";
+        }
+    }
+
+    updateGreeting();
+    </script>
 
 </body>
 </html>

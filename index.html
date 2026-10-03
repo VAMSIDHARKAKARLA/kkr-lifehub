@@ -496,7 +496,13 @@ updateGreeting();
     <div class="card">
         <h3>💊 ${medicine.name}</h3>
         <p><strong>Dosage:</strong> ${medicine.dosage || "Not added"}</p>
-        <p><strong>Time:</strong> ${medicine.time || "Not added"}</p>
+        <p style="
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+">
+    ⏰ Time: ${medicine.time || "Not added"}
+</p>
         <p><strong>Notes:</strong> ${medicine.notes || "No notes"}</p>
 
         <button onclick="editMedicine(${index})" style="

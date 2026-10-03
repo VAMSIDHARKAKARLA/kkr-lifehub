@@ -727,6 +727,33 @@ updateGreeting();
         return;
     }
 
+    if (!("Notification" in window)) {
+        alert("Notifications are not supported in this browser.");
+        return;
+    }
+
+    Notification.requestPermission().then(function(permission) {
+        if (permission === "granted") {
+            alert(
+                "Notifications enabled for " +
+                medicine.name +
+                " at " +
+                medicine.time +
+                " 🔔"
+            );
+        } else {
+            alert("Notification permission was not allowed.");
+        }
+    });
+    }
+    var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
+    var medicine = medicines[index];
+
+    if (!medicine.time) {
+        alert("Please add a medicine time first ⏰");
+        return;
+    }
+
     alert(
         "Reminder set for " +
         medicine.name +

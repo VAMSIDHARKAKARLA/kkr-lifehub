@@ -763,11 +763,10 @@ function setMedicineReminder(index) {
             String(now.getMinutes()).padStart(2, "0");
 
         if (currentTime === medicine.time) {
-            new Notification(
-                "💊 Medicine Reminder",
-                {
-                    body: "Time to take " + medicine.name + " ⏰"
-                }
+            alert(
+                "💊 Medicine Reminder\n\nTime to take " +
+                medicine.name +
+                " ⏰"
             );
 
             clearInterval(reminderCheck);

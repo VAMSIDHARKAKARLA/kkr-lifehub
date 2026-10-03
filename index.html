@@ -672,6 +672,32 @@ updateGreeting();
         </button>
     `;
         }
+    function updateMedicine(index) {
+    var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
+
+    var name = document.getElementById("editMedicineName").value;
+    var dosage = document.getElementById("editMedicineDosage").value;
+    var time = document.getElementById("editMedicineTime").value;
+    var notes = document.getElementById("editMedicineNotes").value;
+
+    if (name === "") {
+        alert("Please enter medicine name 💊");
+        return;
+    }
+
+    medicines[index] = {
+        name: name,
+        dosage: dosage,
+        time: time,
+        notes: notes
+    };
+
+    localStorage.setItem("medicines", JSON.stringify(medicines));
+
+    alert("Medicine updated successfully ✅");
+
+    showMedicineList();
+    }
 </script>
 
 </body>

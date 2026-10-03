@@ -542,6 +542,17 @@ updateGreeting();
         </button>
     `;
     }
+    function deleteMedicine(index) {
+    var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
+
+    medicines.splice(index, 1);
+
+    localStorage.setItem("medicines", JSON.stringify(medicines));
+
+    alert("Medicine deleted successfully 🗑️");
+
+    showMedicineList();
+    }
 </script>
 
 </body>

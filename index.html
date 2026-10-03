@@ -499,20 +499,35 @@ updateGreeting();
         <p><strong>Time:</strong> ${medicine.time || "Not added"}</p>
         <p><strong>Notes:</strong> ${medicine.notes || "No notes"}</p>
 
-        <button onclick="deleteMedicine(${index})" style="
-            width: 100%;
-            padding: 12px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 10px;
-            background: #dc2626;
-            color: white;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-        ">
-            🗑️ Delete Medicine
-        </button>
+        <button onclick="editMedicine(${index})" style="
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+">
+    ✏️ Edit Medicine
+</button>
+
+<button onclick="deleteMedicine(${index})" style="
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #dc2626;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+">
+    🗑️ Delete Medicine
+</button>
     </div>
 `;
         });

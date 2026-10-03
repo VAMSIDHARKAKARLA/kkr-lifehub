@@ -717,8 +717,9 @@ updateGreeting();
     alert("Medicine updated successfully ✅");
 
     showMedicineList();
-    }
-    function setMedicineReminder(index) {
+}
+
+function setMedicineReminder(index) {
     var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
     var medicine = medicines[index];
 
@@ -745,23 +746,7 @@ updateGreeting();
             alert("Notification permission was not allowed.");
         }
     });
-    }
-    var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
-    var medicine = medicines[index];
-
-    if (!medicine.time) {
-        alert("Please add a medicine time first ⏰");
-        return;
-    }
-
-    alert(
-        "Reminder set for " +
-        medicine.name +
-        " at " +
-        medicine.time +
-        " ⏰"
-    );
-    }
+}
 </script>
 
 </body>

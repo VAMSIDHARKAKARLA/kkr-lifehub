@@ -493,13 +493,28 @@ updateGreeting();
     } else {
         medicines.forEach(function(medicine) {
             medicineHTML += `
-                <div class="card">
-                    <h3>💊 ${medicine.name}</h3>
-                    <p><strong>Dosage:</strong> ${medicine.dosage || "Not added"}</p>
-                    <p><strong>Time:</strong> ${medicine.time || "Not added"}</p>
-                    <p><strong>Notes:</strong> ${medicine.notes || "No notes"}</p>
-                </div>
-            `;
+    <div class="card">
+        <h3>💊 ${medicine.name}</h3>
+        <p><strong>Dosage:</strong> ${medicine.dosage || "Not added"}</p>
+        <p><strong>Time:</strong> ${medicine.time || "Not added"}</p>
+        <p><strong>Notes:</strong> ${medicine.notes || "No notes"}</p>
+
+        <button onclick="deleteMedicine(${index})" style="
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #dc2626;
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        ">
+            🗑️ Delete Medicine
+        </button>
+    </div>
+`;
         });
     }
 

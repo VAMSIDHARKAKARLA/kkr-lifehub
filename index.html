@@ -491,7 +491,7 @@ updateGreeting();
             </div>
         `;
     } else {
-        medicines.forEach(function(medicine) {
+        medicines.forEach(function(medicine, index) {
             medicineHTML += `
     <div class="card">
         <h3>💊 ${medicine.name}</h3>

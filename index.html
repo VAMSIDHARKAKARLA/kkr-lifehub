@@ -568,6 +568,110 @@ updateGreeting();
 
     showMedicineList();
     }
+    function editMedicine(index) {
+    var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
+    var medicine = medicines[index];
+
+    document.querySelector(".container").innerHTML = `
+        <div class="header">
+            <h2>✏️ Edit Medicine</h2>
+            <p>Update your medicine details</p>
+        </div>
+
+        <div class="card">
+            <input
+                id="editMedicineName"
+                type="text"
+                value="${medicine.name}"
+                placeholder="Medicine name"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                "
+            >
+
+            <input
+                id="editMedicineDosage"
+                type="text"
+                value="${medicine.dosage}"
+                placeholder="Dosage"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                "
+            >
+
+            <input
+                id="editMedicineTime"
+                type="time"
+                value="${medicine.time}"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                "
+            >
+
+            <textarea
+                id="editMedicineNotes"
+                placeholder="Notes"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                    min-height:90px;
+                "
+            >${medicine.notes}</textarea>
+
+            <button onclick="updateMedicine(${index})" style="
+                width:100%;
+                padding:14px;
+                border:none;
+                border-radius:12px;
+                background:#111827;
+                color:white;
+                font-size:16px;
+                font-weight:600;
+                cursor:pointer;
+            ">
+                💾 Update Medicine
+            </button>
+        </div>
+
+        <button onclick="showMedicineList()" style="
+            width:100%;
+            padding:14px;
+            margin-top:20px;
+            border:none;
+            border-radius:12px;
+            background:#111827;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+        ">
+            ← Back to Medicine List
+        </button>
+    `;
+        }
 </script>
 
 </body>

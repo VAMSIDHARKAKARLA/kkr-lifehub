@@ -750,6 +750,30 @@ function setMedicineReminder(index) {
         }
     });
 }
+    function startMedicineReminder(index) {
+    var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
+    var medicine = medicines[index];
+
+    var reminderCheck = setInterval(function() {
+        var now = new Date();
+
+        var currentTime =
+            String(now.getHours()).padStart(2, "0") +
+            ":" +
+            String(now.getMinutes()).padStart(2, "0");
+
+        if (currentTime === medicine.time) {
+            new Notification(
+                "💊 Medicine Reminder",
+                {
+                    body: "Time to take " + medicine.name + " ⏰"
+                }
+            );
+
+            clearInterval(reminderCheck);
+        }
+    }, 1000);
+    }
 </script>
 
 </body>

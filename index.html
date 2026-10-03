@@ -340,7 +340,10 @@ updateGreeting();
                 <p>Enter your medicine details</p>
             </div>
 
-            <div class="card">
+            <div class="card" onclick="showMedicineList()">
+    <h3>📋 Medicine List</h3>
+    <p>View your saved medicines</p>
+</div>
 
     <label style="display:block; margin-bottom:6px; font-weight:600;">
         💊 Medicine Name
@@ -474,6 +477,55 @@ updateGreeting();
         alert("Medicine saved successfully ✅");
 
         openMedicines();
+    }
+    function showMedicineList() {
+    var medicines = JSON.parse(localStorage.getItem("medicines")) || [];
+
+    var medicineHTML = "";
+
+    if (medicines.length === 0) {
+        medicineHTML = `
+            <div class="card">
+                <h3>📋 No Medicines Yet</h3>
+                <p>Add a medicine to see it here.</p>
+            </div>
+        `;
+    } else {
+        medicines.forEach(function(medicine) {
+            medicineHTML += `
+                <div class="card">
+                    <h3>💊 ${medicine.name}</h3>
+                    <p><strong>Dosage:</strong> ${medicine.dosage || "Not added"}</p>
+                    <p><strong>Time:</strong> ${medicine.time || "Not added"}</p>
+                    <p><strong>Notes:</strong> ${medicine.notes || "No notes"}</p>
+                </div>
+            `;
+        });
+    }
+
+    document.querySelector(".container").innerHTML = `
+        <div class="header">
+            <h2>📋 Medicine List</h2>
+            <p>Your saved medicines</p>
+        </div>
+
+        ${medicineHTML}
+
+        <button onclick="openMedicines()" style="
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 12px;
+            background: #111827;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        ">
+            ← Back to Medicines
+        </button>
+    `;
     }
 </script>
 

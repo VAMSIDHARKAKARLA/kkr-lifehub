@@ -777,11 +777,6 @@ function setMedicineReminder(index) {
     }
 </script>
     <script>
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
-        navigator.serviceWorker.register("sw.js");
-    });
-}
         function openDocuments() {
     document.querySelector(".container").innerHTML = `
         <div class="header">

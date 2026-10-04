@@ -1,1 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+      content="#111827">
+
+<title>KKR LifeHub</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+.header {
+    background: #111827;
+    color: white;
+    padding: 25px 20px;
+    border-radius: 0 0 22px 22px;
+}
+
+.header h1 {
+    margin: 0 0 8px 0;
+    font-size: 25px;
+}
+
+.header p {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.container {
+    padding: 20px;
+    padding-bottom: 90px;
+}
+
+.page-title {
+    margin-bottom: 20px;
+}
+
+.page-title h2 {
+    margin: 0 0 6px 0;
+}
+
+.page-title p {
+    margin: 0;
+    color: #6b7280;
+}
+
+.emergency {
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.emergency h3 {
+    margin: 0 0 8px 0;
+    color: #991b1b;
+}
+
+.emergency p {
+    margin: 0;
+    color: #7f1d1d;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 17px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.grid .card {
+    margin-bottom: 0;
+}
+
+.card:active {
+    transform: scale(0.98);
+}
+
+.icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin: 0 0 7px 0;
+    font-size: 17px;
+}
+
+.card p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 14px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 16px;
+    background: white;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.primary {
+    background: #111827;
+    color: white;
+}
+
+.secondary {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.success {
+    background: #dcfce7;
+    color: #166534;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.item {
+    background: white;
+    padding: 18px;
+    border-radius: 16px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.item h3 {
+    margin: 0 0 10px 0;
+}
+
+.item p {
+    margin: 6px 0;
+    color: #4b5563;
+}
+
+.item-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.item-buttons button {
+    margin: 0;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 16px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.stat-title {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.stat-value {
+    font-size: 23px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+.income {
+    color: #166534;
+}
+
+.expense {
+    color: #991b1b;
+}
+
+.balance {
+    color: #1d4ed8;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 100;
+}
+
+.nav-item {
+    text-align: center;
+    font-size: 12px;
+    color: #4b5563;
+    cursor: pointer;
+}
+
+.nav-icon {
+    font-size: 21px;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.footer {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 12px;
+    margin-top: 25px;
+}
+
+.chat-box {
+    background: white;
+    padding: 15px;
+    border-radius: 16px;
+    min-height: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    margin-bottom: 15px;
+}
+
+.chat-user {
+    background: #111827;
+    color: white;
+    padding: 12px;
+    border-radius: 14px;
+    margin: 8px 0 8px 35px;
+}
+
+.chat-ai {
+    background: #e5e7eb;
+    color: #111827;
+    padding: 12px;
+    border-radius: 14px;
+    margin: 8px 35px 8px 0;
+}
+
+.quick-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.quick-buttons button {
+    font-size: 14px;
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.check-row input {
+    width: auto;
+    margin: 0;
+}
+
+@media (max-width: 500px) {
+
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="app"></div>
+
+<script>
+  function showHome() {
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>KKR LifeHub</h1>
+            <p>${getGreeting()} 👋</p>
+        </div>
+
+        <div class="container">
+
+            <div class="page-title">
+                <h2>Your Life, Organized</h2>
+                <p>Everything you need in one place.</p>
+            </div>
+
+            <div class="emergency">
+                <h3>🚨 Emergency</h3>
+                <p>Keep important information ready when needed.</p>
+            </div>
+
+            <div class="grid">
+
+                <div class="card" onclick="openHealth()">
+                    <div class="icon">❤️</div>
+                    <h3>Health</h3>
+                    <p>Medicines and health records</p>
+                </div>
+
+                <div class="card" onclick="openDocuments()">
+                    <div class="icon">📄</div>
+                    <h3>Documents</h3>
+                    <p>Important documents</p>
+                </div>
+
+                <div class="card" onclick="openReminders()">
+                    <div class="icon">⏰</div>
+                    <h3>Reminders</h3>
+                    <p>Important tasks</p>
+                </div>
+
+                <div class="card" onclick="openFamily()">
+                    <div class="icon">👨‍👩‍👧‍👦</div>
+                    <h3>Family</h3>
+                    <p>Family information</p>
+                </div>
+
+                <div class="card" onclick="openMoney()">
+                    <div class="icon">💰</div>
+                    <h3>Money</h3>
+                    <p>Income and expenses</p>
+                </div>
+
+                <div class="card" onclick="openAI()">
+                    <div class="icon">🤖</div>
+                    <h3>AI Assistant</h3>
+                    <p>Ask your assistant</p>
+                </div>
+
+            </div>
+
+            <div class="footer">
+                KKR LifeHub • Your life, organized.
+            </div>
+
+        </div>
+
+        <div class="bottom-nav">
+
+            <div class="nav-item" onclick="showHome()">
+                <span class="nav-icon">🏠</span>
+                Home
+            </div>
+
+            <div class="nav-item" onclick="openAlerts()">
+                <span class="nav-icon">🔔</span>
+                Alerts
+            </div>
+
+            <div class="nav-item" onclick="openSettings()">
+                <span class="nav-icon">⚙️</span>
+                Settings
+            </div>
+
+        </div>
+    `;
+}
+
+function getGreeting() {
+    let h = new Date().getHours();
+
+    if (h >= 5 && h < 12) return "Good Morning";
+    if (h >= 12 && h < 17) return "Good Afternoon";
+    if (h >= 17 && h < 21) return "Good Evening";
+
+    return "Good Night";
+}
+  function openHealth() {
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Health</h1>
+            <p>Manage your health</p>
+        </div>
+
+        <div class="container">
+
+            <div class="card" onclick="openMedicines()">
+                <div class="icon">💊</div>
+                <h3>Medicines</h3>
+                <p>Manage your medicines</p>
+            </div>
+
+            <div class="card" onclick="openHealthRecords()">
+                <div class="icon">🩺</div>
+                <h3>Health Records</h3>
+                <p>Store health records</p>
+            </div>
+
+            <div class="card" onclick="openAppointments()">
+                <div class="icon">📅</div>
+                <h3>Appointments</h3>
+                <p>Manage appointments</p>
+            </div>
+
+            <div class="card" onclick="openHealthSummary()">
+                <div class="icon">📊</div>
+                <h3>Health Summary</h3>
+                <p>View health information</p>
+            </div>
+
+            <button class="secondary" onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+}
+
+function openMedicines() {
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Medicines</h1>
+            <p>Your medicines</p>
+        </div>
+
+        <div class="container">
+
+            <button class="primary" onclick="addMedicine()">
+                + Add Medicine
+            </button>
+
+            <div id="medicineList"></div>
+
+            <button class="secondary" onclick="openHealth()">
+                ← Back to Health
+            </button>
+
+        </div>
+    `;
+
+    showMedicines();
+}
+
+function addMedicine() {
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Add Medicine</h1>
+            <p>Save medicine details</p>
+        </div>
+
+        <div class="container">
+
+            <label>Medicine Name</label>
+            <input id="medName" placeholder="Example: Amlodipine">
+
+            <label>Dosage</label>
+            <input id="medDose" placeholder="Example: 5 mg">
+
+            <label>Time</label>
+            <input id="medTime" type="time">
+
+            <label>Notes</label>
+            <textarea id="medNotes"
+                placeholder="Optional notes"></textarea>
+
+            <button class="primary" onclick="saveMedicine()">
+                Save Medicine
+            </button>
+
+            <button class="secondary" onclick="openMedicines()">
+                Cancel
+            </button>
+
+        </div>
+    `;
+}
+
+function saveMedicine() {
+    let medicines =
+        JSON.parse(localStorage.getItem("kkr_medicines")) || [];
+
+    medicines.push({
+        name: document.getElementById("medName").value,
+        dose: document.getElementById("medDose").value,
+        time: document.getElementById("medTime").value,
+        notes: document.getElementById("medNotes").value
+    });
+
+    localStorage.setItem(
+        "kkr_medicines",
+        JSON.stringify(medicines)
+    );
+
+    openMedicines();
+}
+
+function showMedicines() {
+    let medicines =
+        JSON.parse(localStorage.getItem("kkr_medicines")) || [];
+
+    let box = document.getElementById("medicineList");
+
+    if (medicines.length === 0) {
+        box.innerHTML = `
+            <div class="item">
+                <h3>No medicines yet</h3>
+                <p>Add your first medicine.</p>
+            </div>
+        `;
+        return;
+    }
+
+    box.innerHTML = medicines.map((m, i) => `
+        <div class="item">
+
+            <h3>💊 ${m.name}</h3>
+
+            <p><b>Dosage:</b> ${m.dose}</p>
+
+            <p><b>Time:</b> ${m.time}</p>
+
+            <p><b>Notes:</b> ${m.notes}</p>
+
+            <button class="danger"
+                onclick="deleteMedicine(${i})">
+                Delete
+            </button>
+
+        </div>
+    `).join("");
+}
+
+function deleteMedicine(index) {
+    let medicines =
+        JSON.parse(localStorage.getItem("kkr_medicines")) || [];
+
+    medicines.splice(index, 1);
+
+    localStorage.setItem(
+        "kkr_medicines",
+        JSON.stringify(medicines)
+    );
+
+    showMedicines();
+}
+
+function openHealthRecords() {
+    alert("Health Records — next part");
+}
+
+function openAppointments() {
+    alert("Appointments — next part");
+}
+
+function openHealthSummary() {
+    alert("Health Summary — next part");
+  }
+  function openDocuments() {
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Documents</h1>
+            <p>Manage your important documents</p>
+        </div>
+
+        <div class="container">
+
+            <button class="primary" onclick="addDocument()">
+                + Add Document
+            </button>
+
+            <div id="documentList"></div>
+
+            <button class="secondary" onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+
+    showDocuments();
+}
+
+function addDocument() {
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Add Document</h1>
+            <p>Save document details</p>
+        </div>
+
+        <div class="container">
+
+            <label>Document Name</label>
+            <input id="docName"
+                   placeholder="Example: Aadhaar Card">
+
+            <label>Document Type</label>
+            <select id="docType">
+                <option>Identity</option>
+                <option>Education</option>
+                <option>Vehicle</option>
+                <option>Insurance</option>
+                <option>Medical</option>
+                <option>Other</option>
+            </select>
+
+            <label>Document Number</label>
+            <input id="docNumber"
+                   placeholder="Enter document number">
+
+            <label>Expiry Date</label>
+            <input id="docExpiry" type="date">
+
+            <label>Notes</label>
+            <textarea id="docNotes"
+                      placeholder="Optional notes"></textarea>
+
+            <button class="primary" onclick="saveDocument()">
+                Save Document
+            </button>
+
+            <button class="secondary"
+                    onclick="openDocuments()">
+                Cancel
+            </button>
+
+        </div>
+    `;
+}
+
+function saveDocument() {
+
+    let documents =
+        JSON.parse(localStorage.getItem("kkr_documents")) || [];
+
+    documents.push({
+        name: document.getElementById("docName").value,
+        type: document.getElementById("docType").value,
+        number: document.getElementById("docNumber").value,
+        expiry: document.getElementById("docExpiry").value,
+        notes: document.getElementById("docNotes").value
+    });
+
+    localStorage.setItem(
+        "kkr_documents",
+        JSON.stringify(documents)
+    );
+
+    openDocuments();
+}
+
+function showDocuments() {
+
+    let documents =
+        JSON.parse(localStorage.getItem("kkr_documents")) || [];
+
+    let box = document.getElementById("documentList");
+
+    if (documents.length === 0) {
+        box.innerHTML = `
+            <div class="item">
+                <h3>No documents yet</h3>
+                <p>Add your first document.</p>
+            </div>
+        `;
+        return;
+    }
+
+    box.innerHTML = documents.map((d, i) => `
+        <div class="item">
+
+            <h3>📄 ${d.name}</h3>
+
+            <p><b>Type:</b> ${d.type}</p>
+
+            <p><b>Number:</b> ${d.number}</p>
+
+            <p><b>Expiry:</b> ${d.expiry || "No expiry"}</p>
+
+            <p><b>Notes:</b> ${d.notes || "None"}</p>
+
+            <button class="danger"
+                    onclick="deleteDocument(${i})">
+                Delete
+            </button>
+
+        </div>
+    `).join("");
+}
+
+function deleteDocument(index) {
+
+    let documents =
+        JSON.parse(localStorage.getItem("kkr_documents")) || [];
+
+    documents.splice(index, 1);
+
+    localStorage.setItem(
+        "kkr_documents",
+        JSON.stringify(documents)
+    );
+
+    showDocuments();
+}
+  function openReminders() {
+
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Reminders</h1>
+            <p>Never forget important tasks</p>
+        </div>
+
+        <div class="container">
+
+            <button class="primary" onclick="addReminder()">
+                + Add Reminder
+            </button>
+
+            <div id="reminderList"></div>
+
+            <button class="secondary"
+                    onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+
+    showReminders();
+}
+
+
+function addReminder() {
+
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Add Reminder</h1>
+            <p>Create a new reminder</p>
+        </div>
+
+        <div class="container">
+
+            <label>Reminder</label>
+            <input id="remTitle"
+                   placeholder="Example: Pay electricity bill">
+
+            <label>Date</label>
+            <input id="remDate" type="date">
+
+            <label>Time</label>
+            <input id="remTime" type="time">
+
+            <button class="primary"
+                    onclick="saveReminder()">
+                Save Reminder
+            </button>
+
+            <button class="secondary"
+                    onclick="openReminders()">
+                Cancel
+            </button>
+
+        </div>
+    `;
+}
+
+
+function saveReminder() {
+
+    let reminders =
+        JSON.parse(localStorage.getItem("kkr_reminders")) || [];
+
+    reminders.push({
+        title: document.getElementById("remTitle").value,
+        date: document.getElementById("remDate").value,
+        time: document.getElementById("remTime").value,
+        completed: false
+    });
+
+    localStorage.setItem(
+        "kkr_reminders",
+        JSON.stringify(reminders)
+    );
+
+    openReminders();
+}
+
+
+function showReminders() {
+
+    let reminders =
+        JSON.parse(localStorage.getItem("kkr_reminders")) || [];
+
+    let box = document.getElementById("reminderList");
+
+    if (reminders.length === 0) {
+
+        box.innerHTML = `
+            <div class="item">
+                <h3>No reminders yet</h3>
+                <p>Add your first reminder.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML = reminders.map((r, i) => `
+
+        <div class="item">
+
+            <h3>
+                ${r.completed ? "✅" : "⏰"}
+                ${r.title}
+            </h3>
+
+            <p>
+                <b>Date:</b> ${r.date || "No date"}
+            </p>
+
+            <p>
+                <b>Time:</b> ${r.time || "No time"}
+            </p>
+
+            <button class="primary"
+                    onclick="toggleReminder(${i})">
+                ${r.completed ? "Mark Pending" : "Mark Done"}
+            </button>
+
+            <button class="danger"
+                    onclick="deleteReminder(${i})">
+                Delete
+            </button>
+
+        </div>
+
+    `).join("");
+}
+
+
+function toggleReminder(index) {
+
+    let reminders =
+        JSON.parse(localStorage.getItem("kkr_reminders")) || [];
+
+    reminders[index].completed =
+        !reminders[index].completed;
+
+    localStorage.setItem(
+        "kkr_reminders",
+        JSON.stringify(reminders)
+    );
+
+    showReminders();
+}
+
+
+function deleteReminder(index) {
+
+    let reminders =
+        JSON.parse(localStorage.getItem("kkr_reminders")) || [];
+
+    reminders.splice(index, 1);
+
+    localStorage.setItem(
+        "kkr_reminders",
+        JSON.stringify(reminders)
+    );
+
+    showReminders();
+}
+  function openFamily() {
+
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Family</h1>
+            <p>Keep family information together</p>
+        </div>
+
+        <div class="container">
+
+            <button class="primary"
+                    onclick="addFamilyMember()">
+                + Add Family Member
+            </button>
+
+            <div id="familyList"></div>
+
+            <button class="secondary"
+                    onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+
+    showFamily();
+}
+
+
+function addFamilyMember() {
+
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Add Family Member</h1>
+            <p>Save family details</p>
+        </div>
+
+        <div class="container">
+
+            <label>Name</label>
+            <input id="familyName"
+                   placeholder="Example: Father">
+
+            <label>Relation</label>
+            <input id="familyRelation"
+                   placeholder="Example: Father">
+
+            <label>Phone</label>
+            <input id="familyPhone"
+                   type="tel"
+                   placeholder="Phone number">
+
+            <label>Notes</label>
+            <textarea id="familyNotes"
+                      placeholder="Optional notes"></textarea>
+
+            <button class="primary"
+                    onclick="saveFamilyMember()">
+                Save Family Member
+            </button>
+
+            <button class="secondary"
+                    onclick="openFamily()">
+                Cancel
+            </button>
+
+        </div>
+    `;
+}
+
+
+function saveFamilyMember() {
+
+    let family =
+        JSON.parse(localStorage.getItem("kkr_family")) || [];
+
+    family.push({
+        name: document.getElementById("familyName").value,
+        relation: document.getElementById("familyRelation").value,
+        phone: document.getElementById("familyPhone").value,
+        notes: document.getElementById("familyNotes").value
+    });
+
+    localStorage.setItem(
+        "kkr_family",
+        JSON.stringify(family)
+    );
+
+    openFamily();
+}
+
+
+function showFamily() {
+
+    let family =
+        JSON.parse(localStorage.getItem("kkr_family")) || [];
+
+    let box = document.getElementById("familyList");
+
+    if (family.length === 0) {
+
+        box.innerHTML = `
+            <div class="item">
+                <h3>No family members yet</h3>
+                <p>Add your family information.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    box.innerHTML = family.map((f, i) => `
+
+        <div class="item">
+
+            <h3>👤 ${f.name}</h3>
+
+            <p>
+                <b>Relation:</b> ${f.relation}
+            </p>
+
+            <p>
+                <b>Phone:</b> ${f.phone}
+            </p>
+
+            <p>
+                <b>Notes:</b> ${f.notes || "None"}
+            </p>
+
+            <button class="danger"
+                    onclick="deleteFamilyMember(${i})">
+                Delete
+            </button>
+
+        </div>
+
+    `).join("");
+}
+
+
+function deleteFamilyMember(index) {
+
+    let family =
+        JSON.parse(localStorage.getItem("kkr_family")) || [];
+
+    family.splice(index, 1);
+
+    localStorage.setItem(
+        "kkr_family",
+        JSON.stringify(family)
+    );
+
+    showFamily();
+                       }
+  function openMoney() {
+
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Money</h1>
+            <p>Track your income and expenses</p>
+        </div>
+
+        <div class="container">
+
+            <div id="moneyStats"></div>
+
+            <button class="primary"
+                    onclick="addTransaction()">
+                + Add Transaction
+            </button>
+
+            <div id="transactionList"></div>
+
+            <button class="secondary"
+                    onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+
+    showMoney();
+}
+
+
+function addTransaction() {
+
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>Add Transaction</h1>
+            <p>Record your money activity</p>
+        </div>
+
+        <div class="container">
+
+            <label>Type</label>
+
+            <select id="moneyType">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+
+            <label>Amount</label>
+
+            <input id="moneyAmount"
+                   type="number"
+                   placeholder="Example: 5000">
+
+            <label>Description</label>
+
+            <input id="moneyDescription"
+                   placeholder="Example: Salary">
+
+            <label>Date</label>
+
+            <input id="moneyDate"
+                   type="date">
+
+            <button class="primary"
+                    onclick="saveTransaction()">
+                Save Transaction
+            </button>
+
+            <button class="secondary"
+                    onclick="openMoney()">
+                Cancel
+            </button>
+
+        </div>
+    `;
+}
+
+
+function saveTransaction() {
+
+    let transactions =
+        JSON.parse(localStorage.getItem("kkr_transactions")) || [];
+
+    transactions.push({
+
+        type: document.getElementById("moneyType").value,
+
+        amount: Number(
+            document.getElementById("moneyAmount").value
+        ),
+
+        description:
+            document.getElementById("moneyDescription").value,
+
+        date:
+            document.getElementById("moneyDate").value
+
+    });
+
+    localStorage.setItem(
+        "kkr_transactions",
+        JSON.stringify(transactions)
+    );
+
+    openMoney();
+}
+
+
+function showMoney() {
+
+    let transactions =
+        JSON.parse(localStorage.getItem("kkr_transactions")) || [];
+
+    let income = 0;
+    let expense = 0;
+
+    transactions.forEach(t => {
+
+        if (t.type === "income") {
+            income += t.amount;
+        } else {
+            expense += t.amount;
+        }
+
+    });
+
+    let balance = income - expense;
+
+
+    document.getElementById("moneyStats").innerHTML = `
+
+        <div class="stat-grid">
+
+            <div class="stat">
+                <div class="stat-title">Income</div>
+                <div class="stat-value income">
+                    ₹${income}
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">Expense</div>
+                <div class="stat-value expense">
+                    ₹${expense}
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">Balance</div>
+                <div class="stat-value balance">
+                    ₹${balance}
+                </div>
+            </div>
+
+        </div>
+
+    `;
+
+
+    let box =
+        document.getElementById("transactionList");
+
+
+    if (transactions.length === 0) {
+
+        box.innerHTML = `
+            <div class="item">
+                <h3>No transactions yet</h3>
+                <p>Add your first income or expense.</p>
+            </div>
+        `;
+
+        return;
+    }
+
+
+    box.innerHTML = transactions.map((t, i) => `
+
+        <div class="item">
+
+            <h3>
+                ${t.type === "income" ? "💚" : "🔴"}
+                ${t.description}
+            </h3>
+
+            <p>
+                <b>Amount:</b> ₹${t.amount}
+            </p>
+
+            <p>
+                <b>Type:</b> ${t.type}
+            </p>
+
+            <p>
+                <b>Date:</b> ${t.date || "No date"}
+            </p>
+
+            <button class="danger"
+                    onclick="deleteTransaction(${i})">
+                Delete
+            </button>
+
+        </div>
+
+    `).join("");
+}
+
+
+function deleteTransaction(index) {
+
+    let transactions =
+        JSON.parse(localStorage.getItem("kkr_transactions")) || [];
+
+    transactions.splice(index, 1);
+
+    localStorage.setItem(
+        "kkr_transactions",
+        JSON.stringify(transactions)
+    );
+
+    showMoney();
+      }
+  function openAI() {
+
+    document.getElementById("app").innerHTML = `
+        <div class="header">
+            <h1>AI Assistant</h1>
+            <p>Your KKR LifeHub assistant</p>
+        </div>
+
+        <div class="container">
+
+            <div id="chatBox" class="chat-box">
+                <div class="chat-ai">
+                    Hello 👋 How can I help you?
+                </div>
+            </div>
+
+            <div class="quick-buttons">
+
+                <button class="secondary"
+                        onclick="quickAI('My Medicines')">
+                    💊 Medicines
+                </button>
+
+                <button class="secondary"
+                        onclick="quickAI('My Documents')">
+                    📄 Documents
+                </button>
+
+                <button class="secondary"
+                        onclick="quickAI('My Reminders')">
+                    ⏰ Reminders
+                </button>
+
+                <button class="secondary"
+                        onclick="quickAI('My Balance')">
+                    💰 Balance
+                </button>
+
+            </div>
+
+            <input id="aiInput"
+                   placeholder="Ask something...">
+
+            <button class="primary"
+                    onclick="sendAI()">
+                Send
+            </button>
+
+            <button class="secondary"
+                    onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+}
+
+
+function sendAI() {
+
+    let input = document.getElementById("aiInput");
+
+    let message = input.value.trim();
+
+    if (!message) return;
+
+    addAIMessage(message, true);
+
+    input.value = "";
+
+    setTimeout(function() {
+
+        addAIMessage(getAIResponse(message), false);
+
+    }, 300);
+}
+
+
+function quickAI(message) {
+
+    addAIMessage(message, true);
+
+    setTimeout(function() {
+
+        addAIMessage(getAIResponse(message), false);
+
+    }, 300);
+}
+
+
+function addAIMessage(message, user) {
+
+    let box = document.getElementById("chatBox");
+
+    let div = document.createElement("div");
+
+    div.className = user ? "chat-user" : "chat-ai";
+
+    div.innerText = message;
+
+    box.appendChild(div);
+
+    box.scrollTop = box.scrollHeight;
+}
+
+
+function getAIResponse(message) {
+
+    let text = message.toLowerCase();
+
+
+    if (text.includes("medicine")) {
+
+        let data =
+            JSON.parse(localStorage.getItem("kkr_medicines")) || [];
+
+        return "You have " + data.length +
+               " medicine(s) saved in KKR LifeHub.";
+
+    }
+
+
+    if (text.includes("document")) {
+
+        let data =
+            JSON.parse(localStorage.getItem("kkr_documents")) || [];
+
+        return "You have " + data.length +
+               " document(s) saved.";
+
+    }
+
+
+    if (text.includes("reminder")) {
+
+        let data =
+            JSON.parse(localStorage.getItem("kkr_reminders")) || [];
+
+        let pending =
+            data.filter(x => !x.completed).length;
+
+        return "You have " + pending +
+               " pending reminder(s).";
+
+    }
+
+
+    if (text.includes("balance") ||
+        text.includes("money")) {
+
+        let data =
+            JSON.parse(localStorage.getItem("kkr_transactions")) || [];
+
+        let income = 0;
+        let expense = 0;
+
+        data.forEach(x => {
+
+            if (x.type === "income") {
+                income += x.amount;
+            } else {
+                expense += x.amount;
+            }
+
+        });
+
+        return "Your current balance is ₹" +
+               (income - expense) + ".";
+
+    }
+
+
+    if (text.includes("hello") ||
+        text.includes("hi")) {
+
+        return "Hello 👋 Welcome to KKR LifeHub!";
+
+    }
+
+
+    return "I can help with medicines, documents, reminders and money. Try asking about one of them.";
+
+}
+
+
+// ===============================
+// ALERTS
+// ===============================
+
+function openAlerts() {
+
+    let medicines =
+        JSON.parse(localStorage.getItem("kkr_medicines")) || [];
+
+    let documents =
+        JSON.parse(localStorage.getItem("kkr_documents")) || [];
+
+    let reminders =
+        JSON.parse(localStorage.getItem("kkr_reminders")) || [];
+
+    let pending =
+        reminders.filter(x => !x.completed).length;
+
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="header">
+            <h1>Alerts</h1>
+            <p>Your LifeHub summary</p>
+        </div>
+
+        <div class="container">
+
+            <div class="stat-grid">
+
+                <div class="stat">
+                    <div class="stat-title">
+                        Medicines
+                    </div>
+
+                    <div class="stat-value">
+                        ${medicines.length}
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title">
+                        Documents
+                    </div>
+
+                    <div class="stat-value">
+                        ${documents.length}
+                    </div>
+                </div>
+
+                <div class="stat">
+                    <div class="stat-title">
+                        Pending Reminders
+                    </div>
+
+                    <div class="stat-value">
+                        ${pending}
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="secondary"
+                    onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+}
+
+
+// ===============================
+// SETTINGS
+// ===============================
+
+function openSettings() {
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="header">
+            <h1>Settings</h1>
+            <p>Manage KKR LifeHub</p>
+        </div>
+
+        <div class="container">
+
+            <div class="card"
+                 onclick="showStorageInfo()">
+
+                <div class="icon">💾</div>
+
+                <h3>Storage Information</h3>
+
+                <p>
+                    View saved information
+                </p>
+
+            </div>
+
+            <div class="card"
+                 onclick="clearLifeHubData()">
+
+                <div class="icon">🗑️</div>
+
+                <h3>Clear All Data</h3>
+
+                <p>
+                    Delete all LifeHub data
+                </p>
+
+            </div>
+
+            <button class="secondary"
+                    onclick="showHome()">
+                ← Back to Home
+            </button>
+
+        </div>
+    `;
+}
+
+
+function showStorageInfo() {
+
+    let medicines =
+        JSON.parse(localStorage.getItem("kkr_medicines")) || [];
+
+    let documents =
+        JSON.parse(localStorage.getItem("kkr_documents")) || [];
+
+    let reminders =
+        JSON.parse(localStorage.getItem("kkr_reminders")) || [];
+
+    let family =
+        JSON.parse(localStorage.getItem("kkr_family")) || [];
+
+    let transactions =
+        JSON.parse(localStorage.getItem("kkr_transactions")) || [];
+
+
+    alert(
+        "KKR LifeHub Storage\n\n" +
+        "Medicines: " + medicines.length + "\n" +
+        "Documents: " + documents.length + "\n" +
+        "Reminders: " + reminders.length + "\n" +
+        "Family: " + family.length + "\n" +
+        "Transactions: " + transactions.length
+    );
+}
+
+
+function clearLifeHubData() {
+
+    let confirmDelete =
+        confirm(
+            "Are you sure you want to delete all KKR LifeHub data?"
+        );
+
+    if (!confirmDelete) return;
+
+    localStorage.removeItem("kkr_medicines");
+    localStorage.removeItem("kkr_documents");
+    localStorage.removeItem("kkr_reminders");
+    localStorage.removeItem("kkr_family");
+    localStorage.removeItem("kkr_transactions");
+
+    alert("All KKR LifeHub data has been deleted.");
+
+    showHome();
+}
+
+
+// ===============================
+// START APP
+// ===============================
+
+showHome();
+
+</script>
+
+</body>
+
+</html>

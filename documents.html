@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111827">
 
+    <title>KKR LifeHub - Documents</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            color: #111827;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 25px 20px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .header h2 {
+            margin: 0 0 5px 0;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 16px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            cursor: pointer;
+        }
+
+        .card h3 {
+            margin: 0 0 8px 0;
+        }
+
+        .card p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+        .icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .back-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 12px;
+            background: #111827;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h2>📄 Documents</h2>
+        <p>Manage your important documents</p>
+    </div>
+
+    <div class="container">
+
+        <div class="card">
+            <div class="icon">➕</div>
+            <h3>Add Document</h3>
+            <p>Add your important documents.</p>
+        </div>
+
+        <div class="card">
+            <div class="icon">📋</div>
+            <h3>Document List</h3>
+            <p>View your saved documents.</p>
+        </div>
+
+        <button class="back-button" onclick="window.location.href='index.html'">
+            ← Back to Home
+        </button>
+
+    </div>
+
+</body>
+</html>

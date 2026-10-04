@@ -812,6 +812,23 @@ function openDocuments() {
     `;
 }
 </script>
+    <script>
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        registrations.forEach(function(registration) {
+            registration.unregister();
+        });
+    });
+}
+
+if ("caches" in window) {
+    caches.keys().then(function(names) {
+        names.forEach(function(name) {
+            caches.delete(name);
+        });
+    });
+}
+</script>
 
 </body>
 </html>

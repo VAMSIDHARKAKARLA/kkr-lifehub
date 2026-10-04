@@ -193,7 +193,7 @@
                 <p>Medicines & health</p>
             </div>
 
-            <div class="card" id="documentsCard">
+            <div class="card" onclick="openDocuments()">
     <div class="icon">📄</div>
     <h3>Documents</h3>
     <p>Important documents</p>
@@ -265,10 +265,12 @@ function updateGreeting() {
 }
 
 updateGreeting();
-    document.getElementById("documentsCard").addEventListener("click", function() {
-    alert("Documents button is working ✅");
-});
-    function openHealth() {
+
+function openDocuments() {
+    alert("TEST: Documents function is working ✅");
+}
+
+function openHealth() {
     document.querySelector(".container").innerHTML = `
         <div class="header">
             <h2>💊 Health</h2>

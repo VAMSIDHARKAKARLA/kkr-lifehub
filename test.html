@@ -1672,6 +1672,417 @@ function clearLifeHubData() {
 // ===============================
 
 showHome();
+      // ===============================
+// SIDE MENU
+// ===============================
+
+function addMenuButton() {
+
+    let header = document.querySelector(".header");
+
+    if (!header) return;
+
+    header.style.position = "relative";
+
+    let button = document.createElement("button");
+
+    button.innerHTML = "☰";
+
+    button.style.position = "absolute";
+    button.style.top = "18px";
+    button.style.left = "15px";
+    button.style.width = "45px";
+    button.style.height = "45px";
+    button.style.margin = "0";
+    button.style.padding = "0";
+    button.style.background = "rgba(255,255,255,0.12)";
+    button.style.color = "white";
+    button.style.fontSize = "25px";
+    button.style.borderRadius = "12px";
+
+    button.onclick = openSideMenu;
+
+    header.appendChild(button);
+
+    header.querySelector("h1").style.paddingLeft = "55px";
+}
+
+
+function openSideMenu() {
+
+    let menu = document.createElement("div");
+
+    menu.id = "sideMenu";
+
+    menu.style.position = "fixed";
+    menu.style.top = "0";
+    menu.style.left = "0";
+    menu.style.width = "85%";
+    menu.style.maxWidth = "360px";
+    menu.style.height = "100%";
+    menu.style.background = "white";
+    menu.style.zIndex = "1000";
+    menu.style.boxShadow = "5px 0 20px rgba(0,0,0,0.25)";
+    menu.style.overflowY = "auto";
+
+    menu.innerHTML = `
+
+        <div style="
+            background:#111827;
+            color:white;
+            padding:28px 20px;
+        ">
+
+            <h2 style="margin:0;">
+                KKR LifeHub
+            </h2>
+
+            <p style="
+                margin:7px 0 0;
+                opacity:0.75;
+            ">
+                Your life, organized.
+            </p>
+
+        </div>
+
+
+        <div style="padding:15px;">
+
+            <div class="card"
+                 onclick="openProfile()">
+
+                <div class="icon">👤</div>
+
+                <h3>Profile</h3>
+
+                <p>
+                    Manage your personal information
+                </p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="openNotifications()">
+
+                <div class="icon">🔔</div>
+
+                <h3>Notifications</h3>
+
+                <p>
+                    Manage LifeHub notifications
+                </p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="toggleTheme()">
+
+                <div class="icon">🌙</div>
+
+                <h3>Theme</h3>
+
+                <p>
+                    Switch between light and dark mode
+                </p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="openPrivacy()">
+
+                <div class="icon">🔒</div>
+
+                <h3>Privacy</h3>
+
+                <p>
+                    Manage your privacy information
+                </p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="showStorageInfo()">
+
+                <div class="icon">💾</div>
+
+                <h3>Storage</h3>
+
+                <p>
+                    View saved LifeHub information
+                </p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="openHelp()">
+
+                <div class="icon">❓</div>
+
+                <h3>Help & Support</h3>
+
+                <p>
+                    Get help using KKR LifeHub
+                </p>
+
+            </div>
+
+
+            <div class="card"
+                 onclick="openAbout()">
+
+                <div class="icon">ℹ️</div>
+
+                <h3>About KKR LifeHub</h3>
+
+                <p>
+                    App information
+                </p>
+
+            </div>
+
+
+            <button class="secondary"
+                    onclick="closeSideMenu()">
+
+                ✕ Close Menu
+
+            </button>
+
+        </div>
+    `;
+
+    document.body.appendChild(menu);
+}
+
+
+function closeSideMenu() {
+
+    let menu =
+        document.getElementById("sideMenu");
+
+    if (menu) {
+        menu.remove();
+    }
+}
+
+
+// ===============================
+// PROFILE
+// ===============================
+
+function openProfile() {
+
+    closeSideMenu();
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="header">
+
+            <h1>Profile</h1>
+
+            <p>Your personal information</p>
+
+        </div>
+
+        <div class="container">
+
+            <label>Name</label>
+
+            <input id="profileName"
+                   placeholder="Enter your name">
+
+            <label>Phone</label>
+
+            <input id="profilePhone"
+                   type="tel"
+                   placeholder="Enter phone number">
+
+            <label>Email</label>
+
+            <input id="profileEmail"
+                   type="email"
+                   placeholder="Enter email">
+
+            <button class="primary"
+                    onclick="saveProfile()">
+
+                Save Profile
+
+            </button>
+
+            <button class="secondary"
+                    onclick="showHome()">
+
+                ← Back to Home
+
+            </button>
+
+        </div>
+    `;
+
+    let profile =
+        JSON.parse(localStorage.getItem("kkr_profile")) || {};
+
+    document.getElementById("profileName").value =
+        profile.name || "";
+
+    document.getElementById("profilePhone").value =
+        profile.phone || "";
+
+    document.getElementById("profileEmail").value =
+        profile.email || "";
+}
+
+
+function saveProfile() {
+
+    let profile = {
+
+        name:
+            document.getElementById("profileName").value,
+
+        phone:
+            document.getElementById("profilePhone").value,
+
+        email:
+            document.getElementById("profileEmail").value
+
+    };
+
+    localStorage.setItem(
+        "kkr_profile",
+        JSON.stringify(profile)
+    );
+
+    alert("Profile saved successfully.");
+
+    showHome();
+}
+
+
+// ===============================
+// NOTIFICATIONS
+// ===============================
+
+function openNotifications() {
+
+    closeSideMenu();
+
+    alert(
+        "🔔 Notifications\n\n" +
+        "KKR LifeHub notifications are ready.\n\n" +
+        "Medicine reminders and important alerts " +
+        "can be managed here."
+    );
+}
+
+
+// ===============================
+// THEME
+// ===============================
+
+function toggleTheme() {
+
+    let current =
+        localStorage.getItem("kkr_theme") || "light";
+
+    if (current === "light") {
+
+        localStorage.setItem(
+            "kkr_theme",
+            "dark"
+        );
+
+        document.body.style.background =
+            "#111827";
+
+        document.body.style.color =
+            "white";
+
+        alert("🌙 Dark mode enabled.");
+
+    } else {
+
+        localStorage.setItem(
+            "kkr_theme",
+            "light"
+        );
+
+        document.body.style.background =
+            "#f3f4f6";
+
+        document.body.style.color =
+            "#111827";
+
+        alert("☀️ Light mode enabled.");
+    }
+
+    closeSideMenu();
+}
+
+
+// ===============================
+// PRIVACY
+// ===============================
+
+function openPrivacy() {
+
+    closeSideMenu();
+
+    alert(
+        "🔒 Privacy\n\n" +
+        "Your KKR LifeHub information is stored " +
+        "locally in this browser.\n\n" +
+        "No information is sent to a server by " +
+        "this basic version of the app."
+    );
+}
+
+
+// ===============================
+// HELP
+// ===============================
+
+function openHelp() {
+
+    closeSideMenu();
+
+    alert(
+        "❓ Help & Support\n\n" +
+        "Use the Home screen to access Health, " +
+        "Documents, Reminders, Family, Money " +
+        "and AI Assistant.\n\n" +
+        "You can also use the ☰ menu for more options."
+    );
+}
+
+
+// ===============================
+// ABOUT
+// ===============================
+
+function openAbout() {
+
+    closeSideMenu();
+
+    alert(
+        "ℹ️ KKR LifeHub\n\n" +
+        "Your life, organized.\n\n" +
+        "Version 1.0\n" +
+        "Personal Life Management App"
+    );
+}
+
+
+// Add menu button after Home loads
+
+addMenuButton();
 
 </script>
 

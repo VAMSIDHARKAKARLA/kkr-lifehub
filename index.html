@@ -193,7 +193,7 @@
                 <p>Medicines & health</p>
             </div>
 
-            <div class="card" onclick="window.openDocuments()">
+            <div class="card" onclick="openDocuments()">
                 <div class="icon">📄</div>
                 <h3>Documents</h3>
                 <p>Important documents</p>
@@ -778,6 +778,7 @@ function setMedicineReminder(index) {
 </script>
 
 <script>
+
 function openDocuments() {
     document.querySelector(".container").innerHTML = `
         <div class="header">
@@ -811,6 +812,505 @@ function openDocuments() {
         </button>
     `;
 }
+
+
+function openAddDocument() {
+    document.querySelector(".container").innerHTML = `
+        <div class="header">
+            <h2>➕ Add Document</h2>
+            <p>Save your important document details</p>
+        </div>
+
+        <label style="
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        ">
+            📄 Document Name
+        </label>
+
+        <input
+            type="text"
+            id="documentName"
+            placeholder="Example: Aadhaar Card"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                margin-bottom:16px;
+                border:1px solid #d1d5db;
+                border-radius:12px;
+                font-size:15px;
+                background:#f9fafb;
+            "
+        >
+
+        <label style="
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        ">
+            📂 Document Type
+        </label>
+
+        <input
+            type="text"
+            id="documentType"
+            placeholder="Example: Identity Proof"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                margin-bottom:16px;
+                border:1px solid #d1d5db;
+                border-radius:12px;
+                font-size:15px;
+                background:#f9fafb;
+            "
+        >
+
+        <label style="
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        ">
+            🔢 Document Number
+        </label>
+
+        <input
+            type="text"
+            id="documentNumber"
+            placeholder="Example: XXXX XXXX XXXX"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                margin-bottom:16px;
+                border:1px solid #d1d5db;
+                border-radius:12px;
+                font-size:15px;
+                background:#f9fafb;
+            "
+        >
+
+        <label style="
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        ">
+            📅 Expiry Date
+        </label>
+
+        <input
+            type="date"
+            id="documentExpiry"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                margin-bottom:16px;
+                border:1px solid #d1d5db;
+                border-radius:12px;
+                font-size:15px;
+                background:#f9fafb;
+            "
+        >
+
+        <label style="
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        ">
+            📝 Notes
+        </label>
+
+        <textarea
+            id="documentNotes"
+            placeholder="Example: Original document kept safely"
+            style="
+                width:100%;
+                box-sizing:border-box;
+                padding:14px;
+                margin-bottom:16px;
+                border:1px solid #d1d5db;
+                border-radius:12px;
+                font-size:15px;
+                background:#f9fafb;
+                min-height:90px;
+                resize:vertical;
+            "
+        ></textarea>
+
+        <button onclick="saveDocument()" style="
+            width:100%;
+            padding:14px;
+            border:none;
+            border-radius:12px;
+            background:#111827;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+        ">
+            💾 Save Document
+        </button>
+
+        <button onclick="openDocuments()" style="
+            width:100%;
+            padding:14px;
+            margin-top:20px;
+            border:none;
+            border-radius:12px;
+            background:#111827;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+        ">
+            ← Back to Documents
+        </button>
+    `;
+}
+
+
+function saveDocument() {
+
+    var name = document.getElementById("documentName").value;
+    var type = document.getElementById("documentType").value;
+    var number = document.getElementById("documentNumber").value;
+    var expiry = document.getElementById("documentExpiry").value;
+    var notes = document.getElementById("documentNotes").value;
+
+    if (name === "") {
+        alert("Please enter document name 📄");
+        return;
+    }
+
+    var documentItem = {
+        name: name,
+        type: type,
+        number: number,
+        expiry: expiry,
+        notes: notes
+    };
+
+    var documents =
+        JSON.parse(localStorage.getItem("documents")) || [];
+
+    documents.push(documentItem);
+
+    localStorage.setItem(
+        "documents",
+        JSON.stringify(documents)
+    );
+
+    alert("Document saved successfully ✅");
+
+    openDocuments();
+}
+
+
+function showDocumentList() {
+
+    var documents =
+        JSON.parse(localStorage.getItem("documents")) || [];
+
+    var documentHTML = "";
+
+    if (documents.length === 0) {
+
+        documentHTML = `
+            <div class="card">
+                <h3>📋 No Documents Yet</h3>
+                <p>Add a document to see it here.</p>
+            </div>
+        `;
+
+    } else {
+
+        documents.forEach(function(documentItem, index) {
+
+            documentHTML += `
+                <div class="card">
+
+                    <h3>📄 ${documentItem.name}</h3>
+
+                    <p>
+                        <strong>Type:</strong>
+                        ${documentItem.type || "Not added"}
+                    </p>
+
+                    <p style="
+                        margin-top:10px;
+                    ">
+                        <strong>Document Number:</strong>
+                        ${documentItem.number || "Not added"}
+                    </p>
+
+                    <p style="
+                        margin-top:10px;
+                    ">
+                        <strong>Expiry:</strong>
+                        ${documentItem.expiry || "Not added"}
+                    </p>
+
+                    <p style="
+                        margin-top:10px;
+                    ">
+                        <strong>Notes:</strong>
+                        ${documentItem.notes || "No notes"}
+                    </p>
+
+                    <button onclick="editDocument(${index})" style="
+                        width:100%;
+                        padding:12px;
+                        margin-top:12px;
+                        border:none;
+                        border-radius:10px;
+                        background:#2563eb;
+                        color:white;
+                        font-size:15px;
+                        font-weight:600;
+                        cursor:pointer;
+                    ">
+                        ✏️ Edit Document
+                    </button>
+
+                    <button onclick="deleteDocument(${index})" style="
+                        width:100%;
+                        padding:12px;
+                        margin-top:10px;
+                        border:none;
+                        border-radius:10px;
+                        background:#dc2626;
+                        color:white;
+                        font-size:15px;
+                        font-weight:600;
+                        cursor:pointer;
+                    ">
+                        🗑️ Delete Document
+                    </button>
+
+                </div>
+            `;
+        });
+    }
+
+    document.querySelector(".container").innerHTML = `
+        <div class="header">
+            <h2>📋 Document List</h2>
+            <p>Your saved documents</p>
+        </div>
+
+        ${documentHTML}
+
+        <button onclick="openDocuments()" style="
+            width:100%;
+            padding:14px;
+            margin-top:20px;
+            border:none;
+            border-radius:12px;
+            background:#111827;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+        ">
+            ← Back to Documents
+        </button>
+    `;
+}
+
+
+function deleteDocument(index) {
+
+    var documents =
+        JSON.parse(localStorage.getItem("documents")) || [];
+
+    documents.splice(index, 1);
+
+    localStorage.setItem(
+        "documents",
+        JSON.stringify(documents)
+    );
+
+    alert("Document deleted successfully 🗑️");
+
+    showDocumentList();
+}
+
+
+function editDocument(index) {
+
+    var documents =
+        JSON.parse(localStorage.getItem("documents")) || [];
+
+    var documentItem = documents[index];
+
+    document.querySelector(".container").innerHTML = `
+
+        <div class="header">
+            <h2>✏️ Edit Document</h2>
+            <p>Update your document details</p>
+        </div>
+
+        <div class="card">
+
+            <input
+                id="editDocumentName"
+                type="text"
+                value="${documentItem.name}"
+                placeholder="Document name"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                "
+            >
+
+            <input
+                id="editDocumentType"
+                type="text"
+                value="${documentItem.type || ""}"
+                placeholder="Document type"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                "
+            >
+
+            <input
+                id="editDocumentNumber"
+                type="text"
+                value="${documentItem.number || ""}"
+                placeholder="Document number"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                "
+            >
+
+            <input
+                id="editDocumentExpiry"
+                type="date"
+                value="${documentItem.expiry || ""}"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                "
+            >
+
+            <textarea
+                id="editDocumentNotes"
+                placeholder="Notes"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-bottom:12px;
+                    border:1px solid #d1d5db;
+                    border-radius:10px;
+                    box-sizing:border-box;
+                    font-size:16px;
+                    min-height:90px;
+                "
+            >${documentItem.notes || ""}</textarea>
+
+            <button onclick="updateDocument(${index})" style="
+                width:100%;
+                padding:14px;
+                border:none;
+                border-radius:12px;
+                background:#111827;
+                color:white;
+                font-size:16px;
+                font-weight:600;
+                cursor:pointer;
+            ">
+                💾 Update Document
+            </button>
+
+        </div>
+
+        <button onclick="showDocumentList()" style="
+            width:100%;
+            padding:14px;
+            margin-top:20px;
+            border:none;
+            border-radius:12px;
+            background:#111827;
+            color:white;
+            font-size:16px;
+            font-weight:600;
+            cursor:pointer;
+        ">
+            ← Back to Document List
+        </button>
+    `;
+}
+
+
+function updateDocument(index) {
+
+    var documents =
+        JSON.parse(localStorage.getItem("documents")) || [];
+
+    var name =
+        document.getElementById("editDocumentName").value;
+
+    var type =
+        document.getElementById("editDocumentType").value;
+
+    var number =
+        document.getElementById("editDocumentNumber").value;
+
+    var expiry =
+        document.getElementById("editDocumentExpiry").value;
+
+    var notes =
+        document.getElementById("editDocumentNotes").value;
+
+    if (name === "") {
+        alert("Please enter document name 📄");
+        return;
+    }
+
+    documents[index] = {
+        name: name,
+        type: type,
+        number: number,
+        expiry: expiry,
+        notes: notes
+    };
+
+    localStorage.setItem(
+        "documents",
+        JSON.stringify(documents)
+    );
+
+    alert("Document updated successfully ✅");
+
+    showDocumentList();
+}
+
 </script>
 
 </body>

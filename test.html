@@ -1726,3 +1726,2507 @@ function selectMedicine(name) {
 }
 
 </style>
+   <script>
+
+/* =========================
+   MEDICINE DETAILS PAGE
+   ========================= */
+
+let selectedMedicine = "";
+
+
+function openMedicineDetails(name) {
+
+    selectedMedicine = name;
+
+    const app =
+        document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openMedicines()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                💊 Medicine Details
+            </h1>
+
+            <p class="page-subtitle">
+                Add your prescribed medicine details
+            </p>
+
+
+            <!-- SELECTED MEDICINE -->
+
+            <div class="selected-medicine">
+
+                <div class="selected-icon">
+                    💊
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${name}
+                    </strong>
+
+                    <small>
+                        Selected medicine
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOSAGE -->
+
+            <label class="form-label">
+                Dosage
+            </label>
+
+            <input
+                class="form-input"
+                id="medicineDosage"
+                type="text"
+                placeholder="Example: 1 tablet">
+
+
+            <!-- TIME -->
+
+            <label class="form-label">
+                Time
+            </label>
+
+            <input
+                class="form-input"
+                id="medicineTime"
+                type="time">
+
+
+            <!-- FREQUENCY -->
+
+            <label class="form-label">
+                Frequency
+            </label>
+
+            <select
+                class="form-input"
+                id="medicineFrequency">
+
+                <option value="">
+                    Select frequency
+                </option>
+
+                <option>
+                    Once a day
+                </option>
+
+                <option>
+                    Twice a day
+                </option>
+
+                <option>
+                    Three times a day
+                </option>
+
+                <option>
+                    As prescribed
+                </option>
+
+            </select>
+
+
+            <!-- START DATE -->
+
+            <label class="form-label">
+                Start Date
+            </label>
+
+            <input
+                class="form-input"
+                id="medicineStartDate"
+                type="date">
+
+
+            <!-- END DATE -->
+
+            <label class="form-label">
+                End Date
+            </label>
+
+            <input
+                class="form-input"
+                id="medicineEndDate"
+                type="date">
+
+
+            <!-- NOTES -->
+
+            <label class="form-label">
+                Notes
+            </label>
+
+            <textarea
+                class="form-input form-textarea"
+                id="medicineNotes"
+                placeholder="Add any notes..."></textarea>
+
+
+            <!-- SAVE -->
+
+            <button class="save-button"
+                    onclick="saveMedicine()">
+
+                Save Medicine
+
+            </button>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================
+   SAVE MEDICINE
+   ========================= */
+
+function saveMedicine() {
+
+    const dosage =
+        document.getElementById(
+            "medicineDosage"
+        ).value.trim();
+
+    const time =
+        document.getElementById(
+            "medicineTime"
+        ).value;
+
+    const frequency =
+        document.getElementById(
+            "medicineFrequency"
+        ).value;
+
+    const startDate =
+        document.getElementById(
+            "medicineStartDate"
+        ).value;
+
+    const endDate =
+        document.getElementById(
+            "medicineEndDate"
+        ).value;
+
+    const notes =
+        document.getElementById(
+            "medicineNotes"
+        ).value.trim();
+
+
+    if (!dosage || !frequency) {
+
+        alert(
+            "Please enter dosage and frequency."
+        );
+
+        return;
+    }
+
+
+    const medicine = {
+
+        id: Date.now(),
+
+        name: selectedMedicine,
+
+        dosage: dosage,
+
+        time: time,
+
+        frequency: frequency,
+
+        startDate: startDate,
+
+        endDate: endDate,
+
+        notes: notes
+
+    };
+
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    medicines.push(medicine);
+
+
+    localStorage.setItem(
+        "kkrMedicines",
+        JSON.stringify(medicines)
+    );
+
+
+    alert(
+        "Medicine saved successfully."
+    );
+
+
+    openMedicines();
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   BACK BUTTON
+   ========================= */
+
+.back-button {
+    margin-bottom: 15px;
+
+    padding: 8px 12px;
+
+    border-radius: 9px;
+
+    background: #eaecf0;
+
+    color: #344054;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   SELECTED MEDICINE
+   ========================= */
+
+.selected-medicine {
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+.selected-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.selected-medicine strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+.selected-medicine small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #667085;
+
+    font-size: 10px;
+}
+
+
+/* =========================
+   FORM
+   ========================= */
+
+.form-label {
+    display: block;
+
+    margin-top: 16px;
+    margin-bottom: 6px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: #344054;
+}
+
+.form-input {
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+
+    color: #172033;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+.form-input:focus {
+    border-color: #667085;
+}
+
+.form-textarea {
+    min-height: 90px;
+
+    resize: vertical;
+}
+
+
+/* =========================
+   SAVE BUTTON
+   ========================= */
+
+.save-button {
+    width: 100%;
+
+    height: 48px;
+
+    margin-top: 22px;
+
+    border-radius: 12px;
+
+    background: #101828;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+</style>
+   <script>
+
+/* =========================
+   LOAD SAVED MEDICINES
+   ========================= */
+
+function loadSavedMedicines() {
+
+    const container =
+        document.getElementById("savedMedicines");
+
+    if (!container) {
+        return;
+    }
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    if (medicines.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>📋</div>
+
+                <strong>
+                    No medicines added
+                </strong>
+
+                <small>
+                    Your saved medicines will appear here
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        medicines.map(function(medicine) {
+
+            return `
+
+                <div class="saved-medicine-card">
+
+                    <div class="saved-medicine-top">
+
+                        <div class="saved-medicine-icon">
+                            💊
+                        </div>
+
+                        <div class="saved-medicine-info">
+
+                            <strong>
+                                ${medicine.name}
+                            </strong>
+
+                            <small>
+                                ${medicine.dosage}
+                            </small>
+
+                            <small>
+                                ${medicine.frequency}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="medicine-details">
+
+                        <span>
+                            ⏰ ${medicine.time || "Not set"}
+                        </span>
+
+                        <span>
+                            📅 ${medicine.startDate || "No start date"}
+                        </span>
+
+                    </div>
+
+
+                    <div class="medicine-actions">
+
+                        <button
+                            onclick="editMedicine(${medicine.id})">
+
+                            ✏️ Edit
+
+                        </button>
+
+
+                        <button
+                            onclick="deleteMedicine(${medicine.id})">
+
+                            🗑️ Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================
+   DELETE MEDICINE
+   ========================= */
+
+function deleteMedicine(id) {
+
+    const confirmDelete =
+        confirm(
+            "Delete this medicine?"
+        );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    let medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    medicines =
+        medicines.filter(function(medicine) {
+
+            return medicine.id !== id;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrMedicines",
+        JSON.stringify(medicines)
+    );
+
+
+    openMedicines();
+
+}
+
+
+/* =========================
+   EDIT MEDICINE
+   ========================= */
+
+function editMedicine(id) {
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    const medicine =
+        medicines.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!medicine) {
+        return;
+    }
+
+
+    selectedMedicine =
+        medicine.name;
+
+
+    const app =
+        document.getElementById("app");
+
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openMedicines()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                ✏️ Edit Medicine
+            </h1>
+
+            <p class="page-subtitle">
+                Update your medicine details
+            </p>
+
+
+            <div class="selected-medicine">
+
+                <div class="selected-icon">
+                    💊
+                </div>
+
+                <div>
+
+                    <strong>
+                        ${medicine.name}
+                    </strong>
+
+                    <small>
+                        Saved medicine
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <label class="form-label">
+                Dosage
+            </label>
+
+            <input
+                class="form-input"
+                id="editDosage"
+                value="${medicine.dosage}">
+
+
+            <label class="form-label">
+                Time
+            </label>
+
+            <input
+                class="form-input"
+                id="editTime"
+                type="time"
+                value="${medicine.time}">
+
+
+            <label class="form-label">
+                Frequency
+            </label>
+
+            <select
+                class="form-input"
+                id="editFrequency">
+
+                <option>
+                    Once a day
+                </option>
+
+                <option>
+                    Twice a day
+                </option>
+
+                <option>
+                    Three times a day
+                </option>
+
+                <option>
+                    As prescribed
+                </option>
+
+            </select>
+
+
+            <label class="form-label">
+                Start Date
+            </label>
+
+            <input
+                class="form-input"
+                id="editStartDate"
+                type="date"
+                value="${medicine.startDate}">
+
+
+            <label class="form-label">
+                End Date
+            </label>
+
+            <input
+                class="form-input"
+                id="editEndDate"
+                type="date"
+                value="${medicine.endDate}">
+
+
+            <label class="form-label">
+                Notes
+            </label>
+
+            <textarea
+                class="form-input form-textarea"
+                id="editNotes">${medicine.notes}</textarea>
+
+
+            <button class="save-button"
+                    onclick="updateMedicine(${medicine.id})">
+
+                Update Medicine
+
+            </button>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================
+   UPDATE MEDICINE
+   ========================= */
+
+function updateMedicine(id) {
+
+    let medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    medicines =
+        medicines.map(function(medicine) {
+
+            if (medicine.id === id) {
+
+                medicine.dosage =
+                    document.getElementById(
+                        "editDosage"
+                    ).value.trim();
+
+                medicine.time =
+                    document.getElementById(
+                        "editTime"
+                    ).value;
+
+                medicine.frequency =
+                    document.getElementById(
+                        "editFrequency"
+                    ).value;
+
+                medicine.startDate =
+                    document.getElementById(
+                        "editStartDate"
+                    ).value;
+
+                medicine.endDate =
+                    document.getElementById(
+                        "editEndDate"
+                    ).value;
+
+                medicine.notes =
+                    document.getElementById(
+                        "editNotes"
+                    ).value.trim();
+
+            }
+
+            return medicine;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrMedicines",
+        JSON.stringify(medicines)
+    );
+
+
+    alert(
+        "Medicine updated successfully."
+    );
+
+
+    openMedicines();
+
+}
+
+
+/* =========================
+   REFRESH MEDICINE LIST
+   ========================= */
+
+const originalOpenMedicines =
+    openMedicines;
+
+
+openMedicines = function() {
+
+    originalOpenMedicines();
+
+    setTimeout(function() {
+
+        loadSavedMedicines();
+
+    }, 0);
+
+};
+
+</script>
+
+
+<style>
+
+/* =========================
+   SAVED MEDICINE CARD
+   ========================= */
+
+.saved-medicine-card {
+    margin-top: 10px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+}
+
+.saved-medicine-top {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+.saved-medicine-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.saved-medicine-info strong {
+    display: block;
+
+    font-size: 14px;
+}
+
+.saved-medicine-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+
+/* =========================
+   MEDICINE DETAILS
+   ========================= */
+
+.medicine-details {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.medicine-details span {
+    padding: 6px 8px;
+
+    border-radius: 8px;
+
+    background: #f2f4f7;
+
+    font-size: 10px;
+
+    color: #475467;
+}
+
+
+/* =========================
+   MEDICINE ACTIONS
+   ========================= */
+
+.medicine-actions {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 12px;
+}
+
+.medicine-actions button {
+    flex: 1;
+
+    height: 36px;
+
+    border-radius: 9px;
+
+    background: #f2f4f7;
+
+    color: #344054;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.medicine-actions button:last-child {
+    color: #b42318;
+}
+
+</style>
+   <script>
+
+/* =========================
+   DOCUMENTS PAGE
+   ========================= */
+
+function openDocuments() {
+
+    const app =
+        document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <h1 class="page-title">
+                📄 Documents
+            </h1>
+
+            <p class="page-subtitle">
+                Manage your important documents
+            </p>
+
+
+            <!-- SEARCH -->
+
+            <div class="medicine-search">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="documentSearch"
+                    placeholder="Search documents..."
+                    oninput="searchDocuments()">
+
+            </div>
+
+
+            <!-- CATEGORIES -->
+
+            <div class="section-title">
+                Categories
+            </div>
+
+
+            <div class="document-grid">
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Identity')">
+
+                    <span>🪪</span>
+
+                    <strong>
+                        Identity
+                    </strong>
+
+                    <small>
+                        Aadhaar, PAN, Passport
+                    </small>
+
+                </button>
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Financial')">
+
+                    <span>💳</span>
+
+                    <strong>
+                        Financial
+                    </strong>
+
+                    <small>
+                        Bank, Insurance, Tax
+                    </small>
+
+                </button>
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Medical')">
+
+                    <span>🏥</span>
+
+                    <strong>
+                        Medical
+                    </strong>
+
+                    <small>
+                        Reports, Prescriptions
+                    </small>
+
+                </button>
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Vehicle')">
+
+                    <span>🚗</span>
+
+                    <strong>
+                        Vehicle
+                    </strong>
+
+                    <small>
+                        RC, Insurance, PUC
+                    </small>
+
+                </button>
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Property')">
+
+                    <span>🏠</span>
+
+                    <strong>
+                        Property
+                    </strong>
+
+                    <small>
+                        Property, Rental, Tax
+                    </small>
+
+                </button>
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Work')">
+
+                    <span>💼</span>
+
+                    <strong>
+                        Work
+                    </strong>
+
+                    <small>
+                        Offer, Salary, Experience
+                    </small>
+
+                </button>
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Education')">
+
+                    <span>🎓</span>
+
+                    <strong>
+                        Education
+                    </strong>
+
+                    <small>
+                        Marksheets, Degree
+                    </small>
+
+                </button>
+
+
+                <button class="document-card"
+                        onclick="openDocumentCategory('Other')">
+
+                    <span>📁</span>
+
+                    <strong>
+                        Other
+                    </strong>
+
+                    <small>
+                        Other important documents
+                    </small>
+
+                </button>
+
+            </div>
+
+
+            <!-- ADD DOCUMENT -->
+
+            <button class="add-medicine-btn"
+                    onclick="openAddDocument()">
+
+                <span>
+                    ＋
+                </span>
+
+                Add Document
+
+            </button>
+
+
+            <!-- SAVED DOCUMENTS -->
+
+            <div class="section-title">
+                My Documents
+            </div>
+
+
+            <div id="savedDocuments">
+
+                <div class="empty-medicine">
+
+                    <div>
+                        📄
+                    </div>
+
+                    <strong>
+                        No documents added
+                    </strong>
+
+                    <small>
+                        Your documents will appear here
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================
+   DOCUMENT SEARCH
+   ========================= */
+
+function searchDocuments() {
+
+    const input =
+        document.getElementById(
+            "documentSearch"
+        );
+
+    const container =
+        document.getElementById(
+            "savedDocuments"
+        );
+
+    if (!input || !container) {
+        return;
+    }
+
+
+    const value =
+        input.value.trim().toLowerCase();
+
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const matches =
+        documents.filter(function(document) {
+
+            return (
+                document.name
+                    .toLowerCase()
+                    .includes(value)
+                ||
+                document.category
+                    .toLowerCase()
+                    .includes(value)
+            );
+
+        });
+
+
+    if (matches.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>🔍</div>
+
+                <strong>
+                    No documents found
+                </strong>
+
+                <small>
+                    Try another search
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        matches.map(function(document) {
+
+            return `
+
+                <div class="saved-medicine-card">
+
+                    <div class="saved-medicine-top">
+
+                        <div class="saved-medicine-icon">
+                            📄
+                        </div>
+
+                        <div class="saved-medicine-info">
+
+                            <strong>
+                                ${document.name}
+                            </strong>
+
+                            <small>
+                                ${document.category}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================
+   DOCUMENT CATEGORY
+   ========================= */
+
+function openDocumentCategory(category) {
+
+    alert(
+        category +
+        " documents will be shown here."
+    );
+
+}
+
+
+/* =========================
+   ADD DOCUMENT PLACEHOLDER
+   ========================= */
+
+function openAddDocument() {
+
+    alert(
+        "Add Document page will be added next."
+    );
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   DOCUMENT GRID
+   ========================= */
+
+.document-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-top: 16px;
+}
+
+
+.document-card {
+    min-height: 115px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 15px;
+
+    text-align: left;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+}
+
+
+.document-card > span {
+    font-size: 23px;
+
+    margin-bottom: 8px;
+}
+
+
+.document-card strong {
+    font-size: 13px;
+
+    color: #172033;
+}
+
+
+.document-card small {
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    line-height: 14px;
+
+    color: #667085;
+}
+
+
+.document-card:active {
+    transform: scale(0.98);
+}
+
+
+@media (max-width: 380px) {
+
+    .document-grid {
+        gap: 8px;
+    }
+
+    .document-card {
+        padding: 11px;
+    }
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   ADD DOCUMENT PAGE
+   ========================= */
+
+function openAddDocument() {
+
+    const app =
+        document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openDocuments()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                📄 Add Document
+            </h1>
+
+            <p class="page-subtitle">
+                Save important document details
+            </p>
+
+
+            <!-- DOCUMENT NAME -->
+
+            <label class="form-label">
+                Document Name
+            </label>
+
+            <input
+                class="form-input"
+                id="documentName"
+                type="text"
+                placeholder="Example: Aadhaar Card">
+
+
+            <!-- CATEGORY -->
+
+            <label class="form-label">
+                Category
+            </label>
+
+            <select
+                class="form-input"
+                id="documentCategory">
+
+                <option value="">
+                    Select category
+                </option>
+
+                <option>
+                    Identity
+                </option>
+
+                <option>
+                    Financial
+                </option>
+
+                <option>
+                    Medical
+                </option>
+
+                <option>
+                    Vehicle
+                </option>
+
+                <option>
+                    Property
+                </option>
+
+                <option>
+                    Work
+                </option>
+
+                <option>
+                    Education
+                </option>
+
+                <option>
+                    Other
+                </option>
+
+            </select>
+
+
+            <!-- DOCUMENT NUMBER -->
+
+            <label class="form-label">
+                Document Number
+            </label>
+
+            <input
+                class="form-input"
+                id="documentNumber"
+                type="text"
+                placeholder="Enter document number">
+
+
+            <!-- ISSUE DATE -->
+
+            <label class="form-label">
+                Issue Date
+            </label>
+
+            <input
+                class="form-input"
+                id="documentIssueDate"
+                type="date">
+
+
+            <!-- EXPIRY DATE -->
+
+            <label class="form-label">
+                Expiry Date
+            </label>
+
+            <input
+                class="form-input"
+                id="documentExpiryDate"
+                type="date">
+
+
+            <!-- REMINDER -->
+
+            <label class="form-label">
+                Reminder Before Expiry
+            </label>
+
+            <select
+                class="form-input"
+                id="documentReminder">
+
+                <option>
+                    No reminder
+                </option>
+
+                <option>
+                    7 days before
+                </option>
+
+                <option>
+                    15 days before
+                </option>
+
+                <option>
+                    30 days before
+                </option>
+
+                <option>
+                    60 days before
+                </option>
+
+                <option>
+                    90 days before
+                </option>
+
+            </select>
+
+
+            <!-- NOTES -->
+
+            <label class="form-label">
+                Notes
+            </label>
+
+            <textarea
+                class="form-input form-textarea"
+                id="documentNotes"
+                placeholder="Add notes about this document..."></textarea>
+
+
+            <!-- SAVE -->
+
+            <button class="save-button"
+                    onclick="saveDocument()">
+
+                Save Document
+
+            </button>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================
+   SAVE DOCUMENT
+   ========================= */
+
+function saveDocument() {
+
+    const name =
+        document.getElementById(
+            "documentName"
+        ).value.trim();
+
+    const category =
+        document.getElementById(
+            "documentCategory"
+        ).value;
+
+    const number =
+        document.getElementById(
+            "documentNumber"
+        ).value.trim();
+
+    const issueDate =
+        document.getElementById(
+            "documentIssueDate"
+        ).value;
+
+    const expiryDate =
+        document.getElementById(
+            "documentExpiryDate"
+        ).value;
+
+    const reminder =
+        document.getElementById(
+            "documentReminder"
+        ).value;
+
+    const notes =
+        document.getElementById(
+            "documentNotes"
+        ).value.trim();
+
+
+    if (!name || !category) {
+
+        alert(
+            "Please enter document name and category."
+        );
+
+        return;
+    }
+
+
+    const documentData = {
+
+        id: Date.now(),
+
+        name: name,
+
+        category: category,
+
+        number: number,
+
+        issueDate: issueDate,
+
+        expiryDate: expiryDate,
+
+        reminder: reminder,
+
+        notes: notes,
+
+        favorite: false,
+
+        archived: false
+
+    };
+
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    documents.push(documentData);
+
+
+    localStorage.setItem(
+        "kkrDocuments",
+        JSON.stringify(documents)
+    );
+
+
+    alert(
+        "Document saved successfully."
+    );
+
+
+    openDocuments();
+
+}
+
+   </script>
+   <script>
+
+/* =========================
+   LOAD SAVED DOCUMENTS
+   ========================= */
+
+function loadSavedDocuments() {
+
+    const container =
+        document.getElementById(
+            "savedDocuments"
+        );
+
+    if (!container) {
+        return;
+    }
+
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const activeDocuments =
+        documents.filter(function(document) {
+
+            return !document.archived;
+
+        });
+
+
+    if (activeDocuments.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>📄</div>
+
+                <strong>
+                    No documents added
+                </strong>
+
+                <small>
+                    Your documents will appear here
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        activeDocuments.map(function(document) {
+
+            let expiryText =
+                "No expiry date";
+
+            let expiryClass =
+                "normal";
+
+
+            if (document.expiryDate) {
+
+                const today =
+                    new Date();
+
+                const expiry =
+                    new Date(
+                        document.expiryDate
+                    );
+
+                const difference =
+                    expiry - today;
+
+                const days =
+                    Math.ceil(
+                        difference /
+                        (1000 * 60 * 60 * 24)
+                    );
+
+
+                if (days < 0) {
+
+                    expiryText =
+                        "Expired";
+
+                    expiryClass =
+                        "expired";
+
+                } else if (days <= 30) {
+
+                    expiryText =
+                        "Expires in " +
+                        days +
+                        " days";
+
+                    expiryClass =
+                        "warning";
+
+                } else {
+
+                    expiryText =
+                        "Expires: " +
+                        document.expiryDate;
+
+                }
+
+            }
+
+
+            return `
+
+                <div class="document-list-card">
+
+
+                    <div class="document-list-top">
+
+                        <div class="document-list-icon">
+                            📄
+                        </div>
+
+
+                        <div class="document-list-info">
+
+                            <strong>
+                                ${document.name}
+                            </strong>
+
+                            <small>
+                                ${document.category}
+                            </small>
+
+                        </div>
+
+
+                        <button
+                            class="favorite-btn"
+                            onclick="toggleDocumentFavorite(${document.id})">
+
+                            ${document.favorite ? "⭐" : "☆"}
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="document-meta">
+
+                        <span>
+                            🗂️ ${document.category}
+                        </span>
+
+                        <span class="${expiryClass}">
+                            📅 ${expiryText}
+                        </span>
+
+                    </div>
+
+
+                    <div class="document-actions">
+
+                        <button
+                            onclick="editDocument(${document.id})">
+
+                            ✏️ Edit
+
+                        </button>
+
+
+                        <button
+                            onclick="archiveDocument(${document.id})">
+
+                            📦 Archive
+
+                        </button>
+
+
+                        <button
+                            onclick="deleteDocument(${document.id})">
+
+                            🗑️ Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================
+   FAVORITE DOCUMENT
+   ========================= */
+
+function toggleDocumentFavorite(id) {
+
+    let documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    documents =
+        documents.map(function(document) {
+
+            if (document.id === id) {
+
+                document.favorite =
+                    !document.favorite;
+
+            }
+
+            return document;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrDocuments",
+        JSON.stringify(documents)
+    );
+
+
+    openDocuments();
+
+}
+
+
+/* =========================
+   ARCHIVE DOCUMENT
+   ========================= */
+
+function archiveDocument(id) {
+
+    let documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    documents =
+        documents.map(function(document) {
+
+            if (document.id === id) {
+
+                document.archived = true;
+
+            }
+
+            return document;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrDocuments",
+        JSON.stringify(documents)
+    );
+
+
+    openDocuments();
+
+}
+
+
+/* =========================
+   DELETE DOCUMENT
+   ========================= */
+
+function deleteDocument(id) {
+
+    if (
+        !confirm(
+            "Delete this document?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    let documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    documents =
+        documents.filter(function(document) {
+
+            return document.id !== id;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrDocuments",
+        JSON.stringify(documents)
+    );
+
+
+    openDocuments();
+
+}
+
+
+/* =========================
+   REFRESH DOCUMENT LIST
+   ========================= */
+
+const originalOpenDocuments =
+    openDocuments;
+
+
+openDocuments = function() {
+
+    originalOpenDocuments();
+
+    setTimeout(function() {
+
+        loadSavedDocuments();
+
+    }, 0);
+
+};
+
+</script>
+
+
+<style>
+
+/* =========================
+   DOCUMENT LIST CARD
+   ========================= */
+
+.document-list-card {
+
+    margin-top: 10px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+
+}
+
+
+.document-list-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+
+.document-list-icon {
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+
+}
+
+
+.document-list-info {
+
+    flex: 1;
+
+}
+
+
+.document-list-info strong {
+
+    display: block;
+
+    font-size: 14px;
+
+}
+
+
+.document-list-info small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #667085;
+
+}
+
+
+/* =========================
+   FAVORITE
+   ========================= */
+
+.favorite-btn {
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 9px;
+
+    background: #f2f4f7;
+
+    font-size: 18px;
+
+}
+
+
+/* =========================
+   DOCUMENT META
+   ========================= */
+
+.document-meta {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 12px;
+
+}
+
+
+.document-meta span {
+
+    padding: 6px 8px;
+
+    border-radius: 8px;
+
+    background: #f2f4f7;
+
+    color: #475467;
+
+    font-size: 10px;
+
+}
+
+
+.document-meta .warning {
+
+    background: #fffaeb;
+
+    color: #b54708;
+
+}
+
+
+.document-meta .expired {
+
+    background: #fef3f2;
+
+    color: #b42318;
+
+}
+
+
+/* =========================
+   DOCUMENT ACTIONS
+   ========================= */
+
+.document-actions {
+
+    display: flex;
+
+    gap: 6px;
+
+    margin-top: 12px;
+
+}
+
+
+.document-actions button {
+
+    flex: 1;
+
+    min-height: 34px;
+
+    padding: 5px;
+
+    border-radius: 8px;
+
+    background: #f2f4f7;
+
+    color: #344054;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+}
+
+
+.document-actions button:last-child {
+
+    color: #b42318;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   EDIT DOCUMENT
+   ========================= */
+
+function editDocument(id) {
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const document =
+        documents.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!document) {
+        return;
+    }
+
+
+    const app =
+        document.getElementById("app");
+
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openDocuments()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                ✏️ Edit Document
+            </h1>
+
+            <p class="page-subtitle">
+                Update your document details
+            </p>
+
+
+            <label class="form-label">
+                Document Name
+            </label>
+
+            <input
+                class="form-input"
+                id="editDocumentName"
+                value="${document.name}">
+
+
+            <label class="form-label">
+                Category
+            </label>
+
+            <select
+                class="form-input"
+                id="editDocumentCategory">
+
+                <option>Identity</option>
+                <option>Financial</option>
+                <option>Medical</option>
+                <option>Vehicle</option>
+                <option>Property</option>
+                <option>Work</option>
+                <option>Education</option>
+                <option>Other</option>
+
+            </select>
+
+
+            <label class="form-label">
+                Document Number
+            </label>
+
+            <input
+                class="form-input"
+                id="editDocumentNumber"
+                value="${document.number || ""}">
+
+
+            <label class="form-label">
+                Issue Date
+            </label>
+
+            <input
+                class="form-input"
+                id="editDocumentIssueDate"
+                type="date"
+                value="${document.issueDate || ""}">
+
+
+            <label class="form-label">
+                Expiry Date
+            </label>
+
+            <input
+                class="form-input"
+                id="editDocumentExpiryDate"
+                type="date"
+                value="${document.expiryDate || ""}">
+
+
+            <label class="form-label">
+                Reminder Before Expiry
+            </label>
+
+            <select
+                class="form-input"
+                id="editDocumentReminder">
+
+                <option>No reminder</option>
+                <option>7 days before</option>
+                <option>15 days before</option>
+                <option>30 days before</option>
+                <option>60 days before</option>
+                <option>90 days before</option>
+
+            </select>
+
+
+            <label class="form-label">
+                Notes
+            </label>
+
+            <textarea
+                class="form-input form-textarea"
+                id="editDocumentNotes">${document.notes || ""}</textarea>
+
+
+            <button class="save-button"
+                    onclick="updateDocument(${document.id})">
+
+                Update Document
+
+            </button>
+
+        </section>
+
+    `;
+
+
+    document.getElementById(
+        "editDocumentCategory"
+    ).value = document.category;
+
+
+    document.getElementById(
+        "editDocumentReminder"
+    ).value =
+        document.reminder || "No reminder";
+
+}
+
+
+/* =========================
+   UPDATE DOCUMENT
+   ========================= */
+
+function updateDocument(id) {
+
+    let documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    documents =
+        documents.map(function(document) {
+
+            if (document.id === id) {
+
+                document.name =
+                    document.getElementById(
+                        "editDocumentName"
+                    ).value.trim();
+
+
+                document.category =
+                    document.getElementById(
+                        "editDocumentCategory"
+                    ).value;
+
+
+                document.number =
+                    document.getElementById(
+                        "editDocumentNumber"
+                    ).value.trim();
+
+
+                document.issueDate =
+                    document.getElementById(
+                        "editDocumentIssueDate"
+                    ).value;
+
+
+                document.expiryDate =
+                    document.getElementById(
+                        "editDocumentExpiryDate"
+                    ).value;
+
+
+                document.reminder =
+                    document.getElementById(
+                        "editDocumentReminder"
+                    ).value;
+
+
+                document.notes =
+                    document.getElementById(
+                        "editDocumentNotes"
+                    ).value.trim();
+
+            }
+
+            return document;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrDocuments",
+        JSON.stringify(documents)
+    );
+
+
+    alert(
+        "Document updated successfully."
+    );
+
+
+    openDocuments();
+
+}
+
+   </script>

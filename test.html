@@ -30049,6 +30049,95 @@ showHome = function() {
 
 })();
    </script>
+   <script>
+(function() {
+
+    /* Keep only the top KKR LifeHub Back button */
+    function cleanBackButtons() {
+
+        document.querySelectorAll(".page-inner-back").forEach(function(btn) {
+            btn.style.display = "none";
+        });
+
+        const topBack =
+            document.querySelector(".lifehub-back-button");
+
+        if (topBack) {
+            const hash = window.location.hash;
+
+            if (hash === "" || hash === "#home") {
+                topBack.style.display = "none";
+            } else {
+                topBack.style.display = "flex";
+            }
+        }
+    }
+
+
+    /* One Back action for both:
+       - KKR LifeHub top Back button
+       - Android phone Back button
+    */
+
+    lifeHubGoBack = function() {
+
+        if (window.kkrNavigationHistory &&
+            window.kkrNavigationHistory.length > 1) {
+
+            history.back();
+
+        } else {
+
+            showHome();
+        }
+    };
+
+
+    /* Make the Android phone Back button work */
+    lifeHubRenderPreviousPage = function() {
+
+        if (window.kkrBackProcessing) return;
+
+        window.kkrBackProcessing = true;
+
+        setTimeout(function() {
+            window.kkrBackProcessing = false;
+        }, 300);
+
+        if (window.kkrNavigationHistory &&
+            window.kkrNavigationHistory.length > 1) {
+
+            window.kkrNavigationHistory.pop();
+
+            const previousPage =
+                window.kkrNavigationHistory[
+                    window.kkrNavigationHistory.length - 1
+                ];
+
+            const pageFunction = window[previousPage];
+
+            if (typeof pageFunction === "function") {
+                pageFunction();
+            } else {
+                showHome();
+            }
+
+        } else {
+
+            showHome();
+        }
+
+        setTimeout(cleanBackButtons, 50);
+    };
+
+
+    /* Continuously remove duplicate in-page Back buttons */
+    cleanBackButtons();
+
+    setInterval(cleanBackButtons, 500);
+
+})();
+   </script>
    </body>
 
 </html>

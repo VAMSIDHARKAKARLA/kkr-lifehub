@@ -30011,6 +30011,44 @@ showHome = function() {
 };
 
    </script>
+   <script>
+(function() {
+
+    function forceHideHomeBackButton() {
+        const topBack =
+            document.querySelector(".lifehub-back-button");
+
+        const innerBack =
+            document.querySelector(".page-inner-back");
+
+        const hash =
+            window.location.hash.replace("#", "");
+
+        if (
+            hash === "" ||
+            hash === "home" ||
+            document.querySelector(".home-page") ||
+            document.querySelector(".home-container")
+        ) {
+            if (topBack) {
+                topBack.style.display = "none";
+                topBack.setAttribute("data-home-hidden", "true");
+            }
+
+            if (innerBack) {
+                innerBack.style.display = "none";
+            }
+        }
+    }
+
+    forceHideHomeBackButton();
+
+    setInterval(function() {
+        forceHideHomeBackButton();
+    }, 300);
+
+})();
+   </script>
    </body>
 
 </html>

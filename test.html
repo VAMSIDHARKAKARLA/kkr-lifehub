@@ -4230,3 +4230,521 @@ function updateDocument(id) {
 }
 
    </script>
+   <script>
+
+/* =========================
+   OPEN DOCUMENT CATEGORY
+   ========================= */
+
+function openDocumentCategory(category) {
+
+    const app =
+        document.getElementById("app");
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const matches =
+        documents.filter(function(document) {
+
+            return (
+                document.category === category &&
+                !document.archived
+            );
+
+        });
+
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openDocuments()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                📁 ${category}
+            </h1>
+
+            <p class="page-subtitle">
+                ${category} documents
+            </p>
+
+
+            <div id="categoryDocuments">
+
+                ${
+                    matches.length === 0
+
+                    ? `
+
+                        <div class="empty-medicine">
+
+                            <div>📄</div>
+
+                            <strong>
+                                No documents found
+                            </strong>
+
+                            <small>
+                                No ${category.toLowerCase()}
+                                documents added yet
+                            </small>
+
+                        </div>
+
+                    `
+
+                    :
+
+                    matches.map(function(document) {
+
+                        return `
+
+                            <div class="document-list-card">
+
+                                <div class="document-list-top">
+
+                                    <div class="document-list-icon">
+                                        📄
+                                    </div>
+
+
+                                    <div class="document-list-info">
+
+                                        <strong>
+                                            ${document.name}
+                                        </strong>
+
+                                        <small>
+                                            ${document.number || "No document number"}
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="document-meta">
+
+                                    <span>
+                                        🗂️ ${document.category}
+                                    </span>
+
+                                    <span>
+                                        📅 ${
+                                            document.expiryDate ||
+                                            "No expiry date"
+                                        }
+                                    </span>
+
+                                </div>
+
+
+                                <div class="document-actions">
+
+                                    <button
+                                        onclick="editDocument(${document.id})">
+
+                                        ✏️ Edit
+
+                                    </button>
+
+
+                                    <button
+                                        onclick="deleteDocument(${document.id})">
+
+                                        🗑️ Delete
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }).join("")
+                }
+
+            </div>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================
+   IMPROVED DOCUMENT SEARCH
+   ========================= */
+
+function searchDocuments() {
+
+    const input =
+        document.getElementById(
+            "documentSearch"
+        );
+
+    const container =
+        document.getElementById(
+            "savedDocuments"
+        );
+
+    if (!input || !container) {
+        return;
+    }
+
+
+    const value =
+        input.value.trim().toLowerCase();
+
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    if (value === "") {
+
+        loadSavedDocuments();
+
+        return;
+
+    }
+
+
+    const matches =
+        documents.filter(function(document) {
+
+            return (
+
+                !document.archived &&
+
+                (
+                    document.name
+                        .toLowerCase()
+                        .includes(value)
+
+                    ||
+
+                    document.category
+                        .toLowerCase()
+                        .includes(value)
+
+                    ||
+
+                    (document.number || "")
+                        .toLowerCase()
+                        .includes(value)
+
+                )
+
+            );
+
+        });
+
+
+    if (matches.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>🔍</div>
+
+                <strong>
+                    No documents found
+                </strong>
+
+                <small>
+                    Try document name,
+                    category or number
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        matches.map(function(document) {
+
+            return `
+
+                <div class="document-list-card">
+
+                    <div class="document-list-top">
+
+                        <div class="document-list-icon">
+                            📄
+                        </div>
+
+
+                        <div class="document-list-info">
+
+                            <strong>
+                                ${document.name}
+                            </strong>
+
+                            <small>
+                                ${document.category}
+                            </small>
+
+                        </div>
+
+
+                        <button
+                            class="favorite-btn"
+                            onclick="toggleDocumentFavorite(${document.id})">
+
+                            ${document.favorite ? "⭐" : "☆"}
+
+                        </button>
+
+                    </div>
+
+
+                    <div class="document-meta">
+
+                        <span>
+                            🗂️ ${document.category}
+                        </span>
+
+                        <span>
+                            📅 ${
+                                document.expiryDate ||
+                                "No expiry date"
+                            }
+                        </span>
+
+                    </div>
+
+
+                    <div class="document-actions">
+
+                        <button
+                            onclick="editDocument(${document.id})">
+
+                            ✏️ Edit
+
+                        </button>
+
+
+                        <button
+                            onclick="deleteDocument(${document.id})">
+
+                            🗑️ Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+   </script>
+   <script>
+
+/* =========================
+   ARCHIVED DOCUMENTS PAGE
+   ========================= */
+
+function openArchivedDocuments() {
+
+    const app =
+        document.getElementById("app");
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const archived =
+        documents.filter(function(document) {
+
+            return document.archived;
+
+        });
+
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openDocuments()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                📦 Archived Documents
+            </h1>
+
+            <p class="page-subtitle">
+                Documents moved out of your main list
+            </p>
+
+
+            <div id="archivedDocuments">
+
+                ${
+                    archived.length === 0
+
+                    ? `
+
+                        <div class="empty-medicine">
+
+                            <div>📦</div>
+
+                            <strong>
+                                No archived documents
+                            </strong>
+
+                            <small>
+                                Archived documents
+                                will appear here
+                            </small>
+
+                        </div>
+
+                    `
+
+                    :
+
+                    archived.map(function(document) {
+
+                        return `
+
+                            <div class="document-list-card">
+
+                                <div class="document-list-top">
+
+                                    <div class="document-list-icon">
+                                        📄
+                                    </div>
+
+
+                                    <div class="document-list-info">
+
+                                        <strong>
+                                            ${document.name}
+                                        </strong>
+
+                                        <small>
+                                            ${document.category}
+                                        </small>
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="document-actions">
+
+                                    <button
+                                        onclick="restoreDocument(${document.id})">
+
+                                        ↩️ Restore
+
+                                    </button>
+
+
+                                    <button
+                                        onclick="deleteDocument(${document.id})">
+
+                                        🗑️ Delete
+
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }).join("")
+                }
+
+            </div>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================
+   RESTORE DOCUMENT
+   ========================= */
+
+function restoreDocument(id) {
+
+    let documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    documents =
+        documents.map(function(document) {
+
+            if (document.id === id) {
+
+                document.archived = false;
+
+            }
+
+            return document;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrDocuments",
+        JSON.stringify(documents)
+    );
+
+
+    alert(
+        "Document restored successfully."
+    );
+
+
+    openArchivedDocuments();
+
+}
+
+   </script>

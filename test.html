@@ -2158,32 +2158,7 @@ function openAbout() {
 }
 // Keep KKR LifeHub top bar permanently visible
 
-function keepTopBar() {
 
-    if (!document.querySelector(".kkr-topbar")) {
-
-        const topBar = document.createElement("div");
-
-        topBar.className = "kkr-topbar";
-
-        topBar.innerHTML = `
-            <button class="kkr-menu-btn" onclick="openSideMenu()">
-                ☰
-            </button>
-
-            <div class="kkr-top-title">
-                KKR LifeHub
-            </div>
-        `;
-
-        document.body.prepend(topBar);
-    }
-}
-
-keepTopBar();
-
-window.addEventListener("load", keepTopBar);
-window.addEventListener("pageshow", keepTopBar);
       if ("serviceWorker" in navigator) {
 
     window.addEventListener("load", function() {

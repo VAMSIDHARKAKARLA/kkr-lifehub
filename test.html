@@ -20503,3 +20503,7184 @@ openAI = function() {
 };
 
    </script>
+   <script>
+
+/* =========================
+   KKR LIFEHUB GLOBAL SEARCH
+   ========================= */
+
+function openGlobalSearch() {
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="search-page">
+
+            <div class="search-header">
+
+                <button
+                    class="back-button"
+                    onclick="showHome()">
+                    ←
+                </button>
+
+                <div>
+                    <h2>Global Search</h2>
+                    <p>Find anything in KKR LifeHub</p>
+                </div>
+
+            </div>
+
+
+            <div class="global-search-box">
+
+                <span>🔎</span>
+
+                <input
+                    id="globalSearchInput"
+                    type="text"
+                    placeholder="Search medicines, documents..."
+                    autocomplete="off"
+                    oninput="performGlobalSearch()">
+
+            </div>
+
+
+            <div id="globalSearchResults">
+
+                <div class="empty-state">
+                    🔎 Start typing to search your LifeHub data.
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    setTimeout(function() {
+
+        const input =
+            document.getElementById(
+                "globalSearchInput"
+            );
+
+        if (input) {
+
+            input.focus();
+
+        }
+
+    }, 100);
+
+}
+
+
+/* =========================
+   SEARCH LIFEHUB DATA
+   ========================= */
+
+function performGlobalSearch() {
+
+    const input =
+        document.getElementById(
+            "globalSearchInput"
+        );
+
+    const results =
+        document.getElementById(
+            "globalSearchResults"
+        );
+
+
+    if (!input || !results) return;
+
+
+    const query =
+        input.value.trim().toLowerCase();
+
+
+    if (!query) {
+
+        results.innerHTML = `
+
+            <div class="empty-state">
+                🔎 Start typing to search your LifeHub data.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    const family =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrFamily"
+            ) || "[]"
+        );
+
+
+    const payments =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrPayments"
+            ) || "[]"
+        );
+
+
+    const appointments =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrAppointments"
+            ) || "[]"
+        );
+
+
+    let found = 0;
+
+    let html = "";
+
+
+    medicines.forEach(function(item) {
+
+        if (
+            JSON.stringify(item)
+                .toLowerCase()
+                .includes(query)
+        ) {
+
+            found++;
+
+            html += `
+
+                <div class="search-result-card">
+
+                    <div class="search-result-icon">
+                        💊
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${item.name}
+                        </strong>
+
+                        <p>
+                            Medicine
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    documents.forEach(function(item) {
+
+        if (
+            JSON.stringify(item)
+                .toLowerCase()
+                .includes(query)
+        ) {
+
+            found++;
+
+            html += `
+
+                <div class="search-result-card">
+
+                    <div class="search-result-icon">
+                        📄
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${item.name}
+                        </strong>
+
+                        <p>
+                            Document
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    reminders.forEach(function(item) {
+
+        if (
+            JSON.stringify(item)
+                .toLowerCase()
+                .includes(query)
+        ) {
+
+            found++;
+
+            html += `
+
+                <div class="search-result-card">
+
+                    <div class="search-result-icon">
+                        🔔
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${item.title}
+                        </strong>
+
+                        <p>
+                            Reminder
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    family.forEach(function(item) {
+
+        if (
+            JSON.stringify(item)
+                .toLowerCase()
+                .includes(query)
+        ) {
+
+            found++;
+
+            html += `
+
+                <div class="search-result-card">
+
+                    <div class="search-result-icon">
+                        👨‍👩‍👧
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${item.name}
+                        </strong>
+
+                        <p>
+                            Family Member
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    payments.forEach(function(item) {
+
+        if (
+            JSON.stringify(item)
+                .toLowerCase()
+                .includes(query)
+        ) {
+
+            found++;
+
+            html += `
+
+                <div class="search-result-card">
+
+                    <div class="search-result-icon">
+                        💰
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${item.name}
+                        </strong>
+
+                        <p>
+                            Payment
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    appointments.forEach(function(item) {
+
+        if (
+            JSON.stringify(item)
+                .toLowerCase()
+                .includes(query)
+        ) {
+
+            found++;
+
+            html += `
+
+                <div class="search-result-card">
+
+                    <div class="search-result-icon">
+                        🏥
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            ${item.doctor}
+                        </strong>
+
+                        <p>
+                            Appointment
+                        </p>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+    });
+
+
+    if (found === 0) {
+
+        results.innerHTML = `
+
+            <div class="empty-state">
+
+                🔎 No matching information found.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    results.innerHTML = `
+
+        <div class="search-count">
+
+            ${found}
+            result${found === 1 ? "" : "s"} found
+
+        </div>
+
+        ${html}
+
+    `;
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   GLOBAL SEARCH
+   ========================= */
+
+.search-page {
+
+    padding-bottom: 20px;
+
+}
+
+
+.search-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+}
+
+
+.search-header h2 {
+
+    margin: 0;
+
+    font-size: 23px;
+
+}
+
+
+.search-header p {
+
+    margin: 5px 0 0;
+
+    color: #667085;
+
+    font-size: 13px;
+
+}
+
+
+.back-button {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #e4e7ec;
+
+    color: #101828;
+
+    font-size: 22px;
+
+}
+
+
+.global-search-box {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background: white;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 14px;
+
+    padding: 0 14px;
+
+    height: 50px;
+
+}
+
+
+.global-search-box input {
+
+    flex: 1;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 14px;
+
+    background: transparent;
+
+}
+
+
+.search-count {
+
+    margin: 16px 0 10px;
+
+    color: #667085;
+
+    font-size: 12px;
+
+}
+
+
+.search-result-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 14px;
+
+    padding: 13px;
+
+    margin-bottom: 9px;
+
+}
+
+
+.search-result-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+}
+
+
+.search-result-card strong {
+
+    font-size: 14px;
+
+}
+
+
+.search-result-card p {
+
+    margin: 4px 0 0;
+
+    color: #667085;
+
+    font-size: 12px;
+
+}
+
+
+body.dark-theme .search-header p {
+
+    color: #98a2b3;
+
+}
+
+
+body.dark-theme .global-search-box,
+
+body.dark-theme .search-result-card {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme .global-search-box input {
+
+    color: white;
+
+}
+
+
+body.dark-theme .search-result-icon {
+
+    background: #344054;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   CONNECT SEARCH TO HOME
+   ========================= */
+
+const originalShowHomeForSearch =
+    showHome;
+
+showHome = function() {
+
+    originalShowHomeForSearch();
+
+
+    setTimeout(function() {
+
+        const homeSection =
+            document.querySelector(
+                ".home-section"
+            );
+
+
+        if (!homeSection) return;
+
+
+        if (
+            document.querySelector(
+                ".home-search-card"
+            )
+        ) return;
+
+
+        const searchCard =
+            document.createElement(
+                "div"
+            );
+
+
+        searchCard.className =
+            "home-search-card";
+
+
+        searchCard.onclick =
+            openGlobalSearch;
+
+
+        searchCard.innerHTML = `
+
+            <div class="home-search-icon">
+                🔎
+            </div>
+
+            <div class="home-search-text">
+
+                <strong>
+                    Search LifeHub
+                </strong>
+
+                <span>
+                    Find medicines, documents,
+                    reminders and more
+                </span>
+
+            </div>
+
+            <div class="home-search-arrow">
+                →
+            </div>
+
+        `;
+
+
+        const firstSection =
+            homeSection.querySelector(
+                ".home-section"
+            );
+
+
+        const firstTitle =
+            homeSection.querySelector(
+                ".page-title"
+            );
+
+
+        if (firstTitle) {
+
+            firstTitle.parentNode.insertBefore(
+                searchCard,
+                firstTitle.nextSibling
+            );
+
+        } else {
+
+            homeSection.insertBefore(
+                searchCard,
+                homeSection.firstChild
+            );
+
+        }
+
+    }, 0);
+
+};
+
+</script>
+
+
+<style>
+
+/* =========================
+   HOME SEARCH CARD
+   ========================= */
+
+.home-search-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin: 16px 0 20px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+
+}
+
+
+.home-search-card:active {
+
+    transform: scale(0.98);
+
+}
+
+
+.home-search-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+}
+
+
+.home-search-text {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+
+.home-search-text strong {
+
+    font-size: 14px;
+
+    color: #101828;
+
+}
+
+
+.home-search-text span {
+
+    font-size: 11px;
+
+    color: #667085;
+
+}
+
+
+.home-search-arrow {
+
+    font-size: 20px;
+
+    color: #98a2b3;
+
+}
+
+
+body.dark-theme .home-search-card {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme .home-search-icon {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme .home-search-text strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme .home-search-text span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   ADD SEARCH TO SIDE MENU
+   ========================= */
+
+const originalOpenMenuForSearch =
+    openMenu;
+
+openMenu = function() {
+
+    originalOpenMenuForSearch();
+
+    setTimeout(function() {
+
+        const menuItems =
+            document.querySelector(
+                ".side-menu-items"
+            );
+
+        if (!menuItems) return;
+
+        if (
+            document.querySelector(
+                ".side-menu-search"
+            )
+        ) return;
+
+        const searchItem =
+            document.createElement(
+                "button"
+            );
+
+        searchItem.className =
+            "side-menu-item side-menu-search";
+
+        searchItem.innerHTML = `
+            <span class="side-menu-item-icon">
+                🔎
+            </span>
+
+            <span class="side-menu-item-text">
+                Search LifeHub
+            </span>
+        `;
+
+        searchItem.onclick = function() {
+            closeMenu();
+            openGlobalSearch();
+        };
+
+        menuItems.insertBefore(
+            searchItem,
+            menuItems.firstChild
+        );
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   SIDE MENU SEARCH
+   ========================= */
+
+.side-menu-search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 4px;
+    background: #f2f4f7;
+    color: #101828;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.side-menu-search:active {
+    transform: scale(0.98);
+}
+
+.side-menu-search .side-menu-item-icon {
+    font-size: 19px;
+}
+
+.side-menu-search .side-menu-item-text {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+body.dark-theme .side-menu-search {
+    background: #344054;
+    color: #f9fafb;
+}
+
+</style>
+   <script>
+
+/* =========================
+   NOTIFICATION BADGE
+   ========================= */
+
+function updateNotificationBadge() {
+
+    const alerts = JSON.parse(
+        localStorage.getItem("kkrAlerts") || "[]"
+    );
+
+    const unreadCount = alerts.filter(function(alert) {
+        return !alert.read;
+    }).length;
+
+    const notificationButton =
+        document.querySelector(".notification-btn");
+
+    if (!notificationButton) return;
+
+    let badge =
+        document.querySelector(
+            ".notification-badge"
+        );
+
+    if (unreadCount === 0) {
+
+        if (badge) {
+            badge.remove();
+        }
+
+        return;
+    }
+
+    if (!badge) {
+
+        badge =
+            document.createElement("span");
+
+        badge.className =
+            "notification-badge";
+
+        notificationButton.appendChild(badge);
+    }
+
+    badge.innerHTML =
+        unreadCount > 99
+            ? "99+"
+            : unreadCount;
+}
+
+
+/* =========================
+   UPDATE AFTER OPENING ALERTS
+   ========================= */
+
+const originalOpenAlertsForBadge =
+    openAlerts;
+
+openAlerts = function() {
+
+    originalOpenAlertsForBadge();
+
+    setTimeout(function() {
+        updateNotificationBadge();
+    }, 0);
+
+};
+
+
+/* =========================
+   UPDATE AFTER MARKING READ
+   ========================= */
+
+const originalMarkAlertReadForBadge =
+    markAlertRead;
+
+markAlertRead = function(id) {
+
+    originalMarkAlertReadForBadge(id);
+
+    setTimeout(function() {
+        updateNotificationBadge();
+    }, 0);
+
+};
+
+
+/* =========================
+   UPDATE AFTER DELETING ALERT
+   ========================= */
+
+const originalDeleteAlertForBadge =
+    deleteAlert;
+
+deleteAlert = function(id) {
+
+    originalDeleteAlertForBadge(id);
+
+    setTimeout(function() {
+        updateNotificationBadge();
+    }, 0);
+
+};
+
+
+/* =========================
+   INITIAL BADGE UPDATE
+   ========================= */
+
+setTimeout(function() {
+    updateNotificationBadge();
+}, 500);
+
+</script>
+
+<style>
+
+/* =========================
+   NOTIFICATION BADGE
+   ========================= */
+
+.notification-btn {
+    position: relative;
+}
+
+.notification-badge {
+
+    position: absolute;
+
+    top: -2px;
+    right: -2px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 4px;
+
+    border-radius: 10px;
+
+    background: #d92d20;
+    color: white;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #101828;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   HOME DASHBOARD STATS
+   ========================= */
+
+function getHomeStats() {
+
+    const medicines = JSON.parse(
+        localStorage.getItem("kkrMedicines") || "[]"
+    );
+
+    const documents = JSON.parse(
+        localStorage.getItem("kkrDocuments") || "[]"
+    );
+
+    const reminders = JSON.parse(
+        localStorage.getItem("kkrReminders") || "[]"
+    );
+
+    const family = JSON.parse(
+        localStorage.getItem("kkrFamily") || "[]"
+    );
+
+    const pendingReminders =
+        reminders.filter(function(reminder) {
+            return reminder.completed !== true;
+        }).length;
+
+    return {
+        medicines: medicines.length,
+        documents: documents.length,
+        reminders: pendingReminders,
+        family: family.length
+    };
+}
+
+
+/* =========================
+   SHOW HOME STATS
+   ========================= */
+
+function showHomeStats() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-stats-grid"
+        )
+    ) return;
+
+    const stats =
+        getHomeStats();
+
+    const statsTitle =
+        document.createElement("div");
+
+    statsTitle.className =
+        "section-title";
+
+    statsTitle.innerHTML =
+        "LifeHub Overview";
+
+
+    const statsGrid =
+        document.createElement("div");
+
+    statsGrid.className =
+        "home-stats-grid";
+
+    statsGrid.innerHTML = `
+
+        <div class="home-stat-card"
+             onclick="openMedicines()">
+
+            <div class="home-stat-icon">
+                💊
+            </div>
+
+            <div class="home-stat-number">
+                ${stats.medicines}
+            </div>
+
+            <div class="home-stat-label">
+                Medicines
+            </div>
+
+        </div>
+
+
+        <div class="home-stat-card"
+             onclick="openDocuments()">
+
+            <div class="home-stat-icon">
+                📄
+            </div>
+
+            <div class="home-stat-number">
+                ${stats.documents}
+            </div>
+
+            <div class="home-stat-label">
+                Documents
+            </div>
+
+        </div>
+
+
+        <div class="home-stat-card"
+             onclick="openReminders()">
+
+            <div class="home-stat-icon">
+                ⏰
+            </div>
+
+            <div class="home-stat-number">
+                ${stats.reminders}
+            </div>
+
+            <div class="home-stat-label">
+                Pending
+            </div>
+
+        </div>
+
+
+        <div class="home-stat-card"
+             onclick="openFamily()">
+
+            <div class="home-stat-icon">
+                👨‍👩‍👧
+            </div>
+
+            <div class="home-stat-number">
+                ${stats.family}
+            </div>
+
+            <div class="home-stat-label">
+                Family
+            </div>
+
+        </div>
+
+    `;
+
+
+    const searchCard =
+        document.querySelector(
+            ".home-search-card"
+        );
+
+    if (searchCard) {
+
+        searchCard.insertAdjacentElement(
+            "afterend",
+            statsTitle
+        );
+
+        statsTitle.insertAdjacentElement(
+            "afterend",
+            statsGrid
+        );
+
+    } else {
+
+        homeSection.appendChild(
+            statsTitle
+        );
+
+        homeSection.appendChild(
+            statsGrid
+        );
+
+    }
+
+}
+
+
+/* =========================
+   CONNECT STATS TO HOME
+   ========================= */
+
+const originalShowHomeForStats =
+    showHome;
+
+showHome = function() {
+
+    originalShowHomeForStats();
+
+    setTimeout(function() {
+        showHomeStats();
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   HOME STATS
+   ========================= */
+
+.home-stats-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.home-stat-card {
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+    padding: 15px;
+
+    min-height: 125px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 8px
+        rgba(16,24,40,0.04);
+
+}
+
+
+.home-stat-card:active {
+
+    transform: scale(0.97);
+
+}
+
+
+.home-stat-icon {
+
+    font-size: 22px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.home-stat-number {
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+}
+
+
+.home-stat-label {
+
+    margin-top: 3px;
+
+    font-size: 12px;
+
+    color: #667085;
+
+}
+
+
+body.dark-theme .home-stat-card {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme .home-stat-number {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme .home-stat-label {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   RECENT ACTIVITY
+   ========================= */
+
+function getRecentActivity() {
+
+    const activities = [];
+
+    const medicines = JSON.parse(
+        localStorage.getItem("kkrMedicines") || "[]"
+    );
+
+    const documents = JSON.parse(
+        localStorage.getItem("kkrDocuments") || "[]"
+    );
+
+    const reminders = JSON.parse(
+        localStorage.getItem("kkrReminders") || "[]"
+    );
+
+    const payments = JSON.parse(
+        localStorage.getItem("kkrPayments") || "[]"
+    );
+
+    const family = JSON.parse(
+        localStorage.getItem("kkrFamily") || "[]"
+    );
+
+
+    medicines.forEach(function(item) {
+
+        activities.push({
+            icon: "💊",
+            title: item.name || "Medicine",
+            text: "Medicine added",
+            time: item.id || 0
+        });
+
+    });
+
+
+    documents.forEach(function(item) {
+
+        activities.push({
+            icon: "📄",
+            title: item.name || "Document",
+            text: "Document saved",
+            time: item.id || 0
+        });
+
+    });
+
+
+    reminders.forEach(function(item) {
+
+        activities.push({
+            icon: "⏰",
+            title: item.title || "Reminder",
+            text: "Reminder created",
+            time: item.id || 0
+        });
+
+    });
+
+
+    payments.forEach(function(item) {
+
+        activities.push({
+            icon: "💰",
+            title: item.name || "Payment",
+            text: "Payment added",
+            time: item.id || 0
+        });
+
+    });
+
+
+    family.forEach(function(item) {
+
+        activities.push({
+            icon: "👨‍👩‍👧",
+            title: item.name || "Family member",
+            text: "Family member added",
+            time: item.id || 0
+        });
+
+    });
+
+
+    activities.sort(function(a, b) {
+
+        return b.time - a.time;
+
+    });
+
+
+    return activities.slice(0, 5);
+}
+
+
+/* =========================
+   SHOW RECENT ACTIVITY
+   ========================= */
+
+function showRecentActivity() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".recent-activity-section"
+        )
+    ) return;
+
+
+    const activities =
+        getRecentActivity();
+
+
+    const section =
+        document.createElement("div");
+
+    section.className =
+        "recent-activity-section";
+
+
+    const title =
+        document.createElement("div");
+
+    title.className =
+        "section-title";
+
+    title.innerHTML =
+        "Recent Activity";
+
+
+    const list =
+        document.createElement("div");
+
+    list.className =
+        "recent-activity-list";
+
+
+    if (activities.length === 0) {
+
+        list.innerHTML = `
+            <div class="recent-empty">
+                No recent activity yet.
+            </div>
+        `;
+
+    } else {
+
+        activities.forEach(function(item) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "recent-activity-card";
+
+            card.innerHTML = `
+
+                <div class="recent-activity-icon">
+                    ${item.icon}
+                </div>
+
+                <div class="recent-activity-text">
+
+                    <strong>
+                        ${item.title}
+                    </strong>
+
+                    <span>
+                        ${item.text}
+                    </span>
+
+                </div>
+
+                <div class="recent-activity-arrow">
+                    →
+                </div>
+
+            `;
+
+            list.appendChild(card);
+
+        });
+
+    }
+
+
+    section.appendChild(title);
+
+    section.appendChild(list);
+
+
+    const statsGrid =
+        document.querySelector(
+            ".home-stats-grid"
+        );
+
+
+    if (statsGrid) {
+
+        statsGrid.insertAdjacentElement(
+            "afterend",
+            section
+        );
+
+    } else {
+
+        homeSection.appendChild(
+            section
+        );
+
+    }
+
+}
+
+
+/* =========================
+   CONNECT TO HOME
+   ========================= */
+
+const originalShowHomeForActivity =
+    showHome;
+
+showHome = function() {
+
+    originalShowHomeForActivity();
+
+    setTimeout(function() {
+        showRecentActivity();
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   RECENT ACTIVITY STYLE
+   ========================= */
+
+.recent-activity-section {
+
+    margin-top: 4px;
+
+    margin-bottom: 22px;
+
+}
+
+
+.recent-activity-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+.recent-activity-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 14px;
+
+}
+
+
+.recent-activity-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+
+}
+
+
+.recent-activity-text {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+.recent-activity-text strong {
+
+    font-size: 13px;
+
+    color: #101828;
+
+}
+
+
+.recent-activity-text span {
+
+    font-size: 11px;
+
+    color: #667085;
+
+}
+
+
+.recent-activity-arrow {
+
+    font-size: 18px;
+
+    color: #98a2b3;
+
+}
+
+
+.recent-empty {
+
+    padding: 18px;
+
+    text-align: center;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 14px;
+
+    color: #667085;
+
+    font-size: 12px;
+
+}
+
+
+body.dark-theme .recent-activity-card,
+body.dark-theme .recent-empty {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme .recent-activity-icon {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme .recent-activity-text strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme .recent-activity-text span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   FAVORITE DOCUMENTS
+   ========================= */
+
+function openFavoriteDocuments() {
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+    const favorites =
+        documents.filter(function(doc) {
+            return doc.favorite === true;
+        });
+
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="page-title">
+            ⭐ Favorite Documents
+        </div>
+
+        <div class="page-subtitle">
+            Your important saved documents
+        </div>
+
+        <button
+            class="back-button"
+            onclick="openDocuments()">
+
+            ← Back to Documents
+
+        </button>
+
+        <div
+            id="favoriteDocumentList"
+            class="favorite-document-list">
+        </div>
+
+    `;
+
+
+    const list =
+        document.getElementById(
+            "favoriteDocumentList"
+        );
+
+
+    if (favorites.length === 0) {
+
+        list.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⭐
+                </div>
+
+                <h3>
+                    No Favorite Documents
+                </h3>
+
+                <p>
+                    Mark important documents
+                    as favorites to find them quickly.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    favorites.forEach(function(doc) {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "favorite-document-card";
+
+
+        card.innerHTML = `
+
+            <div class="favorite-document-icon">
+                📄
+            </div>
+
+            <div class="favorite-document-info">
+
+                <strong>
+                    ${doc.name}
+                </strong>
+
+                <span>
+                    ${doc.category || "Other"}
+                </span>
+
+                ${
+                    doc.expiryDate
+                    ? `
+                        <small>
+                            Expiry:
+                            ${doc.expiryDate}
+                        </small>
+                      `
+                    : ""
+                }
+
+            </div>
+
+            <button
+                class="favorite-remove-btn"
+                onclick="removeDocumentFavorite('${doc.id}')">
+
+                ⭐
+
+            </button>
+
+        `;
+
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   REMOVE FAVORITE
+   ========================= */
+
+function removeDocumentFavorite(id) {
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const index =
+        documents.findIndex(function(doc) {
+
+            return String(doc.id) === String(id);
+
+        });
+
+
+    if (index === -1) return;
+
+
+    documents[index].favorite = false;
+
+
+    localStorage.setItem(
+        "kkrDocuments",
+        JSON.stringify(documents)
+    );
+
+
+    openFavoriteDocuments();
+
+}
+
+</script>
+
+<style>
+
+/* =========================
+   FAVORITE DOCUMENTS
+   ========================= */
+
+.favorite-document-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    margin-top: 20px;
+
+}
+
+
+.favorite-document-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 15px;
+
+}
+
+
+.favorite-document-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+}
+
+
+.favorite-document-info {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+
+.favorite-document-info strong {
+
+    font-size: 14px;
+
+    color: #101828;
+
+}
+
+
+.favorite-document-info span {
+
+    font-size: 11px;
+
+    color: #667085;
+
+}
+
+
+.favorite-document-info small {
+
+    font-size: 10px;
+
+    color: #98a2b3;
+
+}
+
+
+.favorite-remove-btn {
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 10px;
+
+    background: #f2f4f7;
+
+    font-size: 17px;
+
+}
+
+
+body.dark-theme
+.favorite-document-card {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.favorite-document-icon {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.favorite-document-info strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.favorite-document-info span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   CONNECT FAVORITES TO DOCUMENTS
+   ========================= */
+
+const originalOpenDocumentsForFavorites =
+    openDocuments;
+
+openDocuments = function() {
+
+    originalOpenDocumentsForFavorites();
+
+    setTimeout(function() {
+
+        const addButton =
+            document.querySelector(
+                ".add-medicine-btn"
+            );
+
+        if (!addButton) return;
+
+        if (
+            document.querySelector(
+                ".favorite-documents-btn"
+            )
+        ) return;
+
+
+        const favoriteButton =
+            document.createElement(
+                "button"
+            );
+
+        favoriteButton.className =
+            "favorite-documents-btn";
+
+        favoriteButton.innerHTML =
+            "⭐ Favorite Documents";
+
+        favoriteButton.onclick =
+            openFavoriteDocuments;
+
+
+        addButton.insertAdjacentElement(
+            "afterend",
+            favoriteButton
+        );
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   FAVORITE DOCUMENT BUTTON
+   ========================= */
+
+.favorite-documents-btn {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 13px 16px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    color: #101828;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    border: 1px solid #e4e7ec;
+
+}
+
+
+.favorite-documents-btn:active {
+
+    transform: scale(0.98);
+
+}
+
+
+body.dark-theme
+.favorite-documents-btn {
+
+    background: #344054;
+
+    color: #f9fafb;
+
+    border-color: #475467;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   DOCUMENT EXPIRY STATUS
+   ========================= */
+
+function getDocumentExpiryStatus(expiryDate) {
+
+    if (!expiryDate) {
+
+        return {
+            text: "No expiry date",
+            className: "expiry-none"
+        };
+
+    }
+
+
+    const today =
+        new Date();
+
+    today.setHours(
+        0, 0, 0, 0
+    );
+
+
+    const expiry =
+        new Date(
+            expiryDate
+        );
+
+    expiry.setHours(
+        0, 0, 0, 0
+    );
+
+
+    const difference =
+        expiry.getTime() -
+        today.getTime();
+
+
+    const days =
+        Math.ceil(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    if (days < 0) {
+
+        return {
+            text: "Expired",
+            className: "expiry-expired"
+        };
+
+    }
+
+
+    if (days <= 30) {
+
+        return {
+            text:
+                "Expires in " +
+                days +
+                " days",
+            className: "expiry-soon"
+        };
+
+    }
+
+
+    return {
+        text: "Valid",
+        className: "expiry-valid"
+    };
+
+}
+
+
+/* =========================
+   ADD STATUS TO DOCUMENTS
+   ========================= */
+
+function updateDocumentExpiryStatus() {
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    const cards =
+        document.querySelectorAll(
+            ".document-saved-card"
+        );
+
+
+    cards.forEach(function(card, index) {
+
+        const documentItem =
+            documents[index];
+
+        if (!documentItem) return;
+
+        if (!documentItem.expiryDate)
+            return;
+
+
+        const status =
+            getDocumentExpiryStatus(
+                documentItem.expiryDate
+            );
+
+
+        if (
+            card.querySelector(
+                ".document-expiry-status"
+            )
+        ) return;
+
+
+        const statusElement =
+            document.createElement(
+                "div"
+            );
+
+
+        statusElement.className =
+            "document-expiry-status " +
+            status.className;
+
+
+        statusElement.innerHTML =
+            "📅 " +
+            status.text;
+
+
+        const details =
+            card.querySelector(
+                ".document-saved-details"
+            );
+
+
+        if (details) {
+
+            details.appendChild(
+                statusElement
+            );
+
+        }
+
+    });
+
+}
+
+
+/* =========================
+   CONNECT TO DOCUMENTS
+   ========================= */
+
+const originalLoadDocumentsForExpiry =
+    loadSavedDocuments;
+
+loadSavedDocuments = function() {
+
+    originalLoadDocumentsForExpiry();
+
+    setTimeout(function() {
+
+        updateDocumentExpiryStatus();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   EXPIRY STATUS
+   ========================= */
+
+.document-expiry-status {
+
+    margin-top: 6px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+.expiry-expired {
+
+    color: #d92d20;
+
+}
+
+
+.expiry-soon {
+
+    color: #b54708;
+
+}
+
+
+.expiry-valid {
+
+    color: #027a48;
+
+}
+
+
+.expiry-none {
+
+    color: #667085;
+
+}
+
+
+body.dark-theme
+.expiry-expired {
+
+    color: #f97066;
+
+}
+
+
+body.dark-theme
+.expiry-soon {
+
+    color: #fdb022;
+
+}
+
+
+body.dark-theme
+.expiry-valid {
+
+    color: #32d583;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   DOCUMENT EXPIRY SUMMARY
+   ========================= */
+
+function showDocumentExpirySummary() {
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+
+    let expired = 0;
+    let expiringSoon = 0;
+    let valid = 0;
+
+
+    documents.forEach(function(doc) {
+
+        if (!doc.expiryDate) return;
+
+
+        const status =
+            getDocumentExpiryStatus(
+                doc.expiryDate
+            );
+
+
+        if (
+            status.className ===
+            "expiry-expired"
+        ) {
+
+            expired++;
+
+        } else if (
+            status.className ===
+            "expiry-soon"
+        ) {
+
+            expiringSoon++;
+
+        } else if (
+            status.className ===
+            "expiry-valid"
+        ) {
+
+            valid++;
+
+        }
+
+    });
+
+
+    const documentsPage =
+        document.querySelector(
+            ".document-grid"
+        );
+
+
+    if (!documentsPage) return;
+
+
+    if (
+        document.querySelector(
+            ".document-expiry-summary"
+        )
+    ) return;
+
+
+    const summary =
+        document.createElement(
+            "div"
+        );
+
+
+    summary.className =
+        "document-expiry-summary";
+
+
+    summary.innerHTML = `
+
+        <div class="expiry-summary-title">
+            📅 Expiry Overview
+        </div>
+
+        <div class="expiry-summary-grid">
+
+            <div
+                class="expiry-summary-card expired"
+                onclick="openDocuments()">
+
+                <strong>
+                    ${expired}
+                </strong>
+
+                <span>
+                    Expired
+                </span>
+
+            </div>
+
+
+            <div
+                class="expiry-summary-card soon">
+
+                <strong>
+                    ${expiringSoon}
+                </strong>
+
+                <span>
+                    Expiring Soon
+                </span>
+
+            </div>
+
+
+            <div
+                class="expiry-summary-card valid">
+
+                <strong>
+                    ${valid}
+                </strong>
+
+                <span>
+                    Valid
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    documentsPage.insertAdjacentElement(
+        "beforebegin",
+        summary
+    );
+
+}
+
+
+/* =========================
+   CONNECT SUMMARY
+   ========================= */
+
+const documentsOpenBeforeExpirySummary =
+    openDocuments;
+
+openDocuments = function() {
+
+    documentsOpenBeforeExpirySummary();
+
+    setTimeout(function() {
+
+        showDocumentExpirySummary();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   EXPIRY SUMMARY
+   ========================= */
+
+.document-expiry-summary {
+
+    margin: 16px 0;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+
+.expiry-summary-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+    margin-bottom: 12px;
+
+}
+
+
+.expiry-summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+
+}
+
+
+.expiry-summary-card {
+
+    padding: 12px 6px;
+
+    text-align: center;
+
+    border-radius: 12px;
+
+}
+
+
+.expiry-summary-card strong {
+
+    display: block;
+
+    font-size: 21px;
+
+}
+
+
+.expiry-summary-card span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+}
+
+
+.expiry-summary-card.expired {
+
+    background: #fef3f2;
+
+    color: #d92d20;
+
+}
+
+
+.expiry-summary-card.soon {
+
+    background: #fffaeb;
+
+    color: #b54708;
+
+}
+
+
+.expiry-summary-card.valid {
+
+    background: #ecfdf3;
+
+    color: #027a48;
+
+}
+
+
+body.dark-theme
+.document-expiry-summary {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.expiry-summary-title {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.expiry-summary-card.expired {
+
+    background: #4a1f1f;
+
+    color: #f97066;
+
+}
+
+
+body.dark-theme
+.expiry-summary-card.soon {
+
+    background: #46361a;
+
+    color: #fdb022;
+
+}
+
+
+body.dark-theme
+.expiry-summary-card.valid {
+
+    background: #123524;
+
+    color: #32d583;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   IMPROVED MEDICINE SEARCH
+   ========================= */
+
+const originalSearchMedicineImproved =
+    searchMedicine;
+
+searchMedicine = function() {
+
+    const input =
+        document.getElementById(
+            "medicineSearch"
+        );
+
+    if (!input) return;
+
+
+    const query =
+        input.value
+            .trim()
+            .toLowerCase();
+
+
+    const results =
+        document.getElementById(
+            "medicineSearchResults"
+        );
+
+    if (!results) return;
+
+
+    if (!query) {
+
+        results.innerHTML = "";
+
+        return;
+
+    }
+
+
+    const matches =
+        medicineCatalogue.filter(
+            function(medicine) {
+
+                const name =
+                    (
+                        medicine.name ||
+                        ""
+                    ).toLowerCase();
+
+                const type =
+                    (
+                        medicine.type ||
+                        ""
+                    ).toLowerCase();
+
+                return (
+                    name.includes(query) ||
+                    type.includes(query)
+                );
+
+            }
+        );
+
+
+    if (matches.length === 0) {
+
+        results.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+                <h3>
+                    No Medicine Found
+                </h3>
+
+                <p>
+                    Try another medicine name
+                    or type.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    results.innerHTML = "";
+
+
+    matches.forEach(
+        function(medicine) {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "medicine-result-card";
+
+
+            card.onclick =
+                function() {
+
+                    selectMedicine(
+                        medicine.name
+                    );
+
+                };
+
+
+            card.innerHTML = `
+
+                <div
+                    class="medicine-result-icon">
+                    💊
+                </div>
+
+                <div
+                    class="medicine-result-info">
+
+                    <strong>
+                        ${medicine.name}
+                    </strong>
+
+                    <span>
+                        ${medicine.type}
+                    </span>
+
+                </div>
+
+                <div
+                    class="medicine-result-arrow">
+                    →
+                </div>
+
+            `;
+
+
+            results.appendChild(
+                card
+            );
+
+        }
+    );
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   MEDICINE SEARCH RESULTS
+   ========================= */
+
+.medicine-result-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px;
+
+    margin-top: 9px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+}
+
+
+.medicine-result-card:active {
+
+    transform: scale(0.98);
+
+}
+
+
+.medicine-result-icon {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 11px;
+
+    background: #f2f4f7;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+
+}
+
+
+.medicine-result-info {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+}
+
+
+.medicine-result-info strong {
+
+    font-size: 13px;
+
+    color: #101828;
+
+}
+
+
+.medicine-result-info span {
+
+    font-size: 11px;
+
+    color: #667085;
+
+}
+
+
+.medicine-result-arrow {
+
+    font-size: 18px;
+
+    color: #98a2b3;
+
+}
+
+
+body.dark-theme
+.medicine-result-card {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.medicine-result-icon {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.medicine-result-info strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.medicine-result-info span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   MEDICINE SUMMARY
+   ========================= */
+
+function showMedicineSummary() {
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    const total =
+        medicines.length;
+
+
+    const withTime =
+        medicines.filter(function(medicine) {
+
+            return (
+                medicine.time &&
+                medicine.time.trim()
+            );
+
+        }).length;
+
+
+    const withoutTime =
+        total - withTime;
+
+
+    const medicinePage =
+        document.querySelector(
+            ".medicine-search"
+        );
+
+
+    if (!medicinePage) return;
+
+
+    if (
+        document.querySelector(
+            ".medicine-summary"
+        )
+    ) return;
+
+
+    const summary =
+        document.createElement(
+            "div"
+        );
+
+
+    summary.className =
+        "medicine-summary";
+
+
+    summary.innerHTML = `
+
+        <div class="medicine-summary-title">
+            💊 Medicine Overview
+        </div>
+
+        <div class="medicine-summary-grid">
+
+            <div class="medicine-summary-card">
+
+                <strong>
+                    ${total}
+                </strong>
+
+                <span>
+                    Total
+                </span>
+
+            </div>
+
+
+            <div class="medicine-summary-card">
+
+                <strong>
+                    ${withTime}
+                </strong>
+
+                <span>
+                    With Time
+                </span>
+
+            </div>
+
+
+            <div class="medicine-summary-card">
+
+                <strong>
+                    ${withoutTime}
+                </strong>
+
+                <span>
+                    No Time
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    medicinePage.insertAdjacentElement(
+        "afterend",
+        summary
+    );
+
+}
+
+
+/* =========================
+   CONNECT SUMMARY
+   ========================= */
+
+const medicinesOpenBeforeSummary =
+    openMedicines;
+
+openMedicines = function() {
+
+    medicinesOpenBeforeSummary();
+
+    setTimeout(function() {
+
+        showMedicineSummary();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   MEDICINE SUMMARY STYLE
+   ========================= */
+
+.medicine-summary {
+
+    margin: 16px 0;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+
+.medicine-summary-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+    margin-bottom: 12px;
+
+}
+
+
+.medicine-summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+
+}
+
+
+.medicine-summary-card {
+
+    padding: 12px 6px;
+
+    text-align: center;
+
+    background: #f2f4f7;
+
+    border-radius: 12px;
+
+}
+
+
+.medicine-summary-card strong {
+
+    display: block;
+
+    font-size: 21px;
+
+    color: #101828;
+
+}
+
+
+.medicine-summary-card span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    color: #667085;
+
+}
+
+
+body.dark-theme
+.medicine-summary {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.medicine-summary-title {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.medicine-summary-card {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.medicine-summary-card strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.medicine-summary-card span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   REMINDER OVERVIEW
+   ========================= */
+
+function showReminderOverview() {
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    const total =
+        reminders.length;
+
+
+    const completed =
+        reminders.filter(function(reminder) {
+
+            return reminder.completed === true;
+
+        }).length;
+
+
+    const pending =
+        total - completed;
+
+
+    const reminderPage =
+        document.querySelector(
+            ".reminder-filter"
+        );
+
+
+    if (!reminderPage) return;
+
+
+    if (
+        document.querySelector(
+            ".reminder-overview"
+        )
+    ) return;
+
+
+    const overview =
+        document.createElement(
+            "div"
+        );
+
+
+    overview.className =
+        "reminder-overview";
+
+
+    overview.innerHTML = `
+
+        <div class="reminder-overview-title">
+            ⏰ Reminder Overview
+        </div>
+
+        <div class="reminder-overview-grid">
+
+            <div class="reminder-overview-card">
+
+                <strong>
+                    ${total}
+                </strong>
+
+                <span>
+                    Total
+                </span>
+
+            </div>
+
+
+            <div class="reminder-overview-card pending">
+
+                <strong>
+                    ${pending}
+                </strong>
+
+                <span>
+                    Pending
+                </span>
+
+            </div>
+
+
+            <div class="reminder-overview-card completed">
+
+                <strong>
+                    ${completed}
+                </strong>
+
+                <span>
+                    Completed
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    reminderPage.insertAdjacentElement(
+        "afterend",
+        overview
+    );
+
+}
+
+
+/* =========================
+   CONNECT OVERVIEW
+   ========================= */
+
+const remindersOpenBeforeOverview =
+    openReminders;
+
+openReminders = function() {
+
+    remindersOpenBeforeOverview();
+
+    setTimeout(function() {
+
+        showReminderOverview();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   REMINDER OVERVIEW
+   ========================= */
+
+.reminder-overview {
+
+    margin: 16px 0;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+
+.reminder-overview-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+    margin-bottom: 12px;
+
+}
+
+
+.reminder-overview-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+
+}
+
+
+.reminder-overview-card {
+
+    padding: 12px 6px;
+
+    text-align: center;
+
+    background: #f2f4f7;
+
+    border-radius: 12px;
+
+}
+
+
+.reminder-overview-card strong {
+
+    display: block;
+
+    font-size: 21px;
+
+    color: #101828;
+
+}
+
+
+.reminder-overview-card span {
+
+    display: block;
+
+    margin-top: 3px;
+
+    font-size: 10px;
+
+    color: #667085;
+
+}
+
+
+.reminder-overview-card.pending {
+
+    background: #fffaeb;
+
+}
+
+
+.reminder-overview-card.completed {
+
+    background: #ecfdf3;
+
+}
+
+
+body.dark-theme
+.reminder-overview {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.reminder-overview-title {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.reminder-overview-card {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.reminder-overview-card.pending {
+
+    background: #46361a;
+
+}
+
+
+body.dark-theme
+.reminder-overview-card.completed {
+
+    background: #123524;
+
+}
+
+
+body.dark-theme
+.reminder-overview-card strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.reminder-overview-card span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   MONEY OVERVIEW
+   ========================= */
+
+function showMoneyOverview() {
+
+    const payments =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrPayments"
+            ) || "[]"
+        );
+
+
+    let income = 0;
+    let expenses = 0;
+    let pending = 0;
+
+
+    payments.forEach(function(payment) {
+
+        const amount =
+            Number(payment.amount) || 0;
+
+
+        if (
+            payment.status === "paid" &&
+            payment.type === "income"
+        ) {
+
+            income += amount;
+
+        }
+
+
+        if (
+            payment.status === "paid" &&
+            payment.type === "expense"
+        ) {
+
+            expenses += amount;
+
+        }
+
+
+        if (
+            payment.status === "pending"
+        ) {
+
+            pending += amount;
+
+        }
+
+    });
+
+
+    const transactionCount =
+        payments.length;
+
+
+    const moneyPage =
+        document.querySelector(
+            ".money-summary"
+        );
+
+
+    if (!moneyPage) return;
+
+
+    if (
+        document.querySelector(
+            ".money-overview"
+        )
+    ) return;
+
+
+    const overview =
+        document.createElement(
+            "div"
+        );
+
+
+    overview.className =
+        "money-overview";
+
+
+    overview.innerHTML = `
+
+        <div class="money-overview-title">
+            💰 Money Overview
+        </div>
+
+        <div class="money-overview-grid">
+
+            <div class="money-overview-card">
+
+                <strong>
+                    ${formatMoney(income)}
+                </strong>
+
+                <span>
+                    Income
+                </span>
+
+            </div>
+
+
+            <div class="money-overview-card">
+
+                <strong>
+                    ${formatMoney(expenses)}
+                </strong>
+
+                <span>
+                    Expenses
+                </span>
+
+            </div>
+
+
+            <div class="money-overview-card pending">
+
+                <strong>
+                    ${formatMoney(pending)}
+                </strong>
+
+                <span>
+                    Pending
+                </span>
+
+            </div>
+
+
+            <div class="money-overview-card">
+
+                <strong>
+                    ${transactionCount}
+                </strong>
+
+                <span>
+                    Transactions
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    moneyPage.insertAdjacentElement(
+        "afterend",
+        overview
+    );
+
+}
+
+
+/* =========================
+   CONNECT OVERVIEW
+   ========================= */
+
+const moneyOpenBeforeOverview =
+    openMoney;
+
+openMoney = function() {
+
+    moneyOpenBeforeOverview();
+
+    setTimeout(function() {
+
+        showMoneyOverview();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   MONEY OVERVIEW
+   ========================= */
+
+.money-overview {
+
+    margin: 16px 0;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+
+.money-overview-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+    margin-bottom: 12px;
+
+}
+
+
+.money-overview-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 9px;
+
+}
+
+
+.money-overview-card {
+
+    padding: 13px 9px;
+
+    background: #f2f4f7;
+
+    border-radius: 12px;
+
+}
+
+
+.money-overview-card strong {
+
+    display: block;
+
+    font-size: 15px;
+
+    color: #101828;
+
+}
+
+
+.money-overview-card span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #667085;
+
+}
+
+
+.money-overview-card.pending {
+
+    background: #fffaeb;
+
+}
+
+
+body.dark-theme
+.money-overview {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.money-overview-title {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.money-overview-card {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.money-overview-card.pending {
+
+    background: #46361a;
+
+}
+
+
+body.dark-theme
+.money-overview-card strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.money-overview-card span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   FAMILY OVERVIEW
+   ========================= */
+
+function showFamilyOverview() {
+
+    const family =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrFamily"
+            ) || "[]"
+        );
+
+
+    const total =
+        family.length;
+
+
+    const withPhone =
+        family.filter(function(member) {
+
+            return (
+                member.phone &&
+                member.phone.trim()
+            );
+
+        }).length;
+
+
+    const withEmail =
+        family.filter(function(member) {
+
+            return (
+                member.email &&
+                member.email.trim()
+            );
+
+        }).length;
+
+
+    const withBloodGroup =
+        family.filter(function(member) {
+
+            return (
+                member.bloodGroup &&
+                member.bloodGroup.trim()
+            );
+
+        }).length;
+
+
+    const familyPage =
+        document.querySelector(
+            ".family-grid"
+        );
+
+
+    if (!familyPage) return;
+
+
+    if (
+        document.querySelector(
+            ".family-overview"
+        )
+    ) return;
+
+
+    const overview =
+        document.createElement(
+            "div"
+        );
+
+
+    overview.className =
+        "family-overview";
+
+
+    overview.innerHTML = `
+
+        <div class="family-overview-title">
+            👨‍👩‍👧 Family Overview
+        </div>
+
+        <div class="family-overview-grid">
+
+            <div class="family-overview-card">
+
+                <strong>
+                    ${total}
+                </strong>
+
+                <span>
+                    Members
+                </span>
+
+            </div>
+
+
+            <div class="family-overview-card">
+
+                <strong>
+                    ${withPhone}
+                </strong>
+
+                <span>
+                    Phone Added
+                </span>
+
+            </div>
+
+
+            <div class="family-overview-card">
+
+                <strong>
+                    ${withEmail}
+                </strong>
+
+                <span>
+                    Email Added
+                </span>
+
+            </div>
+
+
+            <div class="family-overview-card">
+
+                <strong>
+                    ${withBloodGroup}
+                </strong>
+
+                <span>
+                    Blood Group
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    familyPage.insertAdjacentElement(
+        "afterend",
+        overview
+    );
+
+}
+
+
+/* =========================
+   CONNECT OVERVIEW
+   ========================= */
+
+const familyOpenBeforeOverview =
+    openFamily;
+
+openFamily = function() {
+
+    familyOpenBeforeOverview();
+
+    setTimeout(function() {
+
+        showFamilyOverview();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   FAMILY OVERVIEW
+   ========================= */
+
+.family-overview {
+
+    margin: 16px 0;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+
+.family-overview-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+    margin-bottom: 12px;
+
+}
+
+
+.family-overview-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 9px;
+
+}
+
+
+.family-overview-card {
+
+    padding: 13px;
+
+    background: #f2f4f7;
+
+    border-radius: 12px;
+
+}
+
+
+.family-overview-card strong {
+
+    display: block;
+
+    font-size: 21px;
+
+    color: #101828;
+
+}
+
+
+.family-overview-card span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #667085;
+
+}
+
+
+body.dark-theme
+.family-overview {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.family-overview-title {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.family-overview-card {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.family-overview-card strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.family-overview-card span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   HEALTH OVERVIEW
+   ========================= */
+
+function showHealthOverview() {
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+
+    const records =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrHealthRecords"
+            ) || "[]"
+        );
+
+
+    const appointments =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrAppointments"
+            ) || "[]"
+        );
+
+
+    const measurements =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMeasurements"
+            ) || "[]"
+        );
+
+
+    const healthPage =
+        document.querySelector(
+            ".health-grid"
+        );
+
+
+    if (!healthPage) return;
+
+
+    if (
+        document.querySelector(
+            ".health-overview"
+        )
+    ) return;
+
+
+    const overview =
+        document.createElement(
+            "div"
+        );
+
+
+    overview.className =
+        "health-overview";
+
+
+    overview.innerHTML = `
+
+        <div class="health-overview-title">
+            ❤️ Health Overview
+        </div>
+
+        <div class="health-overview-grid">
+
+            <div class="health-overview-card">
+
+                <strong>
+                    ${medicines.length}
+                </strong>
+
+                <span>
+                    Medicines
+                </span>
+
+            </div>
+
+
+            <div class="health-overview-card">
+
+                <strong>
+                    ${records.length}
+                </strong>
+
+                <span>
+                    Health Records
+                </span>
+
+            </div>
+
+
+            <div class="health-overview-card">
+
+                <strong>
+                    ${appointments.length}
+                </strong>
+
+                <span>
+                    Appointments
+                </span>
+
+            </div>
+
+
+            <div class="health-overview-card">
+
+                <strong>
+                    ${measurements.length}
+                </strong>
+
+                <span>
+                    Measurements
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    healthPage.insertAdjacentElement(
+        "beforebegin",
+        overview
+    );
+
+}
+
+
+/* =========================
+   CONNECT OVERVIEW
+   ========================= */
+
+const healthOpenBeforeOverview =
+    openHealth;
+
+openHealth = function() {
+
+    healthOpenBeforeOverview();
+
+    setTimeout(function() {
+
+        showHealthOverview();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   HEALTH OVERVIEW
+   ========================= */
+
+.health-overview {
+
+    margin: 16px 0;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+
+.health-overview-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+    margin-bottom: 12px;
+
+}
+
+
+.health-overview-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 9px;
+
+}
+
+
+.health-overview-card {
+
+    padding: 13px;
+
+    background: #f2f4f7;
+
+    border-radius: 12px;
+
+}
+
+
+.health-overview-card strong {
+
+    display: block;
+
+    font-size: 21px;
+
+    color: #101828;
+
+}
+
+
+.health-overview-card span {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #667085;
+
+}
+
+
+body.dark-theme
+.health-overview {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.health-overview-title {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.health-overview-card {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.health-overview-card strong {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.health-overview-card span {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   PROFILE COMPLETION
+   ========================= */
+
+function showProfileCompletion() {
+
+    const profile =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrProfile"
+            ) || "{}"
+        );
+
+
+    let completed = 0;
+
+    const totalFields = 3;
+
+
+    if (
+        profile.name &&
+        profile.name.trim()
+    ) {
+        completed++;
+    }
+
+
+    if (
+        profile.email &&
+        profile.email.trim()
+    ) {
+        completed++;
+    }
+
+
+    if (
+        profile.phone &&
+        profile.phone.trim()
+    ) {
+        completed++;
+    }
+
+
+    const percentage =
+        Math.round(
+            (completed /
+            totalFields) * 100
+        );
+
+
+    const profilePage =
+        document.querySelector(
+            ".profile-form"
+        );
+
+
+    if (!profilePage) return;
+
+
+    if (
+        document.querySelector(
+            ".profile-completion"
+        )
+    ) return;
+
+
+    const completion =
+        document.createElement(
+            "div"
+        );
+
+
+    completion.className =
+        "profile-completion";
+
+
+    completion.innerHTML = `
+
+        <div class="profile-completion-top">
+
+            <strong>
+                Profile Completion
+            </strong>
+
+            <span>
+                ${percentage}%
+            </span>
+
+        </div>
+
+
+        <div class="profile-progress">
+
+            <div
+                class="profile-progress-fill"
+                style="width:${percentage}%">
+            </div>
+
+        </div>
+
+
+        <p>
+            ${
+                percentage === 100
+                ? "Your profile is complete."
+                : "Add your missing details to complete your profile."
+            }
+        </p>
+
+    `;
+
+
+    profilePage.insertAdjacentElement(
+        "beforebegin",
+        completion
+    );
+
+}
+
+
+/* =========================
+   CONNECT COMPLETION
+   ========================= */
+
+const profileOpenBeforeCompletion =
+    openProfile;
+
+openProfile = function() {
+
+    profileOpenBeforeCompletion();
+
+    setTimeout(function() {
+
+        showProfileCompletion();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+/* =========================
+   PROFILE COMPLETION
+   ========================= */
+
+.profile-completion {
+
+    margin: 16px 0;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+
+.profile-completion-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+
+}
+
+
+.profile-completion-top strong {
+
+    font-size: 13px;
+
+    color: #101828;
+
+}
+
+
+.profile-completion-top span {
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+}
+
+
+.profile-progress {
+
+    width: 100%;
+
+    height: 8px;
+
+    background: #eaecf0;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+}
+
+
+.profile-progress-fill {
+
+    height: 100%;
+
+    background: #101828;
+
+    border-radius: 10px;
+
+}
+
+
+.profile-completion p {
+
+    margin: 9px 0 0;
+
+    font-size: 11px;
+
+    color: #667085;
+
+}
+
+
+body.dark-theme
+.profile-completion {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme
+.profile-completion-top strong,
+body.dark-theme
+.profile-completion-top span {
+
+    color: #f9fafb;
+
+}
+
+
+body.dark-theme
+.profile-progress {
+
+    background: #344054;
+
+}
+
+
+body.dark-theme
+.profile-progress-fill {
+
+    background: #f9fafb;
+
+}
+
+
+body.dark-theme
+.profile-completion p {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+function showProfileQuickActions() {
+
+    const profileForm =
+        document.querySelector(".profile-form");
+
+    if (!profileForm) return;
+
+    if (
+        document.querySelector(
+            ".profile-quick-actions"
+        )
+    ) return;
+
+    const actions =
+        document.createElement("div");
+
+    actions.className =
+        "profile-quick-actions";
+
+    actions.innerHTML = `
+
+        <div class="section-title">
+            Quick Actions
+        </div>
+
+        <div class="profile-action-grid">
+
+            <button
+                class="profile-action-card"
+                onclick="openSettings()">
+
+                <span class="profile-action-icon">
+                    ⚙️
+                </span>
+
+                <span>
+                    Settings
+                </span>
+
+            </button>
+
+            <button
+                class="profile-action-card"
+                onclick="openDataSettings()">
+
+                <span class="profile-action-icon">
+                    💾
+                </span>
+
+                <span>
+                    Backup & Data
+                </span>
+
+            </button>
+
+            <button
+                class="profile-action-card"
+                onclick="openPrivacySettings()">
+
+                <span class="profile-action-icon">
+                    🔒
+                </span>
+
+                <span>
+                    Privacy
+                </span>
+
+            </button>
+
+            <button
+                class="profile-action-card"
+                onclick="openHelpSupport()">
+
+                <span class="profile-action-icon">
+                    ❓
+                </span>
+
+                <span>
+                    Help & Support
+                </span>
+
+            </button>
+
+        </div>
+
+    `;
+
+    profileForm.insertAdjacentElement(
+        "afterend",
+        actions
+    );
+}
+
+
+const profileOpenBeforeQuickActions =
+    openProfile;
+
+openProfile = function() {
+
+    profileOpenBeforeQuickActions();
+
+    setTimeout(function() {
+
+        showProfileQuickActions();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.profile-quick-actions {
+    margin-top: 20px;
+}
+
+.profile-action-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.profile-action-card {
+    min-height: 90px;
+    padding: 14px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 16px;
+    color: #101828;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.profile-action-card:active {
+    transform: scale(0.97);
+}
+
+.profile-action-icon {
+    font-size: 22px;
+}
+
+body.dark-theme
+.profile-action-card {
+    background: #1d2939;
+    border-color: #344054;
+    color: #f9fafb;
+}
+
+@media (max-width: 380px) {
+
+    .profile-action-grid {
+        gap: 8px;
+    }
+
+    .profile-action-card {
+        min-height: 84px;
+        padding: 12px;
+    }
+
+}
+
+</style>
+   <script>
+
+function applySavedThemeOnLoad() {
+
+    const savedTheme =
+        localStorage.getItem("kkrTheme");
+
+    if (!savedTheme) {
+        return;
+    }
+
+    if (savedTheme === "dark") {
+
+        document.body.classList.add(
+            "dark-theme"
+        );
+
+    } else if (savedTheme === "light") {
+
+        document.body.classList.remove(
+            "dark-theme"
+        );
+
+    } else if (savedTheme === "system") {
+
+        const prefersDark =
+            window.matchMedia &&
+            window.matchMedia(
+                "(prefers-color-scheme: dark)"
+            ).matches;
+
+        if (prefersDark) {
+
+            document.body.classList.add(
+                "dark-theme"
+            );
+
+        } else {
+
+            document.body.classList.remove(
+                "dark-theme"
+            );
+
+        }
+
+    }
+
+}
+
+window.addEventListener(
+    "load",
+    function() {
+
+        applySavedThemeOnLoad();
+
+    }
+);
+
+   </script>
+   <script>
+
+function createBackToHomeButton() {
+
+    const button =
+        document.createElement("button");
+
+    button.className =
+        "global-back-home-btn";
+
+    button.innerHTML =
+        "← Back to Home";
+
+    button.onclick =
+        function() {
+            showHome();
+        };
+
+    return button;
+}
+
+</script>
+
+<style>
+
+.global-back-home-btn {
+    width: 100%;
+    margin: 18px 0;
+    padding: 13px 16px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    color: #101828;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.global-back-home-btn:active {
+    transform: scale(0.98);
+}
+
+body.dark-theme
+.global-back-home-btn {
+    background: #1d2939;
+    border-color: #344054;
+    color: #f9fafb;
+}
+
+</style>
+   <script>
+
+function showHomeEmergencyQuickAccess() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-emergency-quick"
+        )
+    ) return;
+
+    const emergency =
+        document.createElement("button");
+
+    emergency.className =
+        "home-emergency-quick";
+
+    emergency.onclick =
+        function() {
+            openEmergency();
+        };
+
+    emergency.innerHTML = `
+
+        <span class="home-emergency-icon">
+            🚨
+        </span>
+
+        <span class="home-emergency-text">
+
+            <strong>
+                Emergency
+            </strong>
+
+            <small>
+                Quick access to emergency contacts
+            </small>
+
+        </span>
+
+        <span class="home-emergency-arrow">
+            →
+        </span>
+
+    `;
+
+    const greeting =
+        document.getElementById(
+            "homeGreeting"
+        );
+
+    if (greeting) {
+
+        greeting.parentNode.insertBefore(
+            emergency,
+            greeting.nextSibling
+        );
+
+    } else {
+
+        homeSection.insertBefore(
+            emergency,
+            homeSection.firstChild
+        );
+
+    }
+
+}
+
+
+const homeBeforeEmergencyQuick =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeEmergencyQuick();
+
+    setTimeout(function() {
+
+        showHomeEmergencyQuickAccess();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.home-emergency-quick {
+    width: 100%;
+    margin: 14px 0 18px;
+    padding: 14px;
+    background: #fff4f2;
+    border: 1px solid #fecdca;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.home-emergency-quick:active {
+    transform: scale(0.98);
+}
+
+.home-emergency-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #fee4e2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    flex-shrink: 0;
+}
+
+.home-emergency-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.home-emergency-text strong {
+    font-size: 14px;
+    color: #b42318;
+}
+
+.home-emergency-text small {
+    font-size: 11px;
+    color: #667085;
+}
+
+.home-emergency-arrow {
+    font-size: 20px;
+    color: #b42318;
+}
+
+body.dark-theme
+.home-emergency-quick {
+    background: #3b1f1f;
+    border-color: #7a271a;
+}
+
+body.dark-theme
+.home-emergency-icon {
+    background: #5c2424;
+}
+
+body.dark-theme
+.home-emergency-text strong {
+    color: #fda29b;
+}
+
+body.dark-theme
+.home-emergency-text small {
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-emergency-arrow {
+    color: #fda29b;
+}
+
+</style>
+   <script>
+
+function updateHomeQuickActionCounts() {
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+    const payments =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrPayments"
+            ) || "[]"
+        );
+
+    const quickCards =
+        document.querySelectorAll(
+            ".quick-card"
+        );
+
+    quickCards.forEach(function(card) {
+
+        const text =
+            card.innerText.toLowerCase();
+
+        let count = null;
+
+        if (text.includes("medicine")) {
+            count = medicines.length;
+        }
+
+        else if (text.includes("document")) {
+            count = documents.length;
+        }
+
+        else if (text.includes("reminder")) {
+
+            count =
+                reminders.filter(
+                    function(item) {
+                        return item.completed !== true;
+                    }
+                ).length;
+
+        }
+
+        else if (text.includes("money")) {
+            count = payments.length;
+        }
+
+        if (count === null) return;
+
+        let badge =
+            card.querySelector(
+                ".quick-count"
+            );
+
+        if (!badge) {
+
+            badge =
+                document.createElement(
+                    "span"
+                );
+
+            badge.className =
+                "quick-count";
+
+            card.appendChild(badge);
+
+        }
+
+        badge.innerHTML =
+            count;
+
+    });
+
+}
+
+
+const homeBeforeQuickCounts =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeQuickCounts();
+
+    setTimeout(function() {
+
+        updateHomeQuickActionCounts();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.quick-card {
+    position: relative;
+}
+
+.quick-count {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    background: #101828;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.dark-theme
+.quick-count {
+    background: #f9fafb;
+    color: #101828;
+}
+
+</style>
+   <script>
+
+function showHomeAlertSummary() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-alert-summary"
+        )
+    ) return;
+
+    const alerts =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrAlerts"
+            ) || "[]"
+        );
+
+    const unreadCount =
+        alerts.filter(function(alert) {
+            return !alert.read;
+        }).length;
+
+    const card =
+        document.createElement("button");
+
+    card.className =
+        "home-alert-summary";
+
+    card.onclick =
+        function() {
+            openAlerts();
+        };
+
+    card.innerHTML = `
+
+        <span class="home-alert-icon">
+            🔔
+        </span>
+
+        <span class="home-alert-text">
+
+            <strong>
+                Alerts
+            </strong>
+
+            <small>
+                ${
+                    unreadCount > 0
+                    ? unreadCount +
+                      " unread alert" +
+                      (unreadCount === 1
+                        ? ""
+                        : "s")
+                    : "No new alerts"
+                }
+            </small>
+
+        </span>
+
+        <span class="home-alert-arrow">
+            →
+        </span>
+
+    `;
+
+    const emergency =
+        document.querySelector(
+            ".home-emergency-quick"
+        );
+
+    if (emergency) {
+
+        emergency.insertAdjacentElement(
+            "afterend",
+            card
+        );
+
+    } else {
+
+        homeSection.insertBefore(
+            card,
+            homeSection.firstChild
+        );
+
+    }
+
+}
+
+
+const homeBeforeAlertSummary =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeAlertSummary();
+
+    setTimeout(function() {
+
+        showHomeAlertSummary();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.home-alert-summary {
+    width: 100%;
+    margin: 0 0 18px;
+    padding: 14px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.home-alert-summary:active {
+    transform: scale(0.98);
+}
+
+.home-alert-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #f2f4f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.home-alert-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.home-alert-text strong {
+    font-size: 14px;
+    color: #101828;
+}
+
+.home-alert-text small {
+    font-size: 11px;
+    color: #667085;
+}
+
+.home-alert-arrow {
+    font-size: 20px;
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-alert-summary {
+    background: #1d2939;
+    border-color: #344054;
+}
+
+body.dark-theme
+.home-alert-icon {
+    background: #344054;
+}
+
+body.dark-theme
+.home-alert-text strong {
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-alert-text small {
+    color: #98a2b3;
+}
+
+</style>
+   <script>
+
+function showHomeUpcomingReminders() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-upcoming-reminders"
+        )
+    ) return;
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+    const pending =
+        reminders
+            .filter(function(item) {
+                return item.completed !== true;
+            })
+            .slice(0, 3);
+
+    const section =
+        document.createElement("div");
+
+    section.className =
+        "home-upcoming-reminders";
+
+    let html = `
+
+        <div class="home-reminder-header">
+
+            <div>
+                <div class="section-title">
+                    Upcoming Reminders
+                </div>
+
+                <div class="home-reminder-subtitle">
+                    Your pending reminders
+                </div>
+            </div>
+
+            <button
+                class="home-reminder-view"
+                onclick="openReminders()">
+
+                View All
+
+            </button>
+
+        </div>
+
+    `;
+
+    if (pending.length === 0) {
+
+        html += `
+
+            <div class="home-reminder-empty">
+
+                <span>
+                    ✅
+                </span>
+
+                <div>
+                    <strong>
+                        No pending reminders
+                    </strong>
+
+                    <small>
+                        You're all caught up.
+                    </small>
+                </div>
+
+            </div>
+
+        `;
+
+    } else {
+
+        html += `
+            <div class="home-reminder-list">
+        `;
+
+        pending.forEach(function(item) {
+
+            html += `
+
+                <div class="home-reminder-card">
+
+                    <div
+                        class="home-reminder-icon">
+                        ⏰
+                    </div>
+
+                    <div
+                        class="home-reminder-info">
+
+                        <strong>
+                            ${item.title || "Reminder"}
+                        </strong>
+
+                        <small>
+                            ${
+                                item.date
+                                ? item.date
+                                : "No date"
+                            }
+                            ${
+                                item.time
+                                ? " • " + item.time
+                                : ""
+                            }
+                        </small>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+        html += `
+            </div>
+        `;
+
+    }
+
+    section.innerHTML = html;
+
+    const activity =
+        document.querySelector(
+            ".recent-activity-section"
+        );
+
+    if (activity) {
+
+        activity.insertAdjacentElement(
+            "beforebegin",
+            section
+        );
+
+    } else {
+
+        homeSection.appendChild(
+            section
+        );
+
+    }
+
+}
+
+
+const homeBeforeUpcomingReminders =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeUpcomingReminders();
+
+    setTimeout(function() {
+
+        showHomeUpcomingReminders();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.home-upcoming-reminders {
+    margin-top: 22px;
+}
+
+.home-reminder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.home-reminder-subtitle {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #667085;
+}
+
+.home-reminder-view {
+    padding: 8px 10px;
+    background: #f2f4f7;
+    color: #101828;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.home-reminder-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.home-reminder-card {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.home-reminder-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: #f2f4f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.home-reminder-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.home-reminder-info strong {
+    font-size: 13px;
+    color: #101828;
+}
+
+.home-reminder-info small {
+    font-size: 10px;
+    color: #667085;
+}
+
+.home-reminder-empty {
+    padding: 16px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.home-reminder-empty > span {
+    font-size: 22px;
+}
+
+.home-reminder-empty div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.home-reminder-empty strong {
+    font-size: 13px;
+    color: #101828;
+}
+
+.home-reminder-empty small {
+    font-size: 11px;
+    color: #667085;
+}
+
+body.dark-theme
+.home-reminder-view {
+    background: #344054;
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-reminder-subtitle {
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-reminder-card,
+body.dark-theme
+.home-reminder-empty {
+    background: #1d2939;
+    border-color: #344054;
+}
+
+body.dark-theme
+.home-reminder-icon {
+    background: #344054;
+}
+
+body.dark-theme
+.home-reminder-info strong,
+body.dark-theme
+.home-reminder-empty strong {
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-reminder-info small,
+body.dark-theme
+.home-reminder-empty small {
+    color: #98a2b3;
+}
+
+</style>
+   <script>
+
+function showHomeExpiringDocuments() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-expiring-documents"
+        )
+    ) return;
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrDocuments"
+            ) || "[]"
+        );
+
+    const today =
+        new Date();
+
+    const expiring =
+        documents.filter(function(doc) {
+
+            if (!doc.expiryDate) {
+                return false;
+            }
+
+            const expiry =
+                new Date(
+                    doc.expiryDate
+                );
+
+            const difference =
+                expiry - today;
+
+            const days =
+                Math.ceil(
+                    difference /
+                    (1000 * 60 * 60 * 24)
+                );
+
+            return days <= 30;
+
+        }).slice(0, 3);
+
+    const section =
+        document.createElement("div");
+
+    section.className =
+        "home-expiring-documents";
+
+    let html = `
+
+        <div class="home-document-header">
+
+            <div>
+
+                <div class="section-title">
+                    Expiring Documents
+                </div>
+
+                <div class="home-document-subtitle">
+                    Documents needing attention
+                </div>
+
+            </div>
+
+            <button
+                class="home-document-view"
+                onclick="openDocuments()">
+
+                View All
+
+            </button>
+
+        </div>
+
+    `;
+
+    if (expiring.length === 0) {
+
+        html += `
+
+            <div class="home-document-empty">
+
+                <span>
+                    ✅
+                </span>
+
+                <div>
+
+                    <strong>
+                        No documents expiring soon
+                    </strong>
+
+                    <small>
+                        Everything looks good.
+                    </small>
+
+                </div>
+
+            </div>
+
+        `;
+
+    } else {
+
+        html += `
+            <div class="home-document-list">
+        `;
+
+        expiring.forEach(function(doc) {
+
+            const expiry =
+                new Date(
+                    doc.expiryDate
+                );
+
+            const difference =
+                expiry - today;
+
+            const days =
+                Math.ceil(
+                    difference /
+                    (1000 * 60 * 60 * 24)
+                );
+
+            let statusText = "";
+
+            if (days < 0) {
+
+                statusText =
+                    "Expired";
+
+            } else if (days === 0) {
+
+                statusText =
+                    "Expires today";
+
+            } else {
+
+                statusText =
+                    "Expires in " +
+                    days +
+                    " days";
+
+            }
+
+            html += `
+
+                <div class="home-document-card">
+
+                    <div
+                        class="home-document-icon">
+                        📄
+                    </div>
+
+                    <div
+                        class="home-document-info">
+
+                        <strong>
+                            ${
+                                doc.name ||
+                                "Document"
+                            }
+                        </strong>
+
+                        <small>
+                            ${statusText}
+                        </small>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+        html += `
+            </div>
+        `;
+
+    }
+
+    section.innerHTML =
+        html;
+
+    const reminders =
+        document.querySelector(
+            ".home-upcoming-reminders"
+        );
+
+    if (reminders) {
+
+        reminders.insertAdjacentElement(
+            "afterend",
+            section
+        );
+
+    } else {
+
+        homeSection.appendChild(
+            section
+        );
+
+    }
+
+}
+
+
+const homeBeforeExpiringDocuments =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeExpiringDocuments();
+
+    setTimeout(function() {
+
+        showHomeExpiringDocuments();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.home-expiring-documents {
+    margin-top: 22px;
+}
+
+.home-document-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.home-document-subtitle {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #667085;
+}
+
+.home-document-view {
+    padding: 8px 10px;
+    background: #f2f4f7;
+    color: #101828;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.home-document-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.home-document-card {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.home-document-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: #f2f4f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.home-document-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.home-document-info strong {
+    font-size: 13px;
+    color: #101828;
+}
+
+.home-document-info small {
+    font-size: 10px;
+    color: #b42318;
+    font-weight: 600;
+}
+
+.home-document-empty {
+    padding: 16px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.home-document-empty > span {
+    font-size: 22px;
+}
+
+.home-document-empty div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.home-document-empty strong {
+    font-size: 13px;
+    color: #101828;
+}
+
+.home-document-empty small {
+    font-size: 11px;
+    color: #667085;
+}
+
+body.dark-theme
+.home-document-view {
+    background: #344054;
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-document-subtitle {
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-document-card,
+body.dark-theme
+.home-document-empty {
+    background: #1d2939;
+    border-color: #344054;
+}
+
+body.dark-theme
+.home-document-icon {
+    background: #344054;
+}
+
+body.dark-theme
+.home-document-info strong,
+body.dark-theme
+.home-document-empty strong {
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-document-info small {
+    color: #fda29b;
+}
+
+body.dark-theme
+.home-document-empty small {
+    color: #98a2b3;
+}
+
+</style>
+   <script>
+
+function showHomeMoneySnapshot() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-money-snapshot"
+        )
+    ) return;
+
+    const payments =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrPayments"
+            ) || "[]"
+        );
+
+    let income = 0;
+    let expenses = 0;
+    let pending = 0;
+
+    payments.forEach(function(payment) {
+
+        const amount =
+            Number(payment.amount) || 0;
+
+        if (
+            payment.status === "pending"
+        ) {
+
+            pending += amount;
+
+        }
+
+        if (
+            payment.status === "paid" &&
+            payment.type === "income"
+        ) {
+
+            income += amount;
+
+        }
+
+        if (
+            payment.status === "paid" &&
+            payment.type === "expense"
+        ) {
+
+            expenses += amount;
+
+        }
+
+    });
+
+    const balance =
+        income - expenses;
+
+    const section =
+        document.createElement("div");
+
+    section.className =
+        "home-money-snapshot";
+
+    section.innerHTML = `
+
+        <div class="home-money-header">
+
+            <div>
+
+                <div class="section-title">
+                    Money Snapshot
+                </div>
+
+                <div class="home-money-subtitle">
+                    Your current financial overview
+                </div>
+
+            </div>
+
+            <button
+                class="home-money-view"
+                onclick="openMoney()">
+
+                View Money
+
+            </button>
+
+        </div>
+
+        <div class="home-money-grid">
+
+            <div class="home-money-card">
+
+                <span
+                    class="home-money-icon">
+                    💰
+                </span>
+
+                <span
+                    class="home-money-label">
+                    Balance
+                </span>
+
+                <strong>
+                    ₹${balance.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+            <div class="home-money-card">
+
+                <span
+                    class="home-money-icon">
+                    ⏳
+                </span>
+
+                <span
+                    class="home-money-label">
+                    Pending
+                </span>
+
+                <strong>
+                    ₹${pending.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+            <div class="home-money-card">
+
+                <span
+                    class="home-money-icon">
+                    📉
+                </span>
+
+                <span
+                    class="home-money-label">
+                    Expenses
+                </span>
+
+                <strong>
+                    ₹${expenses.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+    const documents =
+        document.querySelector(
+            ".home-expiring-documents"
+        );
+
+    if (documents) {
+
+        documents.insertAdjacentElement(
+            "afterend",
+            section
+        );
+
+    } else {
+
+        homeSection.appendChild(
+            section
+        );
+
+    }
+
+}
+
+
+const homeBeforeMoneySnapshot =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeMoneySnapshot();
+
+    setTimeout(function() {
+
+        showHomeMoneySnapshot();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.home-money-snapshot {
+    margin-top: 22px;
+}
+
+.home-money-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.home-money-subtitle {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #667085;
+}
+
+.home-money-view {
+    padding: 8px 10px;
+    background: #f2f4f7;
+    color: #101828;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.home-money-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.home-money-card {
+    min-width: 0;
+    padding: 12px 8px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.home-money-icon {
+    font-size: 18px;
+}
+
+.home-money-label {
+    font-size: 10px;
+    color: #667085;
+}
+
+.home-money-card strong {
+    font-size: 13px;
+    color: #101828;
+    word-break: break-word;
+}
+
+body.dark-theme
+.home-money-view {
+    background: #344054;
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-money-subtitle {
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-money-card {
+    background: #1d2939;
+    border-color: #344054;
+}
+
+body.dark-theme
+.home-money-label {
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-money-card strong {
+    color: #f9fafb;
+}
+
+@media (max-width: 380px) {
+
+    .home-money-card {
+        padding: 10px 6px;
+    }
+
+    .home-money-card strong {
+        font-size: 11px;
+    }
+
+}
+
+</style>
+   <script>
+
+function showHomeHealthSnapshot() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-health-snapshot"
+        )
+    ) return;
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMedicines"
+            ) || "[]"
+        );
+
+    const records =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrHealthRecords"
+            ) || "[]"
+        );
+
+    const appointments =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrAppointments"
+            ) || "[]"
+        );
+
+    const measurements =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrMeasurements"
+            ) || "[]"
+        );
+
+    const section =
+        document.createElement("div");
+
+    section.className =
+        "home-health-snapshot";
+
+    section.innerHTML = `
+
+        <div class="home-health-header">
+
+            <div>
+
+                <div class="section-title">
+                    Health Snapshot
+                </div>
+
+                <div class="home-health-subtitle">
+                    Your saved health information
+                </div>
+
+            </div>
+
+            <button
+                class="home-health-view"
+                onclick="openHealth()">
+
+                View Health
+
+            </button>
+
+        </div>
+
+        <div class="home-health-grid">
+
+            <div
+                class="home-health-card">
+
+                <span
+                    class="home-health-icon">
+                    💊
+                </span>
+
+                <strong>
+                    ${medicines.length}
+                </strong>
+
+                <small>
+                    Medicines
+                </small>
+
+            </div>
+
+            <div
+                class="home-health-card">
+
+                <span
+                    class="home-health-icon">
+                    📋
+                </span>
+
+                <strong>
+                    ${records.length}
+                </strong>
+
+                <small>
+                    Health Records
+                </small>
+
+            </div>
+
+            <div
+                class="home-health-card">
+
+                <span
+                    class="home-health-icon">
+                    🩺
+                </span>
+
+                <strong>
+                    ${appointments.length}
+                </strong>
+
+                <small>
+                    Appointments
+                </small>
+
+            </div>
+
+            <div
+                class="home-health-card">
+
+                <span
+                    class="home-health-icon">
+                    📊
+                </span>
+
+                <strong>
+                    ${measurements.length}
+                </strong>
+
+                <small>
+                    Measurements
+                </small>
+
+            </div>
+
+        </div>
+
+    `;
+
+    const money =
+        document.querySelector(
+            ".home-money-snapshot"
+        );
+
+    if (money) {
+
+        money.insertAdjacentElement(
+            "afterend",
+            section
+        );
+
+    } else {
+
+        homeSection.appendChild(
+            section
+        );
+
+    }
+
+}
+
+
+const homeBeforeHealthSnapshot =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeHealthSnapshot();
+
+    setTimeout(function() {
+
+        showHomeHealthSnapshot();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.home-health-snapshot {
+    margin-top: 22px;
+}
+
+.home-health-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.home-health-subtitle {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #667085;
+}
+
+.home-health-view {
+    padding: 8px 10px;
+    background: #f2f4f7;
+    color: #101828;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.home-health-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-health-card {
+    padding: 14px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.home-health-icon {
+    font-size: 20px;
+}
+
+.home-health-card strong {
+    font-size: 20px;
+    color: #101828;
+}
+
+.home-health-card small {
+    font-size: 11px;
+    color: #667085;
+}
+
+body.dark-theme
+.home-health-view {
+    background: #344054;
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-health-subtitle {
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-health-card {
+    background: #1d2939;
+    border-color: #344054;
+}
+
+body.dark-theme
+.home-health-card strong {
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-health-card small {
+    color: #98a2b3;
+}
+
+</style>
+   <script>
+
+function showHomeFamilySnapshot() {
+
+    const homeSection =
+        document.querySelector(".home-section");
+
+    if (!homeSection) return;
+
+    if (
+        document.querySelector(
+            ".home-family-snapshot"
+        )
+    ) return;
+
+    const family =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrFamily"
+            ) || "[]"
+        );
+
+    const withPhone =
+        family.filter(function(member) {
+            return member.phone &&
+                   member.phone.trim();
+        }).length;
+
+    const withEmail =
+        family.filter(function(member) {
+            return member.email &&
+                   member.email.trim();
+        }).length;
+
+    const section =
+        document.createElement("div");
+
+    section.className =
+        "home-family-snapshot";
+
+    section.innerHTML = `
+
+        <div class="home-family-header">
+
+            <div>
+
+                <div class="section-title">
+                    Family Snapshot
+                </div>
+
+                <div class="home-family-subtitle">
+                    Your saved family contacts
+                </div>
+
+            </div>
+
+            <button
+                class="home-family-view"
+                onclick="openFamily()">
+
+                View Family
+
+            </button>
+
+        </div>
+
+        <div class="home-family-grid">
+
+            <div class="home-family-card">
+
+                <span
+                    class="home-family-icon">
+                    👨‍👩‍👧‍👦
+                </span>
+
+                <strong>
+                    ${family.length}
+                </strong>
+
+                <small>
+                    Family Members
+                </small>
+
+            </div>
+
+            <div class="home-family-card">
+
+                <span
+                    class="home-family-icon">
+                    📞
+                </span>
+
+                <strong>
+                    ${withPhone}
+                </strong>
+
+                <small>
+                    Phone Available
+                </small>
+
+            </div>
+
+            <div class="home-family-card">
+
+                <span
+                    class="home-family-icon">
+                    ✉️
+                </span>
+
+                <strong>
+                    ${withEmail}
+                </strong>
+
+                <small>
+                    Email Available
+                </small>
+
+            </div>
+
+        </div>
+
+    `;
+
+    const health =
+        document.querySelector(
+            ".home-health-snapshot"
+        );
+
+    if (health) {
+
+        health.insertAdjacentElement(
+            "afterend",
+            section
+        );
+
+    } else {
+
+        homeSection.appendChild(
+            section
+        );
+
+    }
+
+}
+
+
+const homeBeforeFamilySnapshot =
+    showHome;
+
+showHome = function() {
+
+    homeBeforeFamilySnapshot();
+
+    setTimeout(function() {
+
+        showHomeFamilySnapshot();
+
+    }, 0);
+
+};
+
+</script>
+
+<style>
+
+.home-family-snapshot {
+    margin-top: 22px;
+}
+
+.home-family-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.home-family-subtitle {
+    margin-top: 4px;
+    font-size: 11px;
+    color: #667085;
+}
+
+.home-family-view {
+    padding: 8px 10px;
+    background: #f2f4f7;
+    color: #101828;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.home-family-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.home-family-card {
+    min-width: 0;
+    padding: 13px 8px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+.home-family-icon {
+    font-size: 19px;
+}
+
+.home-family-card strong {
+    font-size: 19px;
+    color: #101828;
+}
+
+.home-family-card small {
+    font-size: 10px;
+    color: #667085;
+}
+
+body.dark-theme
+.home-family-view {
+    background: #344054;
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-family-subtitle {
+    color: #98a2b3;
+}
+
+body.dark-theme
+.home-family-card {
+    background: #1d2939;
+    border-color: #344054;
+}
+
+body.dark-theme
+.home-family-card strong {
+    color: #f9fafb;
+}
+
+body.dark-theme
+.home-family-card small {
+    color: #98a2b3;
+}
+
+@media (max-width: 380px) {
+
+    .home-family-card {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .home-family-card small {
+        font-size: 9px;
+    }
+
+}
+
+</style>

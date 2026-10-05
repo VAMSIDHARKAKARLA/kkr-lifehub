@@ -2136,9 +2136,33 @@ function openAbout() {
         "Personal Life Management App"
     );
 }
+// Keep KKR LifeHub top bar permanently visible
 
+function keepTopBar() {
 
-// Add menu button after Home loads
+    if (!document.querySelector(".kkr-topbar")) {
+
+        const topBar = document.createElement("div");
+
+        topBar.className = "kkr-topbar";
+
+        topBar.innerHTML = `
+            <button class="kkr-menu-btn" onclick="openSideMenu()">
+                ☰
+            </button>
+
+            <div class="kkr-top-title">
+                KKR LifeHub
+            </div>
+        `;
+
+        document.body.prepend(topBar);
+    }
+}
+
+keepTopBar();
+
+setInterval(keepTopBar, 300);
 
       if ("serviceWorker" in navigator) {
 

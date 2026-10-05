@@ -4937,3 +4937,1203 @@ openDocuments = function() {
 };
 
    </script>
+   <script>
+
+/* =========================
+   REMINDERS PAGE
+   ========================= */
+
+function openReminders() {
+
+    const app =
+        document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <h1 class="page-title">
+                ⏰ Reminders
+            </h1>
+
+            <p class="page-subtitle">
+                Manage your important reminders
+            </p>
+
+
+            <!-- ADD REMINDER -->
+
+            <button class="add-medicine-btn"
+                    onclick="openAddReminder()">
+
+                <span>
+                    ＋
+                </span>
+
+                Add Reminder
+
+            </button>
+
+
+            <!-- REMINDER FILTER -->
+
+            <div class="reminder-filter">
+
+                <button
+                    class="reminder-filter-btn active"
+                    onclick="showReminderList('all')">
+
+                    All
+
+                </button>
+
+
+                <button
+                    class="reminder-filter-btn"
+                    onclick="showReminderList('pending')">
+
+                    Pending
+
+                </button>
+
+
+                <button
+                    class="reminder-filter-btn"
+                    onclick="showReminderList('completed')">
+
+                    Completed
+
+                </button>
+
+            </div>
+
+
+            <!-- REMINDER LIST -->
+
+            <div id="reminderList">
+
+            </div>
+
+        </section>
+
+    `;
+
+
+    loadReminders();
+
+}
+
+
+/* =========================
+   ADD REMINDER PAGE
+   ========================= */
+
+function openAddReminder() {
+
+    const app =
+        document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openReminders()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                ⏰ Add Reminder
+            </h1>
+
+            <p class="page-subtitle">
+                Create a new reminder
+            </p>
+
+
+            <!-- TITLE -->
+
+            <label class="form-label">
+                Reminder Title
+            </label>
+
+            <input
+                class="form-input"
+                id="reminderTitle"
+                type="text"
+                placeholder="Example: Doctor appointment">
+
+
+            <!-- CATEGORY -->
+
+            <label class="form-label">
+                Category
+            </label>
+
+            <select
+                class="form-input"
+                id="reminderCategory">
+
+                <option value="">
+                    Select category
+                </option>
+
+                <option>
+                    Health
+                </option>
+
+                <option>
+                    Payment
+                </option>
+
+                <option>
+                    Document
+                </option>
+
+                <option>
+                    Personal
+                </option>
+
+                <option>
+                    Work
+                </option>
+
+                <option>
+                    Other
+                </option>
+
+            </select>
+
+
+            <!-- DATE -->
+
+            <label class="form-label">
+                Date
+            </label>
+
+            <input
+                class="form-input"
+                id="reminderDate"
+                type="date">
+
+
+            <!-- TIME -->
+
+            <label class="form-label">
+                Time
+            </label>
+
+            <input
+                class="form-input"
+                id="reminderTime"
+                type="time">
+
+
+            <!-- NOTES -->
+
+            <label class="form-label">
+                Notes
+            </label>
+
+            <textarea
+                class="form-input form-textarea"
+                id="reminderNotes"
+                placeholder="Add reminder notes..."></textarea>
+
+
+            <!-- SAVE -->
+
+            <button class="save-button"
+                    onclick="saveReminder()">
+
+                Save Reminder
+
+            </button>
+
+        </section>
+
+    `;
+
+}
+
+
+/* =========================
+   SAVE REMINDER
+   ========================= */
+
+function saveReminder() {
+
+    const title =
+        document.getElementById(
+            "reminderTitle"
+        ).value.trim();
+
+
+    const category =
+        document.getElementById(
+            "reminderCategory"
+        ).value;
+
+
+    const date =
+        document.getElementById(
+            "reminderDate"
+        ).value;
+
+
+    const time =
+        document.getElementById(
+            "reminderTime"
+        ).value;
+
+
+    const notes =
+        document.getElementById(
+            "reminderNotes"
+        ).value.trim();
+
+
+    if (!title || !date) {
+
+        alert(
+            "Please enter reminder title and date."
+        );
+
+        return;
+
+    }
+
+
+    const reminder = {
+
+        id: Date.now(),
+
+        title: title,
+
+        category: category,
+
+        date: date,
+
+        time: time,
+
+        notes: notes,
+
+        completed: false
+
+    };
+
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    reminders.push(reminder);
+
+
+    localStorage.setItem(
+        "kkrReminders",
+        JSON.stringify(reminders)
+    );
+
+
+    alert(
+        "Reminder saved successfully."
+    );
+
+
+    openReminders();
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   REMINDER FILTER
+   ========================= */
+
+.reminder-filter {
+
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 16px;
+
+}
+
+
+.reminder-filter-btn {
+
+    flex: 1;
+
+    height: 36px;
+
+    border-radius: 9px;
+
+    background: #f2f4f7;
+
+    color: #475467;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+}
+
+
+.reminder-filter-btn.active {
+
+    background: #101828;
+
+    color: #ffffff;
+
+}
+
+
+/* =========================
+   REMINDER CARD
+   ========================= */
+
+.reminder-card {
+
+    margin-top: 10px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+
+}
+
+
+.reminder-card-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+}
+
+
+.reminder-icon {
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+
+}
+
+
+.reminder-info {
+
+    flex: 1;
+
+}
+
+
+.reminder-info strong {
+
+    display: block;
+
+    font-size: 14px;
+
+}
+
+
+.reminder-info small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #667085;
+
+}
+
+
+.reminder-details {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 12px;
+
+}
+
+
+.reminder-details span {
+
+    padding: 6px 8px;
+
+    border-radius: 8px;
+
+    background: #f2f4f7;
+
+    color: #475467;
+
+    font-size: 10px;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   LOAD REMINDERS
+   ========================= */
+
+function loadReminders(filter = "all") {
+
+    const container =
+        document.getElementById(
+            "reminderList"
+        );
+
+    if (!container) {
+        return;
+    }
+
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    let filtered =
+        reminders;
+
+
+    if (filter === "pending") {
+
+        filtered =
+            reminders.filter(function(reminder) {
+
+                return !reminder.completed;
+
+            });
+
+    }
+
+
+    if (filter === "completed") {
+
+        filtered =
+            reminders.filter(function(reminder) {
+
+                return reminder.completed;
+
+            });
+
+    }
+
+
+    if (filtered.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>⏰</div>
+
+                <strong>
+                    No reminders found
+                </strong>
+
+                <small>
+                    Your reminders will appear here
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        filtered.map(function(reminder) {
+
+            return `
+
+                <div class="reminder-card">
+
+                    <div class="reminder-card-top">
+
+                        <div class="reminder-icon">
+                            ⏰
+                        </div>
+
+
+                        <div class="reminder-info">
+
+                            <strong>
+                                ${reminder.title}
+                            </strong>
+
+                            <small>
+                                ${reminder.category || "General"}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="reminder-details">
+
+                        <span>
+                            📅 ${reminder.date}
+                        </span>
+
+                        <span>
+                            ⏰ ${reminder.time || "No time"}
+                        </span>
+
+                    </div>
+
+
+                    ${
+                        reminder.notes
+                        ?
+                        `
+                        <div class="reminder-notes">
+                            📝 ${reminder.notes}
+                        </div>
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <div class="reminder-actions">
+
+                        ${
+                            reminder.completed
+
+                            ?
+
+                            `
+                            <button
+                                onclick="markReminderPending(${reminder.id})">
+
+                                ↩️ Pending
+
+                            </button>
+                            `
+
+                            :
+
+                            `
+                            <button
+                                onclick="completeReminder(${reminder.id})">
+
+                                ✅ Complete
+
+                            </button>
+                            `
+                        }
+
+
+                        <button
+                            onclick="deleteReminder(${reminder.id})">
+
+                            🗑️ Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* =========================
+   FILTER REMINDERS
+   ========================= */
+
+function showReminderList(filter) {
+
+    loadReminders(filter);
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".reminder-filter-btn"
+        );
+
+
+    buttons.forEach(function(button) {
+
+        button.classList.remove("active");
+
+    });
+
+
+    if (filter === "all") {
+        buttons[0].classList.add("active");
+    }
+
+
+    if (filter === "pending") {
+        buttons[1].classList.add("active");
+    }
+
+
+    if (filter === "completed") {
+        buttons[2].classList.add("active");
+    }
+
+}
+
+
+/* =========================
+   COMPLETE REMINDER
+   ========================= */
+
+function completeReminder(id) {
+
+    let reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    reminders =
+        reminders.map(function(reminder) {
+
+            if (reminder.id === id) {
+
+                reminder.completed = true;
+
+            }
+
+            return reminder;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrReminders",
+        JSON.stringify(reminders)
+    );
+
+
+    loadReminders();
+
+}
+
+
+/* =========================
+   MARK AS PENDING
+   ========================= */
+
+function markReminderPending(id) {
+
+    let reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    reminders =
+        reminders.map(function(reminder) {
+
+            if (reminder.id === id) {
+
+                reminder.completed = false;
+
+            }
+
+            return reminder;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrReminders",
+        JSON.stringify(reminders)
+    );
+
+
+    loadReminders();
+
+}
+
+
+/* =========================
+   DELETE REMINDER
+   ========================= */
+
+function deleteReminder(id) {
+
+    if (
+        !confirm(
+            "Delete this reminder?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    let reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    reminders =
+        reminders.filter(function(reminder) {
+
+            return reminder.id !== id;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrReminders",
+        JSON.stringify(reminders)
+    );
+
+
+    loadReminders();
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   REMINDER NOTES
+   ========================= */
+
+.reminder-notes {
+
+    margin-top: 10px;
+
+    padding: 9px;
+
+    border-radius: 9px;
+
+    background: #f9fafb;
+
+    color: #475467;
+
+    font-size: 10px;
+
+    line-height: 15px;
+
+}
+
+
+/* =========================
+   REMINDER ACTIONS
+   ========================= */
+
+.reminder-actions {
+
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 12px;
+
+}
+
+
+.reminder-actions button {
+
+    flex: 1;
+
+    min-height: 35px;
+
+    border-radius: 9px;
+
+    background: #f2f4f7;
+
+    color: #344054;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+}
+
+
+.reminder-actions button:last-child {
+
+    color: #b42318;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   EDIT REMINDER
+   ========================= */
+
+function editReminder(id) {
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    const reminder =
+        reminders.find(function(item) {
+
+            return item.id === id;
+
+        });
+
+
+    if (!reminder) {
+        return;
+    }
+
+
+    const app =
+        document.getElementById("app");
+
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <button class="back-button"
+                    onclick="openReminders()">
+
+                ← Back
+
+            </button>
+
+
+            <h1 class="page-title">
+                ✏️ Edit Reminder
+            </h1>
+
+            <p class="page-subtitle">
+                Update your reminder
+            </p>
+
+
+            <label class="form-label">
+                Reminder Title
+            </label>
+
+            <input
+                class="form-input"
+                id="editReminderTitle"
+                value="${reminder.title}">
+
+
+            <label class="form-label">
+                Category
+            </label>
+
+            <select
+                class="form-input"
+                id="editReminderCategory">
+
+                <option>Health</option>
+                <option>Payment</option>
+                <option>Document</option>
+                <option>Personal</option>
+                <option>Work</option>
+                <option>Other</option>
+
+            </select>
+
+
+            <label class="form-label">
+                Date
+            </label>
+
+            <input
+                class="form-input"
+                id="editReminderDate"
+                type="date"
+                value="${reminder.date}">
+
+
+            <label class="form-label">
+                Time
+            </label>
+
+            <input
+                class="form-input"
+                id="editReminderTime"
+                type="time"
+                value="${reminder.time || ""}">
+
+
+            <label class="form-label">
+                Notes
+            </label>
+
+            <textarea
+                class="form-input form-textarea"
+                id="editReminderNotes">${reminder.notes || ""}</textarea>
+
+
+            <button class="save-button"
+                    onclick="updateReminder(${reminder.id})">
+
+                Update Reminder
+
+            </button>
+
+        </section>
+
+    `;
+
+
+    document.getElementById(
+        "editReminderCategory"
+    ).value =
+        reminder.category || "Other";
+
+}
+
+
+/* =========================
+   UPDATE REMINDER
+   ========================= */
+
+function updateReminder(id) {
+
+    let reminders =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrReminders"
+            ) || "[]"
+        );
+
+
+    reminders =
+        reminders.map(function(reminder) {
+
+            if (reminder.id === id) {
+
+                reminder.title =
+                    document.getElementById(
+                        "editReminderTitle"
+                    ).value.trim();
+
+
+                reminder.category =
+                    document.getElementById(
+                        "editReminderCategory"
+                    ).value;
+
+
+                reminder.date =
+                    document.getElementById(
+                        "editReminderDate"
+                    ).value;
+
+
+                reminder.time =
+                    document.getElementById(
+                        "editReminderTime"
+                    ).value;
+
+
+                reminder.notes =
+                    document.getElementById(
+                        "editReminderNotes"
+                    ).value.trim();
+
+            }
+
+            return reminder;
+
+        });
+
+
+    localStorage.setItem(
+        "kkrReminders",
+        JSON.stringify(reminders)
+    );
+
+
+    alert(
+        "Reminder updated successfully."
+    );
+
+
+    openReminders();
+
+}
+
+   </script>
+   <script>
+
+/* =========================
+   ADD EDIT BUTTON TO REMINDERS
+   ========================= */
+
+const originalLoadReminders =
+    loadReminders;
+
+
+loadReminders = function(filter = "all") {
+
+    originalLoadReminders(filter);
+
+
+    setTimeout(function() {
+
+        const cards =
+            document.querySelectorAll(
+                ".reminder-card"
+            );
+
+
+        const reminders =
+            JSON.parse(
+                localStorage.getItem(
+                    "kkrReminders"
+                ) || "[]"
+            );
+
+
+        cards.forEach(function(card, index) {
+
+            const buttons =
+                card.querySelector(
+                    ".reminder-actions"
+                );
+
+
+            if (!buttons) {
+                return;
+            }
+
+
+            const reminder =
+                reminders[index];
+
+
+            if (!reminder) {
+                return;
+            }
+
+
+            if (
+                card.querySelector(
+                    ".edit-reminder-btn"
+                )
+            ) {
+                return;
+            }
+
+
+            const editButton =
+                document.createElement("button");
+
+
+            editButton.className =
+                "edit-reminder-btn";
+
+
+            editButton.innerHTML =
+                "✏️ Edit";
+
+
+            editButton.onclick =
+                function() {
+
+                    editReminder(
+                        reminder.id
+                    );
+
+                };
+
+
+            buttons.insertBefore(
+                editButton,
+                buttons.firstChild
+            );
+
+        });
+
+    }, 0);
+
+};
+
+</script>
+
+
+<style>
+
+/* =========================
+   EDIT REMINDER BUTTON
+   ========================= */
+
+.edit-reminder-btn {
+
+    color: #344054 !important;
+
+}
+
+</style>

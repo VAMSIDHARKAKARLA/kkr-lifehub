@@ -29139,6 +29139,828 @@ window.addEventListener(
 );
 
    </script>
+   <script>
+
+window.kkrNavigationReady =
+    window.kkrNavigationReady || false;
+
+window.kkrNavigationHistory =
+    window.kkrNavigationHistory || [];
+
+
+function lifeHubNavigate(
+    pageName,
+    pageFunction
+) {
+
+    if (
+        typeof pageFunction !==
+        "function"
+    ) {
+        return;
+    }
+
+    window.kkrNavigationHistory.push(
+        pageName
+    );
+
+    if (
+        window.kkrNavigationHistory.length >
+        20
+    ) {
+
+        window.kkrNavigationHistory.shift();
+
+    }
+
+    history.pushState(
+        {
+            lifeHubPage:
+                pageName
+        },
+        "",
+        "#"
+        + pageName
+    );
+
+    pageFunction();
+
+    updateLifeHubBackButton();
+
+}
+
+
+function lifeHubGoBack() {
+
+    if (
+        window.kkrNavigationHistory.length >
+        1
+    ) {
+
+        window.kkrNavigationHistory.pop();
+
+        history.back();
+
+        return;
+
+    }
+
+    showHome();
+
+    updateLifeHubBackButton();
+
+}
+
+
+function updateLifeHubBackButton() {
+
+    const button =
+        document.querySelector(
+            ".lifehub-back-button"
+        );
+
+    if (!button) {
+        return;
+    }
+
+    if (
+        window.kkrNavigationHistory.length >
+        1
+    ) {
+
+        button.style.display =
+            "flex";
+
+    } else {
+
+        button.style.display =
+            "none";
+
+    }
+
+}
+
+
+function createLifeHubBackButton() {
+
+    if (
+        document.querySelector(
+            ".lifehub-back-button"
+        )
+    ) {
+        return;
+    }
+
+    const button =
+        document.createElement(
+            "button"
+        );
+
+    button.className =
+        "lifehub-back-button";
+
+    button.innerHTML =
+        "←";
+
+    button.title =
+        "Back";
+
+    button.onclick =
+        function() {
+
+            lifeHubGoBack();
+
+        };
+
+    const topbarLeft =
+        document.querySelector(
+            ".topbar-left"
+        );
+
+    if (topbarLeft) {
+
+        topbarLeft.insertBefore(
+            button,
+            topbarLeft.firstChild
+        );
+
+    }
+
+}
+
+
+function setupLifeHubNavigation() {
+
+    if (
+        window.kkrNavigationReady
+    ) {
+        return;
+    }
+
+    window.kkrNavigationReady =
+        true;
+
+    createLifeHubBackButton();
+
+    if (
+        window.kkrNavigationHistory.length ===
+        0
+    ) {
+
+        window.kkrNavigationHistory.push(
+            "home"
+        );
+
+        history.replaceState(
+            {
+                lifeHubPage:
+                    "home"
+            },
+            "",
+            "#home"
+        );
+
+    }
+
+    updateLifeHubBackButton();
+
+}
+
+
+window.addEventListener(
+    "popstate",
+    function() {
+
+        const page =
+            window.kkrNavigationHistory[
+                window.kkrNavigationHistory.length - 1
+            ];
+
+        if (
+            page === "home" ||
+            !page
+        ) {
+
+            showHome();
+
+            updateLifeHubBackButton();
+
+            return;
+
+        }
+
+        lifeHubGoBack();
+
+    }
+);
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        setTimeout(
+            setupLifeHubNavigation,
+            500
+        );
+
+    }
+);
+
+</script>
+
+<style>
+
+.lifehub-back-button {
+
+    width: 40px;
+
+    height: 40px;
+
+    margin-right: 2px;
+
+    border-radius: 12px;
+
+    background: #1d2939;
+
+    color: white;
+
+    font-size: 22px;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-shrink: 0;
+
+}
+
+.lifehub-back-button:active {
+
+    transform:
+        scale(0.94);
+
+}
+
+body.dark-theme
+.lifehub-back-button {
+
+    background: #344054;
+
+}
+
+</style>
+   <script>
+
+function lifeHubRenderPreviousPage() {
+
+    if (
+        window.kkrNavigationHistory.length <= 1
+    ) {
+
+        showHome();
+
+        updateLifeHubBackButton();
+
+        return;
+
+    }
+
+    window.kkrNavigationHistory.pop();
+
+    const previousPage =
+        window.kkrNavigationHistory[
+            window.kkrNavigationHistory.length - 1
+        ];
+
+    const pageFunction =
+        window[
+            previousPage
+        ];
+
+    if (
+        typeof pageFunction ===
+        "function"
+    ) {
+
+        pageFunction();
+
+    } else {
+
+        showHome();
+
+    }
+
+    updateLifeHubBackButton();
+
+}
+
+
+/*
+ Prevent the older navigation
+ foundation from interfering.
+*/
+
+goBackInLifeHub =
+    function() {
+        return;
+    };
+
+
+/*
+ Browser / Android Back
+*/
+
+window.removeEventListener(
+    "popstate",
+    function() {}
+);
+
+
+window.addEventListener(
+    "popstate",
+    function() {
+
+        lifeHubRenderPreviousPage();
+
+    }
+);
+
+
+/*
+ Connect important LifeHub pages.
+*/
+
+function connectLifeHubPage(
+    pageName
+) {
+
+    const pageFunction =
+        window[
+            pageName
+        ];
+
+    if (
+        typeof pageFunction !==
+        "function"
+    ) {
+        return;
+    }
+
+    if (
+        pageFunction.__lifeHubNavigation
+    ) {
+        return;
+    }
+
+    const wrappedPage =
+        function() {
+
+            if (
+                !window.kkrNavigationHistory.length ||
+                window.kkrNavigationHistory[
+                    window.kkrNavigationHistory.length - 1
+                ] !== pageName
+            ) {
+
+                window.kkrNavigationHistory.push(
+                    pageName
+                );
+
+                history.pushState(
+                    {
+                        lifeHubPage:
+                            pageName
+                    },
+                    "",
+                    "#"
+                    + pageName
+                );
+
+            }
+
+            pageFunction.apply(
+                this,
+                arguments
+            );
+
+            updateLifeHubBackButton();
+
+        };
+
+    wrappedPage.__lifeHubNavigation =
+        true;
+
+    window[
+        pageName
+    ] =
+        wrappedPage;
+
+}
+
+
+/*
+ Main pages
+*/
+
+[
+    "openHealth",
+    "openMedicines",
+    "openDocuments",
+    "openMoney",
+    "openReminders",
+    "openFamily",
+    "openAlerts",
+    "openEmergency",
+    "openProfile",
+    "openSettings",
+    "openHelpSupport",
+    "openAbout",
+    "openAI",
+    "openGlobalSearch"
+].forEach(
+    function(pageName) {
+
+        connectLifeHubPage(
+            pageName
+        );
+
+    }
+);
+
+
+setTimeout(
+    function() {
+
+        setupLifeHubNavigation();
+
+        updateLifeHubBackButton();
+
+    },
+    1000
+);
+
+   </script>
+   <script>
+
+[
+    "openHealthRecords",
+    "openAppointments",
+    "openHealthSummary",
+    "openMeasurements",
+    "openEmergencyHealth",
+    "openFavoriteDocuments",
+    "openReminders",
+    "openAddReminder",
+    "openAddFamilyMember",
+    "openAddPayment",
+    "openAddAlert",
+    "openEmergencyContact",
+    "openAddHealthRecord",
+    "openAddAppointment",
+    "openAddMeasurement",
+    "openAddDocument",
+    "openAddMedicine"
+].forEach(
+    function(pageName) {
+
+        connectLifeHubPage(
+            pageName
+        );
+
+    }
+);
+
+
+function addLifeHubBackButtonToPage() {
+
+    const app =
+        document.getElementById(
+            "app"
+        );
+
+    if (!app) {
+        return;
+    }
+
+    if (
+        app.querySelector(
+            ".page-inner-back"
+        )
+    ) {
+        return;
+    }
+
+    const button =
+        document.createElement(
+            "button"
+        );
+
+    button.className =
+        "page-inner-back";
+
+    button.innerHTML =
+        "← Back";
+
+    button.onclick =
+        function() {
+
+            lifeHubRenderPreviousPage();
+
+        };
+
+    const firstElement =
+        app.firstElementChild;
+
+    if (firstElement) {
+
+        firstElement.insertBefore(
+            button,
+            firstElement.firstChild
+        );
+
+    } else {
+
+        app.insertBefore(
+            button,
+            app.firstChild
+        );
+
+    }
+
+}
+
+
+const originalLifeHubPageRender =
+    updateLifeHubBackButton;
+
+updateLifeHubBackButton =
+    function() {
+
+        originalLifeHubPageRender();
+
+        setTimeout(
+            addLifeHubBackButtonToPage,
+            0
+        );
+
+    };
+
+</script>
+
+<style>
+
+.page-inner-back {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 14px;
+
+    padding: 9px 14px;
+
+    border-radius: 10px;
+
+    background: #f2f4f7;
+
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+.page-inner-back:active {
+
+    transform:
+        scale(0.97);
+
+}
+
+body.dark-theme
+.page-inner-back {
+
+    background: #1d2939;
+
+    color: #f9fafb;
+
+}
+
+</style>
+   <script>
+
+function lifeHubReturnAfterSave(
+    pageFunction
+) {
+
+    if (
+        typeof pageFunction !==
+        "function"
+    ) {
+        showHome();
+        return;
+    }
+
+    setTimeout(
+        function() {
+
+            pageFunction();
+
+            updateLifeHubBackButton();
+
+        },
+        100
+    );
+
+}
+
+
+/*
+ Medicine
+*/
+
+const lifeHubOriginalSaveMedicine =
+    saveMedicine;
+
+saveMedicine = function() {
+
+    lifeHubOriginalSaveMedicine();
+
+    lifeHubReturnAfterSave(
+        openMedicines
+    );
+
+};
+
+
+/*
+ Document
+*/
+
+const lifeHubOriginalSaveDocument =
+    saveDocument;
+
+saveDocument = function() {
+
+    lifeHubOriginalSaveDocument();
+
+    lifeHubReturnAfterSave(
+        openDocuments
+    );
+
+};
+
+
+/*
+ Reminder
+*/
+
+const lifeHubOriginalSaveReminder =
+    saveReminder;
+
+saveReminder = function() {
+
+    lifeHubOriginalSaveReminder();
+
+    lifeHubReturnAfterSave(
+        openReminders
+    );
+
+};
+
+
+/*
+ Family
+*/
+
+const lifeHubOriginalSaveFamily =
+    saveFamilyMember;
+
+saveFamilyMember = function() {
+
+    lifeHubOriginalSaveFamily();
+
+    lifeHubReturnAfterSave(
+        openFamily
+    );
+
+};
+
+
+/*
+ Money
+*/
+
+const lifeHubOriginalSavePayment =
+    savePayment;
+
+savePayment = function() {
+
+    lifeHubOriginalSavePayment();
+
+    lifeHubReturnAfterSave(
+        openMoney
+    );
+
+};
+
+
+/*
+ Alerts
+*/
+
+const lifeHubOriginalSaveAlert =
+    saveAlert;
+
+saveAlert = function() {
+
+    lifeHubOriginalSaveAlert();
+
+    lifeHubReturnAfterSave(
+        openAlerts
+    );
+
+};
+
+
+/*
+ Health Records
+*/
+
+const lifeHubOriginalSaveHealthRecord =
+    saveHealthRecord;
+
+saveHealthRecord = function() {
+
+    lifeHubOriginalSaveHealthRecord();
+
+    lifeHubReturnAfterSave(
+        openHealthRecords
+    );
+
+};
+
+
+/*
+ Appointments
+*/
+
+const lifeHubOriginalSaveAppointment =
+    saveAppointment;
+
+saveAppointment = function() {
+
+    lifeHubOriginalSaveAppointment();
+
+    lifeHubReturnAfterSave(
+        openAppointments
+    );
+
+};
+
+
+/*
+ Measurements
+*/
+
+const lifeHubOriginalSaveMeasurement =
+    saveMeasurement;
+
+saveMeasurement = function() {
+
+    lifeHubOriginalSaveMeasurement();
+
+    lifeHubReturnAfterSave(
+        openMeasurements
+    );
+
+};
+
+
+/*
+ Emergency Contact
+*/
+
+const lifeHubOriginalSaveEmergencyContact =
+    saveEmergencyContact;
+
+saveEmergencyContact = function(type) {
+
+    lifeHubOriginalSaveEmergencyContact(
+        type
+    );
+
+    lifeHubReturnAfterSave(
+        openEmergency
+    );
+
+};
+
+   </script>
    </body>
 
 </html>

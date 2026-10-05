@@ -28171,3 +28171,974 @@ window.addEventListener(
 );
 
    </script>
+   <script>
+
+function isLifeHubLockEnabled() {
+
+    const security =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrSecurity"
+            ) || "{}"
+        );
+
+    return security.appLock === true &&
+           security.pin;
+}
+
+
+function showLifeHubLockScreen() {
+
+    if (
+        document.querySelector(
+            ".lifehub-lock-screen"
+        )
+    ) {
+        return;
+    }
+
+    const overlay =
+        document.createElement("div");
+
+    overlay.className =
+        "lifehub-lock-screen";
+
+    overlay.innerHTML = `
+
+        <div class="lock-card">
+
+            <div class="lock-icon">
+                🔒
+            </div>
+
+            <h2>
+                KKR LifeHub
+            </h2>
+
+            <p>
+                App is locked
+            </p>
+
+            <input
+                id="lifeHubUnlockPin"
+                type="password"
+                inputmode="numeric"
+                maxlength="4"
+                placeholder="Enter 4-digit PIN"
+            >
+
+            <button
+                class="lock-unlock-btn"
+                onclick="unlockLifeHub()">
+                Unlock
+            </button>
+
+            <div
+                id="lifeHubLockMessage"
+                class="lock-message">
+            </div>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(
+        overlay
+    );
+
+    setTimeout(function() {
+
+        const input =
+            document.getElementById(
+                "lifeHubUnlockPin"
+            );
+
+        if (input) {
+            input.focus();
+        }
+
+    }, 100);
+
+}
+
+
+function unlockLifeHub() {
+
+    const input =
+        document.getElementById(
+            "lifeHubUnlockPin"
+        );
+
+    const message =
+        document.getElementById(
+            "lifeHubLockMessage"
+        );
+
+    if (!input || !message) {
+        return;
+    }
+
+    const security =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrSecurity"
+            ) || "{}"
+        );
+
+    if (
+        input.value ===
+        security.pin
+    ) {
+
+        const lockScreen =
+            document.querySelector(
+                ".lifehub-lock-screen"
+            );
+
+        if (lockScreen) {
+            lockScreen.remove();
+        }
+
+        sessionStorage.setItem(
+            "kkrLifeHubUnlocked",
+            "true"
+        );
+
+    } else {
+
+        message.innerHTML =
+            "Incorrect PIN. Please try again.";
+
+        input.value = "";
+
+        input.focus();
+
+    }
+
+}
+
+
+function checkLifeHubAppLock() {
+
+    if (
+        !isLifeHubLockEnabled()
+    ) {
+        return;
+    }
+
+    if (
+        sessionStorage.getItem(
+            "kkrLifeHubUnlocked"
+        ) === "true"
+    ) {
+        return;
+    }
+
+    showLifeHubLockScreen();
+
+}
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        setTimeout(
+            checkLifeHubAppLock,
+            900
+        );
+
+    }
+);
+
+</script>
+
+<style>
+
+.lifehub-lock-screen {
+
+    position: fixed;
+    inset: 0;
+
+    background:
+        rgba(16, 24, 40, 0.98);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    z-index: 10000;
+
+}
+
+.lock-card {
+
+    width: 100%;
+    max-width: 360px;
+
+    background: white;
+
+    border-radius: 22px;
+
+    padding: 28px 22px;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,0.3);
+
+}
+
+.lock-icon {
+
+    font-size: 42px;
+
+    margin-bottom: 10px;
+
+}
+
+.lock-card h2 {
+
+    margin: 0;
+
+    color: #101828;
+
+}
+
+.lock-card p {
+
+    margin: 8px 0 20px;
+
+    color: #667085;
+
+    font-size: 14px;
+
+}
+
+.lock-card input {
+
+    width: 100%;
+
+    height: 48px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 12px;
+
+    padding: 0 14px;
+
+    font-size: 18px;
+
+    text-align: center;
+
+    letter-spacing: 5px;
+
+    outline: none;
+
+}
+
+.lock-unlock-btn {
+
+    width: 100%;
+
+    margin-top: 14px;
+
+    height: 46px;
+
+    border-radius: 12px;
+
+    background: #101828;
+
+    color: white;
+
+    font-weight: 700;
+
+}
+
+.lock-message {
+
+    margin-top: 12px;
+
+    min-height: 18px;
+
+    color: #b42318;
+
+    font-size: 12px;
+
+}
+
+</style>
+   <script>
+
+let kkrAutoLockTimer = null;
+
+
+function startLifeHubAutoLock() {
+
+    if (kkrAutoLockTimer) {
+
+        clearTimeout(
+            kkrAutoLockTimer
+        );
+
+        kkrAutoLockTimer = null;
+    }
+
+    const security =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrSecurity"
+            ) || "{}"
+        );
+
+    if (
+        security.appLock !== true ||
+        !security.pin
+    ) {
+        return;
+    }
+
+    const minutes =
+        Number(
+            security.autoLock
+        );
+
+    if (
+        !minutes ||
+        minutes <= 0
+    ) {
+        return;
+    }
+
+    kkrAutoLockTimer =
+        setTimeout(
+            function() {
+
+                sessionStorage.removeItem(
+                    "kkrLifeHubUnlocked"
+                );
+
+                showLifeHubLockScreen();
+
+            },
+            minutes * 60 * 1000
+        );
+
+}
+
+
+function resetLifeHubAutoLock() {
+
+    if (
+        sessionStorage.getItem(
+            "kkrLifeHubUnlocked"
+        ) !== "true"
+    ) {
+        return;
+    }
+
+    startLifeHubAutoLock();
+
+}
+
+
+function setupLifeHubAutoLock() {
+
+    const events = [
+        "click",
+        "touchstart",
+        "keydown"
+    ];
+
+    events.forEach(
+        function(eventName) {
+
+            document.addEventListener(
+                eventName,
+                function() {
+
+                    resetLifeHubAutoLock();
+
+                },
+                {
+                    passive: true
+                }
+            );
+
+        }
+    );
+
+}
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        setupLifeHubAutoLock();
+
+        setTimeout(
+            startLifeHubAutoLock,
+            1200
+        );
+
+    }
+);
+
+   </script>
+   <script>
+
+function handleLifeHubVisibility() {
+
+    if (
+        document.visibilityState !==
+        "visible"
+    ) {
+        return;
+    }
+
+    const security =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrSecurity"
+            ) || "{}"
+        );
+
+    if (
+        security.appLock !== true ||
+        !security.pin
+    ) {
+        return;
+    }
+
+    if (
+        sessionStorage.getItem(
+            "kkrLifeHubUnlocked"
+        ) !== "true"
+    ) {
+        showLifeHubLockScreen();
+        return;
+    }
+
+    startLifeHubAutoLock();
+
+}
+
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        handleLifeHubVisibility();
+
+    }
+);
+
+
+window.addEventListener(
+    "focus",
+    function() {
+
+        handleLifeHubVisibility();
+
+    }
+);
+
+
+window.addEventListener(
+    "blur",
+    function() {
+
+        if (
+            kkrAutoLockTimer
+        ) {
+
+            clearTimeout(
+                kkrAutoLockTimer
+            );
+
+            kkrAutoLockTimer = null;
+
+        }
+
+    }
+);
+
+   </script>
+   <script>
+
+function refreshLifeHubSecurityState() {
+
+    const security =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrSecurity"
+            ) || "{}"
+        );
+
+    if (
+        security.appLock === true &&
+        security.pin
+    ) {
+
+        sessionStorage.removeItem(
+            "kkrLifeHubUnlocked"
+        );
+
+        showLifeHubLockScreen();
+
+        startLifeHubAutoLock();
+
+    } else {
+
+        if (
+            kkrAutoLockTimer
+        ) {
+
+            clearTimeout(
+                kkrAutoLockTimer
+            );
+
+            kkrAutoLockTimer = null;
+
+        }
+
+        sessionStorage.setItem(
+            "kkrLifeHubUnlocked",
+            "true"
+        );
+
+        const lockScreen =
+            document.querySelector(
+                ".lifehub-lock-screen"
+            );
+
+        if (lockScreen) {
+            lockScreen.remove();
+        }
+
+    }
+
+}
+
+
+const originalSaveSecuritySettings =
+    saveSecuritySettings;
+
+saveSecuritySettings = function() {
+
+    originalSaveSecuritySettings();
+
+    setTimeout(
+        function() {
+
+            refreshLifeHubSecurityState();
+
+        },
+        100
+    );
+
+};
+
+   </script>
+   <script>
+
+function refreshLifeHubPersonalization() {
+
+    const name =
+        getProfileName();
+
+    const homeGreeting =
+        document.getElementById(
+            "homeGreeting"
+        );
+
+    if (homeGreeting) {
+
+        updateHomeGreeting();
+
+    }
+
+    const aiGreeting =
+        document.querySelector(
+            ".ai-greeting-text"
+        );
+
+    if (aiGreeting) {
+
+        aiGreeting.innerHTML =
+            getAIGreeting();
+
+    }
+
+    const menuName =
+        document.querySelector(
+            ".side-menu-profile-name"
+        );
+
+    if (menuName) {
+
+        menuName.innerHTML =
+            name === "there"
+                ? "Guest"
+                : name;
+
+    }
+
+}
+
+
+const originalSaveProfileForSync =
+    saveProfile;
+
+saveProfile = function() {
+
+    originalSaveProfileForSync();
+
+    setTimeout(
+        function() {
+
+            refreshLifeHubPersonalization();
+
+        },
+        100
+    );
+
+};
+
+   </script>
+   <script>
+
+function showLastBackupStatus() {
+
+    const backupDate =
+        localStorage.getItem(
+            "kkrLastBackupDate"
+        );
+
+    const backupCard =
+        document.querySelector(
+            ".backup-card"
+        );
+
+    if (!backupCard) {
+        return;
+    }
+
+    if (
+        document.querySelector(
+            ".last-backup-status"
+        )
+    ) {
+        return;
+    }
+
+    const status =
+        document.createElement(
+            "div"
+        );
+
+    status.className =
+        "last-backup-status";
+
+    if (backupDate) {
+
+        const date =
+            new Date(
+                backupDate
+            );
+
+        status.innerHTML =
+            "🕒 Last backup: " +
+            date.toLocaleString(
+                "en-IN"
+            );
+
+    } else {
+
+        status.innerHTML =
+            "🕒 No backup created yet.";
+
+    }
+
+    backupCard.appendChild(
+        status
+    );
+
+}
+
+
+const originalBackupLifeHubData =
+    backupLifeHubData;
+
+backupLifeHubData = function() {
+
+    originalBackupLifeHubData();
+
+    localStorage.setItem(
+        "kkrLastBackupDate",
+        new Date().toISOString()
+    );
+
+    setTimeout(
+        function() {
+
+            showLastBackupStatus();
+
+        },
+        300
+    );
+
+};
+
+
+const originalOpenDataSettings =
+    openDataSettings;
+
+openDataSettings = function() {
+
+    originalOpenDataSettings();
+
+    setTimeout(
+        function() {
+
+            showLastBackupStatus();
+
+        },
+        0
+    );
+
+};
+
+</script>
+
+<style>
+
+.last-backup-status {
+
+    margin-top: 14px;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    background: #f2f4f7;
+
+    color: #475467;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+body.dark-theme
+.last-backup-status {
+
+    background: #1d2939;
+
+    color: #d0d5dd;
+
+}
+
+</style>
+   <script>
+
+function showLifeHubFooter() {
+
+    if (
+        document.querySelector(
+            ".lifehub-footer"
+        )
+    ) {
+        return;
+    }
+
+    const footer =
+        document.createElement(
+            "div"
+        );
+
+    footer.className =
+        "lifehub-footer";
+
+    footer.innerHTML = `
+
+        <div class="lifehub-footer-name">
+            KKR LifeHub
+        </div>
+
+        <div class="lifehub-footer-tagline">
+            Your life, organized.
+        </div>
+
+        <div class="lifehub-footer-version">
+            Version ${
+                KKR_LIFEHUB_INFO.version
+            }
+            · Build ${
+                KKR_LIFEHUB_INFO.build
+            }
+        </div>
+
+    `;
+
+    const mainContent =
+        document.querySelector(
+            ".main-content"
+        );
+
+    if (mainContent) {
+
+        mainContent.appendChild(
+            footer
+        );
+
+    }
+
+}
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        setTimeout(
+            showLifeHubFooter,
+            1200
+        );
+
+    }
+);
+
+</script>
+
+<style>
+
+.lifehub-footer {
+
+    margin-top: 30px;
+
+    padding: 22px 10px 18px;
+
+    text-align: center;
+
+    border-top: 1px solid #e4e7ec;
+
+}
+
+.lifehub-footer-name {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #101828;
+
+}
+
+.lifehub-footer-tagline {
+
+    margin-top: 4px;
+
+    font-size: 11px;
+
+    color: #667085;
+
+}
+
+.lifehub-footer-version {
+
+    margin-top: 8px;
+
+    font-size: 10px;
+
+    color: #98a2b3;
+
+}
+
+body.dark-theme
+.lifehub-footer {
+
+    border-top-color: #344054;
+
+}
+
+body.dark-theme
+.lifehub-footer-name {
+
+    color: #f9fafb;
+
+}
+
+body.dark-theme
+.lifehub-footer-tagline {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+function initializeKKRLifeHub() {
+
+    try {
+
+        checkLifeHubStorage();
+
+    } catch (error) {
+
+        console.warn(
+            "Storage check skipped."
+        );
+
+    }
+
+    try {
+
+        applySavedThemeOnLoad();
+
+    } catch (error) {
+
+        console.warn(
+            "Theme initialization skipped."
+        );
+
+    }
+
+    try {
+
+        updateNotificationBadge();
+
+    } catch (error) {
+
+        console.warn(
+            "Notification badge skipped."
+        );
+
+    }
+
+}
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        setTimeout(
+            initializeKKRLifeHub,
+            100
+        );
+
+    }
+);
+
+   </script>
+   </body>
+
+</html>

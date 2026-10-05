@@ -29961,6 +29961,56 @@ saveEmergencyContact = function(type) {
 };
 
    </script>
+   <script>
+
+function hideBackButtonsOnHome() {
+
+    const topBackButton =
+        document.querySelector(
+            ".lifehub-back-button"
+        );
+
+    const pageBackButton =
+        document.querySelector(
+            ".page-inner-back"
+        );
+
+    if (topBackButton) {
+
+        topBackButton.style.display =
+            "none";
+
+    }
+
+    if (pageBackButton) {
+
+        pageBackButton.style.display =
+            "none";
+
+    }
+
+}
+
+
+const lifeHubShowHomeBeforeBackFix =
+    showHome;
+
+showHome = function() {
+
+    lifeHubShowHomeBeforeBackFix();
+
+    setTimeout(
+        function() {
+
+            hideBackButtonsOnHome();
+
+        },
+        0
+    );
+
+};
+
+   </script>
    </body>
 
 </html>

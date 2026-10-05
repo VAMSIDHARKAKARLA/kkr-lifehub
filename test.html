@@ -25,76 +25,89 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f3f4f6;
-    color: #111827;
+    background: #f5f7fa;
+    color: #172033;
+    font-size: 14px;
 }
 
 .header {
     background: #111827;
     color: white;
-    padding: 25px 20px;
-    border-radius: 0 0 22px 22px;
+    padding: 20px 18px;
+    border-radius: 0 0 18px 18px;
 }
 
 .header h1 {
-    margin: 0 0 8px 0;
-    font-size: 25px;
+    margin: 0 0 5px 0;
+    font-size: 21px;
+    font-weight: 600;
 }
 
 .header p {
     margin: 0;
-    opacity: 0.8;
+    font-size: 13px;
+    opacity: 0.75;
 }
 
 .container {
-    padding: 20px;
+    padding: 16px;
     padding-bottom: 90px;
 }
 
 .page-title {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .page-title h2 {
-    margin: 0 0 6px 0;
+    margin: 0 0 5px 0;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .page-title p {
     margin: 0;
     color: #6b7280;
+    font-size: 13px;
 }
 
 .emergency {
-    background: #fee2e2;
+    background: #fff5f5;
     border: 1px solid #fecaca;
-    padding: 18px;
-    border-radius: 16px;
-    margin-bottom: 20px;
+    padding: 14px;
+    border-radius: 14px;
+    margin-bottom: 16px;
 }
 
 .emergency h3 {
-    margin: 0 0 8px 0;
+    margin: 0 0 6px 0;
     color: #991b1b;
+    font-size: 15px;
 }
 
 .emergency p {
     margin: 0;
     color: #7f1d1d;
+    font-size: 13px;
 }
 
 .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 12px;
 }
 
 .card {
     background: white;
-    padding: 20px;
-    border-radius: 17px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 16px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
     cursor: pointer;
-    margin-bottom: 15px;
+    margin-bottom: 0;
+    transition: transform 0.15s ease;
+}
+
+.card:active {
+    transform: scale(0.98);
 }
 
 .grid .card {
@@ -106,53 +119,55 @@ body {
 }
 
 .icon {
-    font-size: 30px;
-    margin-bottom: 10px;
+    font-size: 26px;
+    margin-bottom: 8px;
 }
 
 .card h3 {
-    margin: 0 0 7px 0;
-    font-size: 17px;
+    margin: 0 0 5px 0;
+    font-size: 15px;
+    font-weight: 600;
 }
 
 .card p {
     margin: 0;
     color: #6b7280;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 input,
 textarea,
 select {
     width: 100%;
-    padding: 14px;
-    margin-top: 8px;
-    margin-bottom: 15px;
+    padding: 12px;
+    margin-top: 7px;
+    margin-bottom: 13px;
     border: 1px solid #d1d5db;
-    border-radius: 12px;
-    font-size: 16px;
+    border-radius: 10px;
+    font-size: 14px;
     background: white;
+    box-sizing: border-box;
 }
 
 textarea {
-    min-height: 100px;
+    min-height: 90px;
     resize: vertical;
 }
 
 label {
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 button {
     width: 100%;
-    padding: 14px;
+    padding: 12px;
     border: none;
-    border-radius: 12px;
-    font-size: 16px;
+    border-radius: 10px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 7px;
 }
 
 .primary {
@@ -171,34 +186,37 @@ button {
 }
 
 .success {
-    background: #dcfce7;
+    background: #f0fdf4;
     color: #166534;
-    padding: 14px;
-    border-radius: 12px;
-    margin-bottom: 15px;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 13px;
+    font-size: 13px;
 }
 
 .item {
     background: white;
-    padding: 18px;
-    border-radius: 16px;
-    margin-bottom: 15px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 15px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .item h3 {
-    margin: 0 0 10px 0;
+    margin: 0 0 7px 0;
+    font-size: 15px;
 }
 
 .item p {
-    margin: 6px 0;
+    margin: 5px 0;
     color: #4b5563;
+    font-size: 13px;
 }
 
 .item-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    gap: 8px;
+    margin-top: 12px;
 }
 
 .item-buttons button {
@@ -208,26 +226,26 @@ button {
 .stat-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 16px;
 }
 
 .stat {
     background: white;
-    padding: 18px;
-    border-radius: 16px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 15px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .stat-title {
     color: #6b7280;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .stat-value {
-    font-size: 23px;
-    font-weight: bold;
-    margin-top: 7px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 5px;
 }
 
 .income {
@@ -247,7 +265,7 @@ button {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 65px;
+    height: 60px;
     background: white;
     border-top: 1px solid #e5e7eb;
     display: flex;
@@ -258,73 +276,75 @@ button {
 
 .nav-item {
     text-align: center;
-    font-size: 12px;
+    font-size: 11px;
     color: #4b5563;
     cursor: pointer;
 }
 
 .nav-icon {
-    font-size: 21px;
+    font-size: 19px;
     display: block;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
 }
 
 .footer {
     text-align: center;
     color: #9ca3af;
-    font-size: 12px;
-    margin-top: 25px;
+    font-size: 11px;
+    margin-top: 20px;
 }
 
 .chat-box {
     background: white;
-    padding: 15px;
-    border-radius: 16px;
-    min-height: 300px;
-    max-height: 400px;
+    padding: 13px;
+    border-radius: 14px;
+    min-height: 280px;
+    max-height: 380px;
     overflow-y: auto;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 13px;
 }
 
 .chat-user {
     background: #111827;
     color: white;
-    padding: 12px;
-    border-radius: 14px;
-    margin: 8px 0 8px 35px;
+    padding: 10px;
+    border-radius: 12px;
+    margin: 7px 30px 7px 30px;
+    font-size: 13px;
 }
 
 .chat-ai {
     background: #e5e7eb;
     color: #111827;
-    padding: 12px;
-    border-radius: 14px;
-    margin: 8px 35px 8px 0;
+    padding: 10px;
+    border-radius: 12px;
+    margin: 7px 30px 7px 0;
+    font-size: 13px;
 }
 
 .quick-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 8px;
+    margin-bottom: 13px;
 }
 
 .quick-buttons button {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .check-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin: 10px 0;
+    gap: 8px;
+    margin: 8px 0;
 }
 
 .check-row input {
     width: auto;
     margin: 0;
-}
+      }
 
 @media (max-width: 500px) {
 

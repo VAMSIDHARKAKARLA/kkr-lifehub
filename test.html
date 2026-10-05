@@ -1,1 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color"
+content="#101828">
+
+<title>KKR LifeHub</title>
+
+<style>
+
+/* =========================
+   KKR LIFEHUB FOUNDATION
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, sans-serif;
+
+    background: #f5f7fa;
+    color: #172033;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================
+   APP CONTAINER
+   ========================= */
+
+#app {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* =========================
+   COMMON BUTTON
+   ========================= */
+
+button {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   TOP BAR
+   ========================= */
+
+.topbar {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 64px;
+
+    background: #101828;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 16px;
+
+    z-index: 1000;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.menu-btn,
+.notification-btn {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #1d2939;
+    color: white;
+
+    font-size: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.app-subtitle {
+    margin-top: 2px;
+
+    font-size: 10px;
+    color: #d0d5dd;
+}
+
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+
+.main-content {
+    width: 100%;
+    max-width: 760px;
+
+    margin: auto;
+
+    padding: 82px 16px 100px;
+}
+
+
+/* =========================
+   PAGE HEADER
+   ========================= */
+
+.page-title {
+    margin: 0;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.page-subtitle {
+    margin-top: 6px;
+
+    color: #667085;
+    font-size: 14px;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (min-width: 768px) {
+
+    .main-content {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .topbar {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+}
+  </style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     PERMANENT TOP BAR
+     ========================= -->
+
+<header class="topbar">
+
+    <div class="topbar-left">
+
+        <button class="menu-btn"
+                onclick="openMenu()">
+
+            ☰
+
+        </button>
+
+        <div>
+
+            <div class="app-title">
+                KKR LifeHub
+            </div>
+
+            <div class="app-subtitle">
+                Your life, organized.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <button class="notification-btn"
+            onclick="openAlerts()">
+
+        🔔
+
+    </button>
+
+</header>
+
+
+<!-- =========================
+     MAIN CONTENT AREA
+     ========================= -->
+
+<main class="main-content">
+
+    <div id="app">
+
+    </div>
+
+</main>
+
+
+<!-- =========================
+     FLOATING KKR AI
+     ========================= -->
+
+<button class="ai-button"
+        onclick="openAI()">
+
+    🤖
+
+    <span class="ai-label">
+        KKR AI
+    </span>
+
+</button>
+
+
+<!-- =========================
+     BOTTOM NAVIGATION
+     ========================= -->
+
+<nav class="bottom-nav">
+
+    <button class="nav-item active"
+            onclick="showHome()">
+
+        <span class="nav-icon">
+            🏠
+        </span>
+
+        <span>
+            Home
+        </span>
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="openHealth()">
+
+        <span class="nav-icon">
+            ❤️
+        </span>
+
+        <span>
+            Health
+        </span>
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="openDocuments()">
+
+        <span class="nav-icon">
+            📄
+        </span>
+
+        <span>
+            Documents
+        </span>
+
+    </button>
+
+
+    <button class="nav-item"
+            onclick="openMoney()">
+
+        <span class="nav-icon">
+            💰
+        </span>
+
+        <span>
+            Money
+        </span>
+
+    </button>
+
+</nav>
+<style>
+
+/* =========================
+   BOTTOM NAVIGATION
+   ========================= */
+
+.bottom-nav {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 68px;
+
+    background: #ffffff;
+
+    border-top: 1px solid #e4e7ec;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    padding: 6px 4px;
+
+    z-index: 1000;
+}
+
+.nav-item {
+    min-width: 64px;
+
+    padding: 5px 8px;
+
+    background: transparent;
+
+    color: #667085;
+
+    font-size: 11px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 3px;
+
+    border-radius: 10px;
+}
+
+.nav-icon {
+    font-size: 20px;
+    line-height: 22px;
+}
+
+.nav-item.active {
+    color: #101828;
+    font-weight: 700;
+}
+
+.nav-item:active {
+    background: #f2f4f7;
+}
+
+
+/* =========================
+   FLOATING KKR AI BUTTON
+   ========================= */
+
+.ai-button {
+    position: fixed;
+
+    right: 18px;
+    bottom: 84px;
+
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    background: #101828;
+
+    color: white;
+
+    font-size: 23px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.22);
+
+    z-index: 1100;
+}
+
+.ai-button:active {
+    transform: scale(0.94);
+}
+
+.ai-label {
+    position: absolute;
+
+    right: 2px;
+    bottom: -18px;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    color: #101828;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   MOBILE ADJUSTMENT
+   ========================= */
+
+@media (max-width: 380px) {
+
+    .nav-item {
+        min-width: 55px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .nav-icon {
+        font-size: 18px;
+    }
+
+    .ai-button {
+        right: 14px;
+    }
+
+}
+
+</style>
+<!-- =========================
+     HOME DASHBOARD
+     ========================= -->
+
+<script>
+
+function getGreeting() {
+
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) {
+        return "Good Morning";
+    }
+
+    if (hour >= 12 && hour < 17) {
+        return "Good Afternoon";
+    }
+
+    if (hour >= 17 && hour < 21) {
+        return "Good Evening";
+    }
+
+    return "Good Night";
+}
+
+
+function showHome() {
+
+    const app = document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <h1 class="page-title">
+                ${getGreeting()} 👋
+            </h1>
+
+            <p class="page-subtitle">
+                Welcome to KKR LifeHub
+            </p>
+
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="section-title">
+                Quick Actions
+            </div>
+
+
+            <div class="quick-grid">
+
+                <button class="quick-card"
+                        onclick="openHealth()">
+
+                    <div class="quick-icon">
+                        💊
+                    </div>
+
+                    <div>
+                        <strong>Medicine</strong>
+                        <small>Manage medicines</small>
+                    </div>
+
+                </button>
+
+
+                <button class="quick-card"
+                        onclick="openDocuments()">
+
+                    <div class="quick-icon">
+                        📄
+                    </div>
+
+                    <div>
+                        <strong>Documents</strong>
+                        <small>Important documents</small>
+                    </div>
+
+                </button>
+
+
+                <button class="quick-card"
+                        onclick="openReminders()">
+
+                    <div class="quick-icon">
+                        ⏰
+                    </div>
+
+                    <div>
+                        <strong>Reminder</strong>
+                        <small>Tasks & reminders</small>
+                    </div>
+
+                </button>
+
+
+                <button class="quick-card"
+                        onclick="openMoney()">
+
+                    <div class="quick-icon">
+                        💰
+                    </div>
+
+                    <div>
+                        <strong>Money</strong>
+                        <small>Payments & expenses</small>
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <!-- EMERGENCY -->
+
+            <div class="emergency-card"
+                 onclick="openEmergency()">
+
+                <div class="emergency-icon">
+                    🚨
+                </div>
+
+                <div>
+
+                    <strong>Emergency</strong>
+
+                    <p>
+                        Quick access to emergency contacts
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- LIFEHUB MODULES -->
+
+            <div class="section-title">
+                My LifeHub
+            </div>
+
+
+            <div class="module-grid">
+
+
+                <button class="module-card"
+                        onclick="openHealth()">
+
+                    <span>❤️</span>
+
+                    <strong>Health</strong>
+
+                    <small>
+                        Health & medicines
+                    </small>
+
+                </button>
+
+
+                <button class="module-card"
+                        onclick="openDocuments()">
+
+                    <span>📄</span>
+
+                    <strong>Documents</strong>
+
+                    <small>
+                        Store important details
+                    </small>
+
+                </button>
+
+
+                <button class="module-card"
+                        onclick="openReminders()">
+
+                    <span>⏰</span>
+
+                    <strong>Reminders</strong>
+
+                    <small>
+                        Never miss important tasks
+                    </small>
+
+                </button>
+
+
+                <button class="module-card"
+                        onclick="openFamily()">
+
+                    <span>👨‍👩‍👧</span>
+
+                    <strong>Family</strong>
+
+                    <small>
+                        Family information
+                    </small>
+
+                </button>
+
+
+                <button class="module-card"
+                        onclick="openMoney()">
+
+                    <span>💰</span>
+
+                    <strong>Money</strong>
+
+                    <small>
+                        Payments & expenses
+                    </small>
+
+                </button>
+
+
+                <button class="module-card"
+                        onclick="openAlerts()">
+
+                    <span>🔔</span>
+
+                    <strong>Alerts</strong>
+
+                    <small>
+                        Important notifications
+                    </small>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    `;
+
+}
+
+
+/* Show Home when page loads */
+
+window.addEventListener("load", function() {
+
+    showHome();
+
+});
+
+</script>
+<style>
+
+/* =========================
+   HOME SECTION
+   ========================= */
+
+.home-section {
+    width: 100%;
+}
+
+.section-title {
+    margin-top: 24px;
+    margin-bottom: 10px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    color: #344054;
+}
+
+
+/* =========================
+   QUICK ACTIONS
+   ========================= */
+
+.quick-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+.quick-card {
+    min-height: 78px;
+
+    padding: 12px;
+
+    border: 1px solid #eaecf0;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    text-align: left;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+}
+
+.quick-card strong {
+    display: block;
+
+    font-size: 13px;
+
+    color: #172033;
+}
+
+.quick-card small {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+.quick-icon {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background: #f2f4f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+
+/* =========================
+   EMERGENCY CARD
+   ========================= */
+
+.emergency-card {
+    margin-top: 14px;
+
+    padding: 14px;
+
+    border-radius: 15px;
+
+    background: #fff4f2;
+
+    border: 1px solid #fecdca;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+}
+
+.emergency-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.emergency-card strong {
+    font-size: 14px;
+
+    color: #b42318;
+}
+
+.emergency-card p {
+    margin: 4px 0 0;
+
+    font-size: 11px;
+
+    color: #667085;
+}
+
+
+/* =========================
+   LIFEHUB MODULES
+   ========================= */
+
+.module-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    padding-bottom: 10px;
+}
+
+.module-card {
+    min-height: 105px;
+
+    padding: 14px;
+
+    border: 1px solid #eaecf0;
+    border-radius: 15px;
+
+    background: #ffffff;
+
+    text-align: left;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.module-card > span {
+    font-size: 22px;
+
+    margin-bottom: 8px;
+}
+
+.module-card strong {
+    font-size: 13px;
+
+    color: #172033;
+}
+
+.module-card small {
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    line-height: 14px;
+
+    color: #667085;
+}
+
+
+/* =========================
+   CARD PRESS EFFECT
+   ========================= */
+
+.quick-card:active,
+.module-card:active,
+.emergency-card:active {
+    transform: scale(0.98);
+}
+
+
+/* =========================
+   SMALL SCREEN
+   ========================= */
+
+@media (max-width: 380px) {
+
+    .quick-grid,
+    .module-grid {
+        gap: 8px;
+    }
+
+    .quick-card {
+        padding: 10px;
+    }
+
+    .module-card {
+        padding: 12px;
+    }
+
+}
+
+  </style>
+  <script>
+
+/* =========================
+   HEALTH PAGE
+   ========================= */
+
+function openHealth() {
+
+    const app = document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <h1 class="page-title">
+                ❤️ Health
+            </h1>
+
+            <p class="page-subtitle">
+                Manage your health information
+            </p>
+
+
+            <div class="health-grid">
+
+
+                <button class="health-card"
+                        onclick="openMedicines()">
+
+                    <span class="health-icon">
+                        💊
+                    </span>
+
+                    <strong>
+                        Medicines
+                    </strong>
+
+                    <small>
+                        Manage medicines and schedules
+                    </small>
+
+                </button>
+
+
+                <button class="health-card"
+                        onclick="openHealthRecords()">
+
+                    <span class="health-icon">
+                        📋
+                    </span>
+
+                    <strong>
+                        Health Records
+                    </strong>
+
+                    <small>
+                        Reports and medical records
+                    </small>
+
+                </button>
+
+
+                <button class="health-card"
+                        onclick="openAppointments()">
+
+                    <span class="health-icon">
+                        📅
+                    </span>
+
+                    <strong>
+                        Appointments
+                    </strong>
+
+                    <small>
+                        Doctor visits and appointments
+                    </small>
+
+                </button>
+
+
+                <button class="health-card"
+                        onclick="openHealthSummary()">
+
+                    <span class="health-icon">
+                        📊
+                    </span>
+
+                    <strong>
+                        Health Summary
+                    </strong>
+
+                    <small>
+                        View your health overview
+                    </small>
+
+                </button>
+
+
+                <button class="health-card"
+                        onclick="openMeasurements()">
+
+                    <span class="health-icon">
+                        ❤️
+                    </span>
+
+                    <strong>
+                        Measurements
+                    </strong>
+
+                    <small>
+                        Track important health values
+                    </small>
+
+                </button>
+
+
+                <button class="health-card"
+                        onclick="openEmergencyHealth()">
+
+                    <span class="health-icon">
+                        🚑
+                    </span>
+
+                    <strong>
+                        Emergency Health
+                    </strong>
+
+                    <small>
+                        Important health information
+                    </small>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    `;
+}
+
+
+/* =========================
+   HEALTH CARD STYLING
+   ========================= */
+
+</script>
+
+
+<style>
+
+.health-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.health-card {
+    min-height: 125px;
+
+    padding: 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 15px;
+
+    text-align: left;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow:
+        0 2px 8px rgba(16,24,40,0.04);
+}
+
+.health-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+
+    margin-bottom: 10px;
+}
+
+.health-card strong {
+    font-size: 13px;
+
+    color: #172033;
+}
+
+.health-card small {
+    margin-top: 5px;
+
+    font-size: 10px;
+
+    line-height: 14px;
+
+    color: #667085;
+}
+
+.health-card:active {
+    transform: scale(0.98);
+}
+
+
+@media (max-width: 380px) {
+
+    .health-grid {
+        gap: 8px;
+    }
+
+    .health-card {
+        padding: 11px;
+    }
+
+}
+
+</style>
+<script>
+
+/* =========================
+   MEDICINES PAGE
+   ========================= */
+
+function openMedicines() {
+
+    const app = document.getElementById("app");
+
+    app.innerHTML = `
+
+        <section class="home-section">
+
+            <h1 class="page-title">
+                💊 Medicines
+            </h1>
+
+            <p class="page-subtitle">
+                Manage your medicines and schedules
+            </p>
+
+
+            <!-- SEARCH MEDICINE -->
+
+            <div class="medicine-search">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="medicineSearch"
+                    placeholder="Search medicine..."
+                    oninput="searchMedicine()">
+
+            </div>
+
+
+            <!-- SEARCH RESULTS -->
+
+            <div id="medicineResults">
+
+                <div class="empty-medicine">
+
+                    <div>
+                        💊
+                    </div>
+
+                    <strong>
+                        Search for a medicine
+                    </strong>
+
+                    <small>
+                        Find a medicine from the catalogue
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- SAVED MEDICINES -->
+
+            <div class="section-title">
+                My Medicines
+            </div>
+
+            <div id="savedMedicines">
+
+                <div class="empty-medicine">
+
+                    <div>
+                        📋
+                    </div>
+
+                    <strong>
+                        No medicines added
+                    </strong>
+
+                    <small>
+                        Your saved medicines will appear here
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- ADD BUTTON -->
+
+            <button class="add-medicine-btn"
+                    onclick="openAddMedicine()">
+
+                <span>
+                    ＋
+                </span>
+
+                Add Medicine
+
+            </button>
+
+        </section>
+
+    `;
+}
+
+
+/* =========================
+   MEDICINE SEARCH
+   ========================= */
+
+function searchMedicine() {
+
+    const input =
+        document.getElementById("medicineSearch");
+
+    const results =
+        document.getElementById("medicineResults");
+
+    if (!input || !results) {
+        return;
+    }
+
+    const value =
+        input.value.trim();
+
+    if (value === "") {
+
+        results.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>💊</div>
+
+                <strong>
+                    Search for a medicine
+                </strong>
+
+                <small>
+                    Find a medicine from the catalogue
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    results.innerHTML = `
+
+        <button class="medicine-result"
+                onclick="selectMedicine('${value}')">
+
+            <span>
+                💊
+            </span>
+
+            <div>
+
+                <strong>
+                    ${value}
+                </strong>
+
+                <small>
+                    Select this medicine
+                </small>
+
+            </div>
+
+        </button>
+
+    `;
+}
+
+
+function selectMedicine(name) {
+
+    alert(
+        "Medicine selected: " + name
+    );
+
+}
+
+
+/* =========================
+   ADD MEDICINE PLACEHOLDER
+   ========================= */
+
+function openAddMedicine() {
+
+    alert(
+        "Add Medicine page will be added next."
+    );
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   MEDICINE SEARCH
+   ========================= */
+
+.medicine-search {
+    margin-top: 20px;
+
+    height: 48px;
+
+    padding: 0 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+}
+
+.medicine-search span {
+    font-size: 18px;
+}
+
+.medicine-search input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    font-size: 14px;
+
+    color: #172033;
+}
+
+
+/* =========================
+   MEDICINE RESULT
+   ========================= */
+
+.medicine-result {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 13px;
+
+    background: #ffffff;
+
+    border: 1px solid #eaecf0;
+
+    border-radius: 13px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+.medicine-result > span {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 11px;
+
+    background: #f2f4f7;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+.medicine-result strong {
+    display: block;
+
+    font-size: 13px;
+}
+
+.medicine-result small {
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
+.empty-medicine {
+    margin-top: 12px;
+
+    padding: 22px 12px;
+
+    background: #ffffff;
+
+    border: 1px dashed #d0d5dd;
+
+    border-radius: 14px;
+
+    text-align: center;
+}
+
+.empty-medicine div {
+    font-size: 25px;
+
+    margin-bottom: 7px;
+}
+
+.empty-medicine strong {
+    display: block;
+
+    font-size: 13px;
+}
+
+.empty-medicine small {
+    display: block;
+
+    margin-top: 5px;
+
+    font-size: 10px;
+
+    color: #667085;
+}
+
+
+/* =========================
+   ADD MEDICINE BUTTON
+   ========================= */
+
+.add-medicine-btn {
+    width: 100%;
+
+    margin-top: 18px;
+
+    height: 48px;
+
+    border-radius: 13px;
+
+    background: #101828;
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+}
+
+.add-medicine-btn span {
+    font-size: 20px;
+}
+
+</style>
+<script>
+
+/* =========================
+   MEDICINE CATALOGUE
+   ========================= */
+
+const medicineCatalogue = [
+
+    {
+        name: "Amlodipine",
+        type: "Tablet"
+    },
+
+    {
+        name: "Metformin",
+        type: "Tablet"
+    },
+
+    {
+        name: "Losartan",
+        type: "Tablet"
+    },
+
+    {
+        name: "Omeprazole",
+        type: "Capsule"
+    },
+
+    {
+        name: "Pantoprazole",
+        type: "Tablet"
+    },
+
+    {
+        name: "Atorvastatin",
+        type: "Tablet"
+    },
+
+    {
+        name: "Paracetamol",
+        type: "Tablet"
+    },
+
+    {
+        name: "Cetirizine",
+        type: "Tablet"
+    }
+
+];
+
+
+/* =========================
+   SEARCH CATALOGUE
+   ========================= */
+
+function searchMedicine() {
+
+    const input =
+        document.getElementById("medicineSearch");
+
+    const results =
+        document.getElementById("medicineResults");
+
+    if (!input || !results) {
+        return;
+    }
+
+    const value =
+        input.value.trim().toLowerCase();
+
+
+    if (value === "") {
+
+        results.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>💊</div>
+
+                <strong>
+                    Search for a medicine
+                </strong>
+
+                <small>
+                    Find a medicine from the catalogue
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    const matches =
+        medicineCatalogue.filter(function(medicine) {
+
+            return medicine.name
+                .toLowerCase()
+                .includes(value);
+
+        });
+
+
+    if (matches.length === 0) {
+
+        results.innerHTML = `
+
+            <div class="empty-medicine">
+
+                <div>🔍</div>
+
+                <strong>
+                    No medicine found
+                </strong>
+
+                <small>
+                    Try another medicine name
+                </small>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    results.innerHTML = matches.map(function(medicine) {
+
+        return `
+
+            <button class="medicine-result"
+                    onclick="selectMedicine('${medicine.name}')">
+
+                <span>
+                    💊
+                </span>
+
+                <div>
+
+                    <strong>
+                        ${medicine.name}
+                    </strong>
+
+                    <small>
+                        ${medicine.type}
+                    </small>
+
+                </div>
+
+            </button>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =========================
+   SELECT MEDICINE
+   ========================= */
+
+function selectMedicine(name) {
+
+    openMedicineDetails(name);
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   MEDICINE SEARCH RESULT
+   ========================= */
+
+.medicine-result {
+    transition: transform 0.15s ease;
+}
+
+.medicine-result:active {
+    transform: scale(0.98);
+}
+
+</style>

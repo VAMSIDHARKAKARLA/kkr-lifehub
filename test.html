@@ -2182,8 +2182,8 @@ function keepTopBar() {
 
 keepTopBar();
 
-setInterval(keepTopBar, 300);
-
+window.addEventListener("load", keepTopBar);
+window.addEventListener("pageshow", keepTopBar);
       if ("serviceWorker" in navigator) {
 
     window.addEventListener("load", function() {

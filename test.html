@@ -18279,3 +18279,2227 @@ showHome = function() {
 };
 
    </script>
+   <script>
+
+/* =========================
+   KKR AI CHAT SCREEN
+   ========================= */
+
+function openAI() {
+
+    const name = getProfileName();
+
+    const hour = new Date().getHours();
+
+    let greeting = "";
+
+    if (hour < 12) {
+        greeting = "Good Morning";
+    } else if (hour < 17) {
+        greeting = "Good Afternoon";
+    } else if (hour < 21) {
+        greeting = "Good Evening";
+    } else {
+        greeting = "Good Night";
+    }
+
+    document.getElementById("app").innerHTML = `
+
+        <div class="ai-chat-page">
+
+            <div class="ai-chat-header">
+
+                <button
+                    class="ai-back-btn"
+                    onclick="showHome()">
+                    ←
+                </button>
+
+                <div>
+                    <div class="ai-title">
+                        KKR AI
+                    </div>
+
+                    <div class="ai-subtitle">
+                        Your LifeHub Assistant
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div
+                id="aiMessages"
+                class="ai-messages">
+
+                <div class="ai-message ai-message-bot">
+
+                    <div class="ai-message-name">
+                        KKR AI
+                    </div>
+
+                    <div>
+                        ${greeting}, ${name} 👋
+                    </div>
+
+                    <div class="ai-welcome-text">
+                        Welcome to KKR AI.
+                        How can I help you today?
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="ai-suggestions">
+
+                <button
+                    onclick="useAISuggestion('Show my medicines')">
+                    💊 Medicines
+                </button>
+
+                <button
+                    onclick="useAISuggestion('Show my documents')">
+                    📄 Documents
+                </button>
+
+                <button
+                    onclick="useAISuggestion('Show my reminders')">
+                    🔔 Reminders
+                </button>
+
+                <button
+                    onclick="useAISuggestion('Show my money summary')">
+                    💰 Money
+                </button>
+
+            </div>
+
+
+            <div class="ai-input-area">
+
+                <input
+                    id="aiInput"
+                    type="text"
+                    placeholder="Ask KKR AI..."
+                    autocomplete="off"
+                    onkeydown="if(event.key==='Enter') sendAIMessage()">
+
+                <button
+                    class="ai-send-btn"
+                    onclick="sendAIMessage()">
+                    ➤
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   KKR AI CHAT
+   ========================= */
+
+.ai-chat-page {
+
+    min-height: calc(100vh - 20px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    background: #f5f7fa;
+
+    margin: -82px -16px -100px;
+
+    padding-bottom: 76px;
+
+}
+
+
+.ai-chat-header {
+
+    position: sticky;
+
+    top: 64px;
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px 16px;
+
+    background: #101828;
+
+    color: white;
+
+}
+
+
+.ai-back-btn {
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #1d2939;
+
+    color: white;
+
+    font-size: 22px;
+
+}
+
+
+.ai-title {
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+}
+
+
+.ai-subtitle {
+
+    margin-top: 2px;
+
+    font-size: 11px;
+
+    color: #d0d5dd;
+
+}
+
+
+.ai-messages {
+
+    flex: 1;
+
+    padding: 20px 16px;
+
+}
+
+
+.ai-message {
+
+    max-width: 88%;
+
+    padding: 13px 15px;
+
+    border-radius: 16px;
+
+    margin-bottom: 12px;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+}
+
+
+.ai-message-bot {
+
+    background: white;
+
+    color: #172033;
+
+    border: 1px solid #e4e7ec;
+
+    border-top-left-radius: 5px;
+
+}
+
+
+.ai-message-name {
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: #667085;
+
+    margin-bottom: 5px;
+
+}
+
+
+.ai-welcome-text {
+
+    margin-top: 6px;
+
+    color: #667085;
+
+}
+
+
+.ai-suggestions {
+
+    display: flex;
+
+    gap: 8px;
+
+    overflow-x: auto;
+
+    padding: 8px 16px;
+
+}
+
+
+.ai-suggestions button {
+
+    flex-shrink: 0;
+
+    padding: 9px 12px;
+
+    border-radius: 20px;
+
+    background: white;
+
+    border: 1px solid #d0d5dd;
+
+    color: #344054;
+
+    font-size: 12px;
+
+}
+
+
+.ai-input-area {
+
+    position: fixed;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 68px;
+
+    display: flex;
+
+    gap: 8px;
+
+    padding: 10px 12px;
+
+    background: white;
+
+    border-top: 1px solid #e4e7ec;
+
+    z-index: 1050;
+
+}
+
+
+.ai-input-area input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    height: 44px;
+
+    padding: 0 14px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 22px;
+
+    outline: none;
+
+    font-size: 14px;
+
+}
+
+
+.ai-send-btn {
+
+    width: 44px;
+
+    height: 44px;
+
+    border-radius: 50%;
+
+    background: #101828;
+
+    color: white;
+
+    font-size: 18px;
+
+}
+
+
+body.dark-theme .ai-chat-page {
+
+    background: #101828;
+
+}
+
+
+body.dark-theme .ai-message-bot {
+
+    background: #1d2939;
+
+    color: #f9fafb;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme .ai-message-name,
+
+body.dark-theme .ai-welcome-text {
+
+    color: #98a2b3;
+
+}
+
+
+body.dark-theme .ai-suggestions button,
+
+body.dark-theme .ai-input-area {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+
+body.dark-theme .ai-input-area input {
+
+    background: #101828;
+
+    color: white;
+
+    border-color: #475467;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   KKR AI MESSAGE SYSTEM
+   ========================= */
+
+function sendAIMessage() {
+
+    const input =
+        document.getElementById("aiInput");
+
+    if (!input) return;
+
+    const message =
+        input.value.trim();
+
+    if (!message) return;
+
+
+    addAIUserMessage(message);
+
+    input.value = "";
+
+
+    setTimeout(function() {
+
+        const reply =
+            getAIResponse(message);
+
+        addAIBotMessage(reply);
+
+    }, 500);
+
+}
+
+
+/* Add user message */
+
+function addAIUserMessage(message) {
+
+    const messages =
+        document.getElementById("aiMessages");
+
+    if (!messages) return;
+
+
+    const messageBox =
+        document.createElement("div");
+
+    messageBox.className =
+        "ai-message ai-message-user";
+
+    messageBox.innerHTML = `
+        <div>
+            ${message}
+        </div>
+    `;
+
+
+    messages.appendChild(messageBox);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* Add AI message */
+
+function addAIBotMessage(message) {
+
+    const messages =
+        document.getElementById("aiMessages");
+
+    if (!messages) return;
+
+
+    const messageBox =
+        document.createElement("div");
+
+    messageBox.className =
+        "ai-message ai-message-bot";
+
+    messageBox.innerHTML = `
+
+        <div class="ai-message-name">
+            KKR AI
+        </div>
+
+        <div>
+            ${message}
+        </div>
+
+    `;
+
+
+    messages.appendChild(messageBox);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* Basic local AI responses */
+
+function getAIResponse(message) {
+
+    const text =
+        message.toLowerCase();
+
+
+    if (
+        text.includes("hello") ||
+        text.includes("hi") ||
+        text.includes("hey")
+    ) {
+
+        return "Hello 👋 How can I help you with KKR LifeHub?";
+
+    }
+
+
+    if (
+        text.includes("medicine") ||
+        text.includes("medicines")
+    ) {
+
+        return "Sure 💊 I can help you manage your medicines. You can open the Medicines section from Health.";
+
+    }
+
+
+    if (
+        text.includes("document") ||
+        text.includes("documents")
+    ) {
+
+        return "Sure 📄 You can manage your important documents from the Documents section.";
+
+    }
+
+
+    if (
+        text.includes("reminder") ||
+        text.includes("reminders")
+    ) {
+
+        return "Sure 🔔 You can add, edit and manage your reminders from the Reminders section.";
+
+    }
+
+
+    if (
+        text.includes("money") ||
+        text.includes("expense") ||
+        text.includes("payment")
+    ) {
+
+        return "Sure 💰 You can check your income, expenses, payments and balance from the Money section.";
+
+    }
+
+
+    if (
+        text.includes("health")
+    ) {
+
+        return "Your Health section contains medicines, health records, appointments, measurements and emergency health information.";
+
+    }
+
+
+    return "I understand 👍 I'm still learning. You can ask me about Medicines, Documents, Reminders, Health or Money.";
+
+}
+
+
+/* Suggestion buttons */
+
+function useAISuggestion(message) {
+
+    const input =
+        document.getElementById("aiInput");
+
+    if (!input) return;
+
+    input.value = message;
+
+    sendAIMessage();
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   KKR AI USER MESSAGE
+   ========================= */
+
+.ai-message-user {
+
+    margin-left: auto;
+
+    background: #101828;
+
+    color: white;
+
+    border-top-right-radius: 5px;
+
+}
+
+
+/* AI message animation */
+
+.ai-message {
+
+    animation: aiMessageIn 0.2s ease;
+
+}
+
+
+@keyframes aiMessageIn {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(5px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+
+/* Dark mode */
+
+body.dark-theme .ai-message-user {
+
+    background: #344054;
+
+    color: white;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   KKR AI QUICK NAVIGATION
+   ========================= */
+
+function openAISection(section) {
+
+    if (section === "medicine") {
+
+        openMedicines();
+
+        return;
+
+    }
+
+
+    if (section === "documents") {
+
+        openDocuments();
+
+        return;
+
+    }
+
+
+    if (section === "reminders") {
+
+        openReminders();
+
+        return;
+
+    }
+
+
+    if (section === "money") {
+
+        openMoney();
+
+        return;
+
+    }
+
+
+    if (section === "health") {
+
+        openHealth();
+
+        return;
+
+    }
+
+}
+
+
+/* =========================
+   SMART AI RESPONSE
+   ========================= */
+
+const previousAIResponse =
+    getAIResponse;
+
+getAIResponse = function(message) {
+
+    const text =
+        message.toLowerCase();
+
+
+    if (
+        text.includes("show my medicine") ||
+        text.includes("open medicine") ||
+        text.includes("medicine section")
+    ) {
+
+        setTimeout(function() {
+
+            openAISection("medicine");
+
+        }, 700);
+
+
+        return "Sure 💊 Opening your Medicines section.";
+
+    }
+
+
+    if (
+        text.includes("show my document") ||
+        text.includes("open document") ||
+        text.includes("document section")
+    ) {
+
+        setTimeout(function() {
+
+            openAISection("documents");
+
+        }, 700);
+
+
+        return "Sure 📄 Opening your Documents section.";
+
+    }
+
+
+    if (
+        text.includes("show my reminder") ||
+        text.includes("open reminder") ||
+        text.includes("reminder section")
+    ) {
+
+        setTimeout(function() {
+
+            openAISection("reminders");
+
+        }, 700);
+
+
+        return "Sure 🔔 Opening your Reminders section.";
+
+    }
+
+
+    if (
+        text.includes("show my money") ||
+        text.includes("open money") ||
+        text.includes("money section")
+    ) {
+
+        setTimeout(function() {
+
+            openAISection("money");
+
+        }, 700);
+
+
+        return "Sure 💰 Opening your Money section.";
+
+    }
+
+
+    if (
+        text.includes("show my health") ||
+        text.includes("open health") ||
+        text.includes("health section")
+    ) {
+
+        setTimeout(function() {
+
+            openAISection("health");
+
+        }, 700);
+
+
+        return "Sure ❤️ Opening your Health section.";
+
+    }
+
+
+    return previousAIResponse(message);
+
+};
+
+   </script>
+   <script>
+
+/* =========================
+   KKR AI LIFEHUB DATA
+   ========================= */
+
+function getLifeHubDataSummary() {
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem("kkrMedicines") || "[]"
+        );
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem("kkrDocuments") || "[]"
+        );
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem("kkrReminders") || "[]"
+        );
+
+    const family =
+        JSON.parse(
+            localStorage.getItem("kkrFamily") || "[]"
+        );
+
+    const payments =
+        JSON.parse(
+            localStorage.getItem("kkrPayments") || "[]"
+        );
+
+    const appointments =
+        JSON.parse(
+            localStorage.getItem("kkrAppointments") || "[]"
+        );
+
+    const healthRecords =
+        JSON.parse(
+            localStorage.getItem("kkrHealthRecords") || "[]"
+        );
+
+    const measurements =
+        JSON.parse(
+            localStorage.getItem("kkrMeasurements") || "[]"
+        );
+
+
+    let totalExpenses = 0;
+
+    payments.forEach(function(payment) {
+
+        if (
+            payment.type === "expense" &&
+            payment.status === "paid"
+        ) {
+
+            totalExpenses +=
+                Number(payment.amount) || 0;
+
+        }
+
+    });
+
+
+    return {
+
+        medicines: medicines.length,
+
+        documents: documents.length,
+
+        reminders: reminders.length,
+
+        family: family.length,
+
+        payments: payments.length,
+
+        appointments: appointments.length,
+
+        healthRecords: healthRecords.length,
+
+        measurements: measurements.length,
+
+        totalExpenses: totalExpenses
+
+    };
+
+}
+
+
+/* =========================
+   AI DATA RESPONSES
+   ========================= */
+
+const aiResponseBeforeData =
+    getAIResponse;
+
+getAIResponse = function(message) {
+
+    const text =
+        message.toLowerCase();
+
+    const data =
+        getLifeHubDataSummary();
+
+
+    if (
+        text.includes("how many medicine") ||
+        text.includes("how many medicines")
+    ) {
+
+        return `
+You currently have
+<strong>${data.medicines}</strong>
+saved medicine${data.medicines === 1 ? "" : "s"} in KKR LifeHub. 💊
+`;
+
+    }
+
+
+    if (
+        text.includes("how many document") ||
+        text.includes("how many documents")
+    ) {
+
+        return `
+You currently have
+<strong>${data.documents}</strong>
+saved document${data.documents === 1 ? "" : "s"} in KKR LifeHub. 📄
+`;
+
+    }
+
+
+    if (
+        text.includes("how many reminder") ||
+        text.includes("how many reminders")
+    ) {
+
+        return `
+You currently have
+<strong>${data.reminders}</strong>
+saved reminder${data.reminders === 1 ? "" : "s"} in KKR LifeHub. 🔔
+`;
+
+    }
+
+
+    if (
+        text.includes("how many family") ||
+        text.includes("family members")
+    ) {
+
+        return `
+You currently have
+<strong>${data.family}</strong>
+saved family member${data.family === 1 ? "" : "s"}. 👨‍👩‍👧
+`;
+
+    }
+
+
+    if (
+        text.includes("how many appointment") ||
+        text.includes("appointments")
+    ) {
+
+        return `
+You currently have
+<strong>${data.appointments}</strong>
+saved appointment${data.appointments === 1 ? "" : "s"}. 🏥
+`;
+
+    }
+
+
+    if (
+        text.includes("how many health record") ||
+        text.includes("health records")
+    ) {
+
+        return `
+You currently have
+<strong>${data.healthRecords}</strong>
+saved health record${data.healthRecords === 1 ? "" : "s"}. ❤️
+`;
+
+    }
+
+
+    if (
+        text.includes("how many measurement") ||
+        text.includes("measurements")
+    ) {
+
+        return `
+You currently have
+<strong>${data.measurements}</strong>
+saved measurement${data.measurements === 1 ? "" : "s"}.
+`;
+
+    }
+
+
+    if (
+        text.includes("how much") &&
+        (
+            text.includes("spend") ||
+            text.includes("expense") ||
+            text.includes("expenses")
+        )
+    ) {
+
+        return `
+Your recorded paid expenses total
+<strong>₹${data.totalExpenses.toLocaleString("en-IN")}</strong>. 💰
+`;
+
+    }
+
+
+    return aiResponseBeforeData(message);
+
+};
+
+   </script>
+   <script>
+
+/* =========================
+   KKR AI SAVED ITEMS
+   ========================= */
+
+function getSavedItemsResponse(message) {
+
+    const text =
+        message.toLowerCase();
+
+
+    const medicines =
+        JSON.parse(
+            localStorage.getItem("kkrMedicines") || "[]"
+        );
+
+
+    const documents =
+        JSON.parse(
+            localStorage.getItem("kkrDocuments") || "[]"
+        );
+
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem("kkrReminders") || "[]"
+        );
+
+
+    const family =
+        JSON.parse(
+            localStorage.getItem("kkrFamily") || "[]"
+        );
+
+
+    const appointments =
+        JSON.parse(
+            localStorage.getItem("kkrAppointments") || "[]"
+        );
+
+
+    /* Medicines */
+
+    if (
+        text.includes("what medicine") ||
+        text.includes("which medicine") ||
+        text.includes("list medicine") ||
+        text.includes("show medicine")
+    ) {
+
+        if (medicines.length === 0) {
+
+            return "You don't have any saved medicines yet. 💊";
+
+        }
+
+
+        let result =
+            "Here are your saved medicines: 💊<br><br>";
+
+
+        medicines.forEach(function(medicine, index) {
+
+            result +=
+                (index + 1) +
+                ". <strong>" +
+                medicine.name +
+                "</strong>";
+
+
+            if (medicine.dosage) {
+
+                result +=
+                    " — " +
+                    medicine.dosage;
+
+            }
+
+
+            result += "<br>";
+
+        });
+
+
+        return result;
+
+    }
+
+
+    /* Documents */
+
+    if (
+        text.includes("what document") ||
+        text.includes("which document") ||
+        text.includes("list document") ||
+        text.includes("show document")
+    ) {
+
+        if (documents.length === 0) {
+
+            return "You don't have any saved documents yet. 📄";
+
+        }
+
+
+        let result =
+            "Here are your saved documents: 📄<br><br>";
+
+
+        documents.forEach(function(document, index) {
+
+            result +=
+                (index + 1) +
+                ". <strong>" +
+                document.name +
+                "</strong>";
+
+
+            if (document.category) {
+
+                result +=
+                    " — " +
+                    document.category;
+
+            }
+
+
+            result += "<br>";
+
+        });
+
+
+        return result;
+
+    }
+
+
+    /* Family */
+
+    if (
+        text.includes("family member") ||
+        text.includes("family members") ||
+        text.includes("show family")
+    ) {
+
+        if (family.length === 0) {
+
+            return "You don't have any saved family members yet. 👨‍👩‍👧";
+
+        }
+
+
+        let result =
+            "Here are your saved family members: 👨‍👩‍👧<br><br>";
+
+
+        family.forEach(function(member, index) {
+
+            result +=
+                (index + 1) +
+                ". <strong>" +
+                member.name +
+                "</strong>";
+
+
+            if (member.relationship) {
+
+                result +=
+                    " — " +
+                    member.relationship;
+
+            }
+
+
+            result += "<br>";
+
+        });
+
+
+        return result;
+
+    }
+
+
+    /* Appointments */
+
+    if (
+        text.includes("what appointment") ||
+        text.includes("which appointment") ||
+        text.includes("show appointment")
+    ) {
+
+        if (appointments.length === 0) {
+
+            return "You don't have any saved appointments yet. 🏥";
+
+        }
+
+
+        let result =
+            "Here are your saved appointments: 🏥<br><br>";
+
+
+        appointments.forEach(function(appointment, index) {
+
+            result +=
+                (index + 1) +
+                ". <strong>" +
+                appointment.doctor +
+                "</strong>";
+
+
+            if (appointment.date) {
+
+                result +=
+                    " — " +
+                    appointment.date;
+
+            }
+
+
+            if (appointment.time) {
+
+                result +=
+                    " " +
+                    appointment.time;
+
+            }
+
+
+            result += "<br>";
+
+        });
+
+
+        return result;
+
+    }
+
+
+    return null;
+
+}
+
+
+/* Connect saved items to KKR AI */
+
+const aiResponseBeforeSavedItems =
+    getAIResponse;
+
+getAIResponse = function(message) {
+
+    const savedResponse =
+        getSavedItemsResponse(message);
+
+
+    if (savedResponse) {
+
+        return savedResponse;
+
+    }
+
+
+    return aiResponseBeforeSavedItems(message);
+
+};
+
+   </script>
+   <script>
+
+/* =========================
+   KKR AI REMINDERS + MONEY
+   ========================= */
+
+function getReminderAndMoneyResponse(message) {
+
+    const text =
+        message.toLowerCase();
+
+
+    const reminders =
+        JSON.parse(
+            localStorage.getItem("kkrReminders") || "[]"
+        );
+
+
+    const payments =
+        JSON.parse(
+            localStorage.getItem("kkrPayments") || "[]"
+        );
+
+
+    /* Reminders */
+
+    if (
+        text.includes("what reminder") ||
+        text.includes("which reminder") ||
+        text.includes("list reminder") ||
+        text.includes("show reminder")
+    ) {
+
+        if (reminders.length === 0) {
+
+            return "You don't have any saved reminders yet. 🔔";
+
+        }
+
+
+        let result =
+            "Here are your saved reminders: 🔔<br><br>";
+
+
+        reminders.forEach(function(reminder, index) {
+
+            result +=
+                (index + 1) +
+                ". <strong>" +
+                reminder.title +
+                "</strong>";
+
+
+            if (reminder.date) {
+
+                result +=
+                    " — " +
+                    reminder.date;
+
+            }
+
+
+            if (reminder.time) {
+
+                result +=
+                    " " +
+                    reminder.time;
+
+            }
+
+
+            if (reminder.completed) {
+
+                result +=
+                    " — Completed";
+
+            } else {
+
+                result +=
+                    " — Pending";
+
+            }
+
+
+            result += "<br>";
+
+        });
+
+
+        return result;
+
+    }
+
+
+    /* Money */
+
+    if (
+        text.includes("recent payment") ||
+        text.includes("my payments") ||
+        text.includes("show payments")
+    ) {
+
+        if (payments.length === 0) {
+
+            return "You don't have any saved payments yet. 💰";
+
+        }
+
+
+        let result =
+            "Here are your recent payments: 💰<br><br>";
+
+
+        const recentPayments =
+            payments.slice(-5).reverse();
+
+
+        recentPayments.forEach(function(payment, index) {
+
+            const amount =
+                Number(payment.amount) || 0;
+
+
+            result +=
+                (index + 1) +
+                ". <strong>" +
+                payment.name +
+                "</strong>";
+
+
+            result +=
+                " — ₹" +
+                amount.toLocaleString("en-IN");
+
+
+            if (payment.type) {
+
+                result +=
+                    " — " +
+                    payment.type;
+
+            }
+
+
+            if (payment.status) {
+
+                result +=
+                    " — " +
+                    payment.status;
+
+            }
+
+
+            result += "<br>";
+
+        });
+
+
+        return result;
+
+    }
+
+
+    /* Expenses */
+
+    if (
+        text.includes("my expenses") ||
+        text.includes("show expenses") ||
+        text.includes("list expenses")
+    ) {
+
+        const expenses =
+            payments.filter(function(payment) {
+
+                return (
+                    payment.type === "expense" &&
+                    payment.status === "paid"
+                );
+
+            });
+
+
+        if (expenses.length === 0) {
+
+            return "You don't have any paid expenses saved yet. 💰";
+
+        }
+
+
+        let total = 0;
+
+
+        expenses.forEach(function(payment) {
+
+            total +=
+                Number(payment.amount) || 0;
+
+        });
+
+
+        return `
+Your recorded paid expenses are
+<strong>₹${total.toLocaleString("en-IN")}</strong>. 💰
+`;
+
+    }
+
+
+    return null;
+
+}
+
+
+/* Connect reminders and money */
+
+const aiResponseBeforeReminderMoney =
+    getAIResponse;
+
+getAIResponse = function(message) {
+
+    const response =
+        getReminderAndMoneyResponse(message);
+
+
+    if (response) {
+
+        return response;
+
+    }
+
+
+    return aiResponseBeforeReminderMoney(message);
+
+};
+
+   </script>
+   <script>
+
+/* =========================
+   KKR AI TYPING INDICATOR
+   ========================= */
+
+const originalSendAIMessage =
+    sendAIMessage;
+
+sendAIMessage = function() {
+
+    const input =
+        document.getElementById("aiInput");
+
+    if (!input) return;
+
+
+    const message =
+        input.value.trim();
+
+    if (!message) return;
+
+
+    addAIUserMessage(message);
+
+    input.value = "";
+
+
+    showAITyping();
+
+
+    setTimeout(function() {
+
+        removeAITyping();
+
+        const reply =
+            getAIResponse(message);
+
+        addAIBotMessage(reply);
+
+    }, 800);
+
+};
+
+
+/* Show typing */
+
+function showAITyping() {
+
+    const messages =
+        document.getElementById("aiMessages");
+
+    if (!messages) return;
+
+
+    if (
+        document.getElementById(
+            "aiTyping"
+        )
+    ) return;
+
+
+    const typing =
+        document.createElement("div");
+
+    typing.id =
+        "aiTyping";
+
+    typing.className =
+        "ai-message ai-message-bot ai-typing";
+
+
+    typing.innerHTML = `
+
+        <div class="ai-message-name">
+            KKR AI
+        </div>
+
+        <div>
+            KKR AI is typing
+            <span class="typing-dots">...</span>
+        </div>
+
+    `;
+
+
+    messages.appendChild(typing);
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* Remove typing */
+
+function removeAITyping() {
+
+    const typing =
+        document.getElementById(
+            "aiTyping"
+        );
+
+    if (typing) {
+
+        typing.remove();
+
+    }
+
+}
+
+</script>
+
+
+<style>
+
+/* =========================
+   AI TYPING EFFECT
+   ========================= */
+
+.ai-typing {
+
+    color: #667085;
+
+}
+
+
+.typing-dots {
+
+    display: inline-block;
+
+    min-width: 18px;
+
+    animation: typingDots 1s infinite;
+
+}
+
+
+@keyframes typingDots {
+
+    0% {
+
+        opacity: 0.2;
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: 0.2;
+
+    }
+
+}
+
+
+body.dark-theme .ai-typing {
+
+    color: #98a2b3;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   KKR AI CHAT CONTROLS
+   ========================= */
+
+function clearAIChat() {
+
+    const messages =
+        document.getElementById("aiMessages");
+
+    if (!messages) return;
+
+
+    const name =
+        getProfileName();
+
+
+    const hour =
+        new Date().getHours();
+
+
+    let greeting = "";
+
+
+    if (hour < 12) {
+
+        greeting = "Good Morning";
+
+    } else if (hour < 17) {
+
+        greeting = "Good Afternoon";
+
+    } else if (hour < 21) {
+
+        greeting = "Good Evening";
+
+    } else {
+
+        greeting = "Good Night";
+
+    }
+
+
+    messages.innerHTML = `
+
+        <div class="ai-message ai-message-bot">
+
+            <div class="ai-message-name">
+                KKR AI
+            </div>
+
+            <div>
+                ${greeting}, ${name} 👋
+            </div>
+
+            <div class="ai-welcome-text">
+                Welcome back to KKR AI.
+                How can I help you today?
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================
+   ADD CLEAR BUTTON
+   ========================= */
+
+const originalOpenAIForControls =
+    openAI;
+
+openAI = function() {
+
+    originalOpenAIForControls();
+
+
+    setTimeout(function() {
+
+        const header =
+            document.querySelector(
+                ".ai-chat-header"
+            );
+
+
+        if (!header) return;
+
+
+        if (
+            document.querySelector(
+                ".ai-clear-btn"
+            )
+        ) return;
+
+
+        const clearButton =
+            document.createElement("button");
+
+
+        clearButton.className =
+            "ai-clear-btn";
+
+
+        clearButton.innerHTML =
+            "🗑️";
+
+
+        clearButton.title =
+            "Clear chat";
+
+
+        clearButton.onclick =
+            clearAIChat;
+
+
+        header.appendChild(
+            clearButton
+        );
+
+    }, 0);
+
+};
+
+</script>
+
+
+<style>
+
+/* =========================
+   AI CLEAR BUTTON
+   ========================= */
+
+.ai-clear-btn {
+
+    margin-left: auto;
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 12px;
+
+    background: #1d2939;
+
+    color: white;
+
+    font-size: 17px;
+
+}
+
+
+.ai-clear-btn:active {
+
+    transform: scale(0.94);
+
+}
+
+
+body.dark-theme .ai-clear-btn {
+
+    background: #344054;
+
+}
+
+</style>
+   <script>
+
+/* =========================
+   KKR AI CHAT MEMORY
+   ========================= */
+
+function saveAIChatMessage(role, message) {
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrAIChat"
+            ) || "[]"
+        );
+
+
+    history.push({
+
+        role: role,
+
+        message: message,
+
+        time:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+        "kkrAIChat",
+        JSON.stringify(history)
+    );
+
+}
+
+
+/* Save user messages */
+
+const oldAddAIUserMessage =
+    addAIUserMessage;
+
+addAIUserMessage = function(message) {
+
+    oldAddAIUserMessage(message);
+
+    saveAIChatMessage(
+        "user",
+        message
+    );
+
+};
+
+
+/* Save AI messages */
+
+const oldAddAIBotMessage =
+    addAIBotMessage;
+
+addAIBotMessage = function(message) {
+
+    oldAddAIBotMessage(message);
+
+    saveAIChatMessage(
+        "ai",
+        message
+    );
+
+};
+
+
+/* =========================
+   CLEAR SAVED CHAT
+   ========================= */
+
+const oldClearAIChat =
+    clearAIChat;
+
+clearAIChat = function() {
+
+    localStorage.removeItem(
+        "kkrAIChat"
+    );
+
+
+    oldClearAIChat();
+
+};
+
+
+/* =========================
+   LOAD CHAT HISTORY
+   ========================= */
+
+function loadAIChatHistory() {
+
+    const messages =
+        document.getElementById(
+            "aiMessages"
+        );
+
+
+    if (!messages) return;
+
+
+    const history =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrAIChat"
+            ) || "[]"
+        );
+
+
+    if (history.length === 0) return;
+
+
+    history.forEach(function(item) {
+
+        const box =
+            document.createElement(
+                "div"
+            );
+
+
+        box.className =
+            "ai-message " +
+            (
+                item.role === "user"
+                    ? "ai-message-user"
+                    : "ai-message-bot"
+            );
+
+
+        if (
+            item.role === "user"
+        ) {
+
+            box.innerHTML = `
+                <div>
+                    ${item.message}
+                </div>
+            `;
+
+        } else {
+
+            box.innerHTML = `
+
+                <div class="ai-message-name">
+                    KKR AI
+                </div>
+
+                <div>
+                    ${item.message}
+                </div>
+
+            `;
+
+        }
+
+
+        messages.appendChild(box);
+
+    });
+
+
+    messages.scrollTop =
+        messages.scrollHeight;
+
+}
+
+
+/* =========================
+   CONNECT CHAT HISTORY
+   ========================= */
+
+const openAIWithMemory =
+    openAI;
+
+openAI = function() {
+
+    openAIWithMemory();
+
+
+    setTimeout(function() {
+
+        loadAIChatHistory();
+
+    }, 0);
+
+};
+
+   </script>
+   <script>
+
+/* =========================
+   KKR AI PROFILE GREETING
+   ========================= */
+
+function getAIGreeting() {
+
+    const profile =
+        JSON.parse(
+            localStorage.getItem(
+                "kkrProfile"
+            ) || "{}"
+        );
+
+
+    const name =
+        profile.name &&
+        profile.name.trim()
+            ? profile.name.trim()
+            : "";
+
+
+    const hour =
+        new Date().getHours();
+
+
+    let greeting = "";
+
+
+    if (hour < 12) {
+
+        greeting = "Good Morning";
+
+    } else if (hour < 17) {
+
+        greeting = "Good Afternoon";
+
+    } else if (hour < 21) {
+
+        greeting = "Good Evening";
+
+    } else {
+
+        greeting = "Good Night";
+
+    }
+
+
+    if (name) {
+
+        return greeting +
+            ", " +
+            name +
+            " 👋";
+
+    }
+
+
+    return greeting + " 👋";
+
+}
+
+
+/* =========================
+   UPDATE AI WELCOME
+   ========================= */
+
+function updateAIGreeting() {
+
+    const firstMessage =
+        document.querySelector(
+            "#aiMessages .ai-message-bot"
+        );
+
+
+    if (!firstMessage) return;
+
+
+    const greetingElement =
+        firstMessage.querySelector(
+            ".ai-greeting-text"
+        );
+
+
+    if (!greetingElement) return;
+
+
+    greetingElement.innerHTML =
+        getAIGreeting();
+
+}
+
+
+/* =========================
+   IMPROVE OPEN AI GREETING
+   ========================= */
+
+const openAIWithProfileGreeting =
+    openAI;
+
+openAI = function() {
+
+    openAIWithProfileGreeting();
+
+
+    setTimeout(function() {
+
+        const firstMessage =
+            document.querySelector(
+                "#aiMessages .ai-message-bot"
+            );
+
+
+        if (!firstMessage) return;
+
+
+        const greetingText =
+            firstMessage.querySelector(
+                ".ai-greeting-text"
+            );
+
+
+        if (greetingText) {
+
+            greetingText.innerHTML =
+                getAIGreeting();
+
+        }
+
+    }, 0);
+
+};
+
+   </script>

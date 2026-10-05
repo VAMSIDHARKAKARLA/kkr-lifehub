@@ -27684,3 +27684,490 @@ body.dark-theme
 }
 
 </style>
+   <script>
+
+function createLifeHubLoader() {
+
+    if (
+        document.querySelector(
+            ".lifehub-loader"
+        )
+    ) {
+        return;
+    }
+
+    const loader =
+        document.createElement("div");
+
+    loader.className =
+        "lifehub-loader";
+
+    loader.innerHTML = `
+
+        <div class="lifehub-loader-logo">
+            KKR
+        </div>
+
+        <div class="lifehub-loader-title">
+            KKR LifeHub
+        </div>
+
+        <div class="lifehub-loader-subtitle">
+            Your life, organized.
+        </div>
+
+        <div class="lifehub-loader-spinner">
+        </div>
+
+    `;
+
+    document.body.appendChild(
+        loader
+    );
+
+    setTimeout(function() {
+
+        loader.classList.add(
+            "lifehub-loader-hide"
+        );
+
+        setTimeout(function() {
+
+            if (loader) {
+                loader.remove();
+            }
+
+        }, 400);
+
+    }, 700);
+}
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        createLifeHubLoader();
+
+    }
+);
+
+</script>
+
+<style>
+
+.lifehub-loader {
+    position: fixed;
+    inset: 0;
+    background: #101828;
+    color: white;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition:
+        opacity 0.4s ease;
+}
+
+.lifehub-loader-hide {
+    opacity: 0;
+}
+
+.lifehub-loader-logo {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: white;
+    color: #101828;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.lifehub-loader-title {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.lifehub-loader-subtitle {
+    margin-top: 5px;
+    color: #d0d5dd;
+    font-size: 12px;
+}
+
+.lifehub-loader-spinner {
+    width: 24px;
+    height: 24px;
+    margin-top: 24px;
+    border: 3px solid #475467;
+    border-top-color: white;
+    border-radius: 50%;
+    animation:
+        lifehubSpin 0.8s linear infinite;
+}
+
+@keyframes lifehubSpin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+</style>
+   <script>
+
+window.kkrPageHistory =
+    window.kkrPageHistory || [];
+
+
+function rememberLifeHubPage(pageName) {
+
+    if (!pageName) return;
+
+    const history =
+        window.kkrPageHistory;
+
+    if (
+        history.length === 0 ||
+        history[history.length - 1] !== pageName
+    ) {
+
+        history.push(pageName);
+
+    }
+
+    if (history.length > 20) {
+
+        history.shift();
+
+    }
+
+}
+
+
+function goBackInLifeHub() {
+
+    const history =
+        window.kkrPageHistory;
+
+    if (history.length <= 1) {
+
+        showHome();
+
+        return;
+
+    }
+
+    history.pop();
+
+    const previousPage =
+        history[history.length - 1];
+
+    if (
+        previousPage &&
+        typeof window[previousPage] ===
+        "function"
+    ) {
+
+        window[previousPage]();
+
+    } else {
+
+        showHome();
+
+    }
+
+}
+
+
+function setupLifeHubBackButton() {
+
+    if (
+        window.kkrBackButtonReady
+    ) {
+        return;
+    }
+
+    window.kkrBackButtonReady =
+        true;
+
+    window.addEventListener(
+        "popstate",
+        function() {
+
+            goBackInLifeHub();
+
+        }
+    );
+
+}
+
+
+setupLifeHubBackButton();
+
+   </script>
+   <script>
+
+window.KKR_LIFEHUB_INFO = {
+
+    appName:
+        "KKR LifeHub",
+
+    version:
+        "1.0",
+
+    build:
+        "2026.10",
+
+    tagline:
+        "Your life, organized.",
+
+    storage:
+        "Local Device Storage"
+
+};
+
+
+function getLifeHubAppInfo() {
+
+    return window.KKR_LIFEHUB_INFO;
+
+}
+
+
+function showLifeHubAppInfo() {
+
+    const info =
+        getLifeHubAppInfo();
+
+    return (
+        info.appName +
+        " v" +
+        info.version +
+        " (" +
+        info.build +
+        ")"
+    );
+
+}
+
+   </script>
+   <script>
+
+function showConnectionStatus() {
+
+    let banner =
+        document.querySelector(
+            ".connection-status"
+        );
+
+    if (!banner) {
+
+        banner =
+            document.createElement("div");
+
+        banner.className =
+            "connection-status";
+
+        document.body.appendChild(
+            banner
+        );
+
+    }
+
+    if (navigator.onLine) {
+
+        banner.classList.remove(
+            "connection-offline"
+        );
+
+        banner.innerHTML =
+            "✓ Back online";
+
+        banner.classList.add(
+            "connection-online"
+        );
+
+        setTimeout(function() {
+
+            banner.classList.remove(
+                "connection-online"
+            );
+
+        }, 2500);
+
+    } else {
+
+        banner.classList.remove(
+            "connection-online"
+        );
+
+        banner.classList.add(
+            "connection-offline"
+        );
+
+        banner.innerHTML =
+            "⚠ You are offline. Saved data is still available.";
+
+    }
+
+}
+
+
+window.addEventListener(
+    "online",
+    function() {
+
+        showConnectionStatus();
+
+    }
+);
+
+
+window.addEventListener(
+    "offline",
+    function() {
+
+        showConnectionStatus();
+
+    }
+);
+
+</script>
+
+<style>
+
+.connection-status {
+    position: fixed;
+    left: 50%;
+    bottom: 76px;
+    transform:
+        translateX(-50%)
+        translateY(20px);
+    max-width: calc(100% - 32px);
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5000;
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.connection-offline {
+    background: #7a271a;
+    color: white;
+    opacity: 1;
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+.connection-online {
+    background: #027a48;
+    color: white;
+    opacity: 1;
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+</style>
+   <script>
+
+function safeLifeHubStorage(
+    key,
+    fallback
+) {
+
+    try {
+
+        const saved =
+            localStorage.getItem(key);
+
+        if (saved === null) {
+            return fallback;
+        }
+
+        return JSON.parse(saved);
+
+    } catch (error) {
+
+        console.warn(
+            "KKR LifeHub storage issue:",
+            key
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
+function checkLifeHubStorage() {
+
+    const listKeys = [
+
+        "kkrMedicines",
+        "kkrDocuments",
+        "kkrReminders",
+        "kkrFamily",
+        "kkrPayments",
+        "kkrAlerts",
+        "kkrHealthRecords",
+        "kkrAppointments",
+        "kkrMeasurements",
+        "kkrEmergencyContacts"
+
+    ];
+
+    listKeys.forEach(
+        function(key) {
+
+            const data =
+                safeLifeHubStorage(
+                    key,
+                    []
+                );
+
+            if (!Array.isArray(data)) {
+
+                localStorage.setItem(
+                    key,
+                    JSON.stringify([])
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+window.addEventListener(
+    "load",
+    function() {
+
+        checkLifeHubStorage();
+
+    }
+);
+
+   </script>

@@ -2086,6 +2086,21 @@ function openAbout() {
 // Add menu button after Home loads
 
 addMenuButton();
+      if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", function() {
+
+        navigator.serviceWorker.register("./sw.js")
+            .then(function() {
+                console.log("KKR LifeHub service worker registered");
+            })
+            .catch(function(error) {
+                console.log("Service worker error:", error);
+            });
+
+    });
+
+}
 
 </script>
 

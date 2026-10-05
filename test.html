@@ -30138,6 +30138,714 @@ showHome = function() {
 
 })();
    </script>
+   <script>
+/* =========================================
+   KKR LIFEHUB - COMPLETE GLOBAL SEARCH
+   ========================================= */
+
+(function () {
+
+    function getData(key) {
+        try {
+            return JSON.parse(
+                localStorage.getItem(key) || "[]"
+            );
+        } catch (error) {
+            return [];
+        }
+    }
+
+    function escapeHTML(value) {
+        return String(value || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function searchSectionMatches(query) {
+
+        const sections = [
+
+            {
+                name: "Medicines",
+                icon: "💊",
+                keywords:
+                    "medicine medicines medication tablet tablets drug drugs dose dosage prescription",
+                action: "openMedicines"
+            },
+
+            {
+                name: "Health",
+                icon: "❤️",
+                keywords:
+                    "health medical healthcare wellness",
+                action: "openHealth"
+            },
+
+            {
+                name: "Health Records",
+                icon: "📋",
+                keywords:
+                    "health record records medical report reports",
+                action: "openHealthRecords"
+            },
+
+            {
+                name: "Appointments",
+                icon: "📅",
+                keywords:
+                    "appointment appointments doctor doctors hospital clinic visit",
+                action: "openAppointments"
+            },
+
+            {
+                name: "Health Summary",
+                icon: "📊",
+                keywords:
+                    "health summary health overview overview",
+                action: "openHealthSummary"
+            },
+
+            {
+                name: "Measurements",
+                icon: "❤️",
+                keywords:
+                    "measurement measurements bp blood pressure sugar weight temperature",
+                action: "openMeasurements"
+            },
+
+            {
+                name: "Documents",
+                icon: "📄",
+                keywords:
+                    "document documents file files important papers",
+                action: "openDocuments"
+            },
+
+            {
+                name: "Reminders",
+                icon: "⏰",
+                keywords:
+                    "reminder reminders task tasks schedule",
+                action: "openReminders"
+            },
+
+            {
+                name: "Alerts",
+                icon: "🔔",
+                keywords:
+                    "alert alerts notification notifications warning",
+                action: "openAlerts"
+            },
+
+            {
+                name: "Family",
+                icon: "👨‍👩‍👧",
+                keywords:
+                    "family families member members relatives",
+                action: "openFamily"
+            },
+
+            {
+                name: "Money",
+                icon: "💰",
+                keywords:
+                    "money payment payments expense expenses income balance",
+                action: "openMoney"
+            },
+
+            {
+                name: "Emergency",
+                icon: "🚨",
+                keywords:
+                    "emergency emergencies contact contacts urgent",
+                action: "openEmergency"
+            },
+
+            {
+                name: "Settings",
+                icon: "⚙️",
+                keywords:
+                    "setting settings preferences profile",
+                action: "openSettings"
+            },
+
+            {
+                name: "KKR AI",
+                icon: "🤖",
+                keywords:
+                    "ai kkr ai artificial intelligence assistant chat chatbot",
+                action: "openAI"
+            }
+
+        ];
+
+        return sections.filter(function (section) {
+
+            const searchable =
+                (
+                    section.name +
+                    " " +
+                    section.keywords
+                ).toLowerCase();
+
+            return searchable.includes(query);
+
+        });
+    }
+
+
+    function addSectionResult(section) {
+
+        return `
+            <div
+                class="search-result-card kkr-search-clickable"
+                onclick="window.${section.action}()"
+            >
+
+                <div class="search-result-icon">
+                    ${section.icon}
+                </div>
+
+                <div class="kkr-search-result-text">
+
+                    <strong>
+                        ${section.name}
+                    </strong>
+
+                    <p>
+                        LifeHub section
+                    </p>
+
+                </div>
+
+                <div class="kkr-search-arrow">
+                    →
+                </div>
+
+            </div>
+        `;
+    }
+
+
+    function searchSavedData(query) {
+
+        const sources = [
+
+            {
+                key: "kkrMedicines",
+                icon: "💊",
+                type: "Medicine",
+                titleFields: ["name", "medicine"]
+            },
+
+            {
+                key: "kkrDocuments",
+                icon: "📄",
+                type: "Document",
+                titleFields: ["name", "title"]
+            },
+
+            {
+                key: "kkrReminders",
+                icon: "⏰",
+                type: "Reminder",
+                titleFields: ["title", "name"]
+            },
+
+            {
+                key: "kkrFamily",
+                icon: "👨‍👩‍👧",
+                type: "Family Member",
+                titleFields: ["name"]
+            },
+
+            {
+                key: "kkrPayments",
+                icon: "💰",
+                type: "Payment",
+                titleFields: ["name", "title"]
+            },
+
+            {
+                key: "kkrAppointments",
+                icon: "📅",
+                type: "Appointment",
+                titleFields: ["doctor", "name", "hospital"]
+            },
+
+            {
+                key: "kkrHealthRecords",
+                icon: "📋",
+                type: "Health Record",
+                titleFields: ["name", "title", "type"]
+            },
+
+            {
+                key: "kkrMeasurements",
+                icon: "❤️",
+                type: "Measurement",
+                titleFields: ["type", "name"]
+            },
+
+            {
+                key: "kkrAlerts",
+                icon: "🔔",
+                type: "Alert",
+                titleFields: ["title", "name"]
+            },
+
+            {
+                key: "kkrEmergencyContacts",
+                icon: "🚨",
+                type: "Emergency Contact",
+                titleFields: ["name", "title"]
+            }
+
+        ];
+
+        let results = [];
+
+        sources.forEach(function (source) {
+
+            const items =
+                getData(source.key);
+
+            items.forEach(function (item) {
+
+                const searchable =
+                    JSON.stringify(item)
+                        .toLowerCase();
+
+                if (!searchable.includes(query)) {
+                    return;
+                }
+
+                let title =
+                    source.type;
+
+                for (
+                    let i = 0;
+                    i < source.titleFields.length;
+                    i++
+                ) {
+
+                    const field =
+                        source.titleFields[i];
+
+                    if (
+                        item[field] &&
+                        String(item[field]).trim()
+                    ) {
+
+                        title =
+                            item[field];
+
+                        break;
+                    }
+                }
+
+                results.push({
+
+                    icon: source.icon,
+
+                    type: source.type,
+
+                    title: title,
+
+                    action:
+                        source.type === "Medicine"
+                            ? "openMedicines"
+                            : source.type === "Document"
+                            ? "openDocuments"
+                            : source.type === "Reminder"
+                            ? "openReminders"
+                            : source.type === "Family Member"
+                            ? "openFamily"
+                            : source.type === "Payment"
+                            ? "openMoney"
+                            : source.type === "Appointment"
+                            ? "openAppointments"
+                            : source.type === "Health Record"
+                            ? "openHealthRecords"
+                            : source.type === "Measurement"
+                            ? "openMeasurements"
+                            : source.type === "Alert"
+                            ? "openAlerts"
+                            : source.type === "Emergency Contact"
+                            ? "openEmergency"
+                            : "showHome"
+
+                });
+
+            });
+
+        });
+
+        return results;
+    }
+
+
+    window.performGlobalSearch =
+        function () {
+
+            const input =
+                document.getElementById(
+                    "globalSearchInput"
+                );
+
+            const results =
+                document.getElementById(
+                    "globalSearchResults"
+                );
+
+            if (!input || !results) {
+                return;
+            }
+
+            const query =
+                input.value
+                    .trim()
+                    .toLowerCase();
+
+            if (!query) {
+
+                results.innerHTML = `
+                    <div class="empty-state">
+
+                        🔎 Start typing to search KKR LifeHub.
+
+                        <br><br>
+
+                        Try:
+                        <strong>
+                            medicine, health, family,
+                            documents, alerts or appointments
+                        </strong>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            const matchedSections =
+                searchSectionMatches(query);
+
+            const savedResults =
+                searchSavedData(query);
+
+
+            let html = "";
+
+            let total =
+                matchedSections.length +
+                savedResults.length;
+
+
+            /* SECTION RESULTS */
+
+            if (matchedSections.length > 0) {
+
+                html += `
+                    <div class="kkr-search-heading">
+                        LifeHub Sections
+                    </div>
+                `;
+
+                matchedSections.forEach(
+                    function (section) {
+
+                        html +=
+                            addSectionResult(
+                                section
+                            );
+
+                    }
+                );
+
+            }
+
+
+            /* SAVED DATA RESULTS */
+
+            if (savedResults.length > 0) {
+
+                html += `
+                    <div class="kkr-search-heading">
+                        Your Saved Information
+                    </div>
+                `;
+
+                savedResults.forEach(
+                    function (item) {
+
+                        html += `
+                            <div
+                                class="search-result-card kkr-search-clickable"
+                                onclick="window.${item.action}()"
+                            >
+
+                                <div class="search-result-icon">
+                                    ${item.icon}
+                                </div>
+
+                                <div class="kkr-search-result-text">
+
+                                    <strong>
+                                        ${escapeHTML(
+                                            item.title
+                                        )}
+                                    </strong>
+
+                                    <p>
+                                        ${item.type}
+                                    </p>
+
+                                </div>
+
+                                <div class="kkr-search-arrow">
+                                    →
+                                </div>
+
+                            </div>
+                        `;
+
+                    }
+                );
+
+            }
+
+
+            /* NO RESULTS */
+
+            if (total === 0) {
+
+                results.innerHTML = `
+
+                    <div class="kkr-search-no-results">
+
+                        <div class="kkr-search-no-icon">
+                            🔎
+                        </div>
+
+                        <strong>
+                            No matching information found
+                        </strong>
+
+                        <p>
+                            Try searching for medicines,
+                            health, documents, alerts,
+                            appointments, family or money.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            /* RESULT COUNT */
+
+            results.innerHTML = `
+
+                <div class="search-count">
+
+                    ${total}
+                    result${total === 1 ? "" : "s"} found
+
+                </div>
+
+                ${html}
+
+            `;
+
+        };
+
+
+})();
+</script>
+
+<style>
+
+/* =========================================
+   KKR LIFEHUB - GLOBAL SEARCH IMPROVEMENT
+   ========================================= */
+
+.kkr-search-heading {
+
+    margin-top: 18px;
+    margin-bottom: 9px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: #667085;
+
+    text-transform: uppercase;
+
+}
+
+.kkr-search-clickable {
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        background 0.15s ease;
+
+}
+
+.kkr-search-clickable:active {
+
+    transform: scale(0.98);
+
+    background: #f2f4f7;
+
+}
+
+.kkr-search-result-text {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+.kkr-search-result-text strong {
+
+    display: block;
+
+    font-size: 14px;
+
+    color: #172033;
+
+}
+
+.kkr-search-result-text p {
+
+    margin: 4px 0 0;
+
+    color: #667085;
+
+    font-size: 12px;
+
+}
+
+.kkr-search-arrow {
+
+    font-size: 20px;
+
+    color: #98a2b3;
+
+}
+
+.kkr-search-no-results {
+
+    margin-top: 25px;
+
+    padding: 25px 18px;
+
+    text-align: center;
+
+    background: white;
+
+    border: 1px solid #e4e7ec;
+
+    border-radius: 16px;
+
+}
+
+.kkr-search-no-icon {
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+
+}
+
+.kkr-search-no-results strong {
+
+    display: block;
+
+    font-size: 15px;
+
+    color: #172033;
+
+}
+
+.kkr-search-no-results p {
+
+    margin-top: 8px;
+
+    font-size: 12px;
+
+    line-height: 18px;
+
+    color: #667085;
+
+}
+
+
+/* DARK MODE */
+
+body.dark-theme
+.kkr-search-heading {
+
+    color: #98a2b3;
+
+}
+
+body.dark-theme
+.kkr-search-clickable:active {
+
+    background: #344054;
+
+}
+
+body.dark-theme
+.kkr-search-result-text strong {
+
+    color: #f9fafb;
+
+}
+
+body.dark-theme
+.kkr-search-result-text p {
+
+    color: #98a2b3;
+
+}
+
+body.dark-theme
+.kkr-search-no-results {
+
+    background: #1d2939;
+
+    border-color: #344054;
+
+}
+
+body.dark-theme
+.kkr-search-no-results strong {
+
+    color: #f9fafb;
+
+}
+
+body.dark-theme
+.kkr-search-no-results p {
+
+    color: #98a2b3;
+
+}
+
+</style>
    </body>
 
 </html>

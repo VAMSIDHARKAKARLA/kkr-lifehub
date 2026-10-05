@@ -337,12 +337,67 @@ button {
     }
 
 }
+      /* ===== KKR LIFEHUB PROFESSIONAL TOP BAR ===== */
+
+.kkr-topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 58px;
+    background: #111827;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    z-index: 9999;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+}
+
+.kkr-menu-btn {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kkr-menu-btn:active {
+    background: rgba(255,255,255,0.12);
+}
+
+.kkr-top-title {
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    margin-left: 8px;
+}
+
+body {
+    padding-top: 58px;
+}
 
 </style>
 
 </head>
 
 <body>
+      <div class="kkr-topbar">
+
+    <button class="kkr-menu-btn" onclick="openSideMenu()">
+        ☰
+    </button>
+
+    <div class="kkr-top-title">
+        KKR LifeHub
+    </div>
+
+      </div>
 
 <div id="app"></div>
 

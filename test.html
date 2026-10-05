@@ -4748,3 +4748,122 @@ function restoreDocument(id) {
 }
 
    </script>
+   <script>
+
+/* =========================
+   ADD ARCHIVED DOCUMENTS BUTTON
+   ========================= */
+
+const documentsPageBeforeArchive =
+    openDocuments;
+
+
+openDocuments = function() {
+
+    documentsPageBeforeArchive();
+
+
+    setTimeout(function() {
+
+        const addButton =
+            document.querySelector(
+                ".add-medicine-btn"
+            );
+
+
+        if (!addButton) {
+            return;
+        }
+
+
+        if (
+            document.getElementById(
+                "archiveDocumentsButton"
+            )
+        ) {
+            return;
+        }
+
+
+        const button =
+            document.createElement("button");
+
+
+        button.id =
+            "archiveDocumentsButton";
+
+
+        button.className =
+            "archive-documents-btn";
+
+
+        button.innerHTML = `
+            <span>📦</span>
+            Archived Documents
+        `;
+
+
+        button.onclick =
+            openArchivedDocuments;
+
+
+        addButton.parentNode.insertBefore(
+            button,
+            addButton.nextSibling
+        );
+
+
+    }, 0);
+
+};
+
+</script>
+
+
+<style>
+
+.archive-documents-btn {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+    height: 44px;
+
+    border-radius: 12px;
+
+    background: #f2f4f7;
+
+    border: 1px solid #eaecf0;
+
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+}
+
+
+.archive-documents-btn span {
+
+    font-size: 17px;
+
+}
+
+
+.archive-documents-btn:active {
+
+    transform: scale(0.98);
+
+}
+
+</style>

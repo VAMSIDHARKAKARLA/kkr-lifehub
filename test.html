@@ -28235,13 +28235,42 @@ window.addEventListener(
 window.kkrPageHistory =
     window.kkrPageHistory || [];
 
+window.kkrBackNavigation =
+    false;
+
+
+/* =========================
+   REMEMBER LIFEHUB PAGE
+   ========================= */
 
 function rememberLifeHubPage(pageName) {
 
-    if (!pageName) return;
+    if (!pageName) {
+        return;
+    }
 
     const history =
         window.kkrPageHistory;
+
+    /*
+     * When Android Back is pressed,
+     * the previous page is opened.
+     * Do not add that page again.
+     */
+
+    if (window.kkrBackNavigation) {
+
+        window.kkrBackNavigation =
+            false;
+
+        return;
+
+    }
+
+
+    /*
+     * Do not add the same page twice
+     */
 
     if (
         history.length === 0 ||
@@ -28252,13 +28281,131 @@ function rememberLifeHubPage(pageName) {
 
     }
 
-    if (history.length > 20) {
+
+    /*
+     * Keep maximum 30 pages
+     */
+
+    if (history.length > 30) {
 
         history.shift();
 
     }
 
+
+    /*
+     * Add browser history entry.
+     * This makes the Android/mobile Back button
+     * trigger LifeHub navigation.
+     */
+
+    history.replaceState(
+        {
+            kkrLifeHub: true,
+            page: pageName
+        },
+        "",
+        window.location.href
+    );
+
 }
+
+
+/* =========================
+   MOBILE / ANDROID BACK
+   ========================= */
+
+function goBackInLifeHub() {
+
+    const history =
+        window.kkrPageHistory || [];
+
+
+    /*
+     * If we are already on Home,
+     * allow the normal Android/browser Back
+     * behavior instead of navigating inside LifeHub.
+     */
+
+    if (history.length <= 1) {
+
+        return;
+
+    }
+
+
+    /*
+     * Remove current page
+     */
+
+    history.pop();
+
+
+    const previousPage =
+        history[history.length - 1];
+
+
+    /*
+     * Open previous LifeHub page
+     */
+
+    if (
+        previousPage &&
+        typeof window[previousPage] === "function"
+    ) {
+
+        window.kkrBackNavigation =
+            true;
+
+        window[previousPage]();
+
+    } else {
+
+        window.kkrBackNavigation =
+            true;
+
+        showHome();
+
+    }
+
+}
+
+
+/* =========================
+   ANDROID / BROWSER BACK
+   ========================= */
+
+function setupLifeHubBackButton() {
+
+    if (
+        window.kkrBackButtonReady
+    ) {
+
+        return;
+
+    }
+
+
+    window.kkrBackButtonReady =
+        true;
+
+
+    window.addEventListener(
+        "popstate",
+        function() {
+
+            goBackInLifeHub();
+
+        }
+    );
+
+}
+
+
+setupLifeHubBackButton();
+
+</script>
+   <script>
 
 
 function goBackInLifeHub() {
@@ -29848,10 +29995,13 @@ window.removeEventListener(
 
 
 window.addEventListener(
-    "popstate",
+    "load",
     function() {
 
-        lifeHubRenderPreviousPage();
+        setTimeout(
+            setupLifeHubNavigation,
+            500
+        );
 
     }
 );

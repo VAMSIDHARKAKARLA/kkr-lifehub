@@ -28264,7 +28264,7 @@ function rememberLifeHubPage(pageName) {
 function goBackInLifeHub() {
 
     const history =
-        window.kkrPageHistory;
+        window.kkrPageHistory || [];
 
     if (history.length <= 1) {
 
@@ -28281,8 +28281,7 @@ function goBackInLifeHub() {
 
     if (
         previousPage &&
-        typeof window[previousPage] ===
-        "function"
+        typeof window[previousPage] === "function"
     ) {
 
         window[previousPage]();
@@ -28298,14 +28297,11 @@ function goBackInLifeHub() {
 
 function setupLifeHubBackButton() {
 
-    if (
-        window.kkrBackButtonReady
-    ) {
+    if (window.kkrBackButtonReady) {
         return;
     }
 
-    window.kkrBackButtonReady =
-        true;
+    window.kkrBackButtonReady = true;
 
     window.addEventListener(
         "popstate",
@@ -29717,28 +29713,13 @@ function setupLifeHubNavigation() {
 
 
 window.addEventListener(
-    "popstate",
+    "load",
     function() {
 
-        const page =
-            window.kkrNavigationHistory[
-                window.kkrNavigationHistory.length - 1
-            ];
-
-        if (
-            page === "home" ||
-            !page
-        ) {
-
-            showHome();
-
-            updateLifeHubBackButton();
-
-            return;
-
-        }
-
-        lifeHubGoBack();
+        setTimeout(
+            setupLifeHubNavigation,
+            500
+        );
 
     }
 );

@@ -4955,72 +4955,7 @@ openDocuments = function() {
 </style>
    <script>
 
-/* =========================
-   ARCHIVED DOCUMENTS BUTTON
-   ========================= */
 
-documentsPageBeforeArchive =
-    openDocuments;
-
-
-openDocuments = function() {
-
-    documentsPageBeforeArchive();
-
-
-    setTimeout(function() {
-
-        const addButton =
-            document.querySelector(
-                ".add-medicine-btn"
-            );
-
-
-        if (!addButton) {
-            return;
-        }
-
-
-        if (
-            document.getElementById(
-                "archiveDocumentsButton"
-            )
-        ) {
-            return;
-        }
-
-
-        const button =
-            document.createElement("button");
-
-
-        button.id =
-            "archiveDocumentsButton";
-
-
-        button.className =
-            "archive-documents-btn";
-
-
-        button.innerHTML = `
-            <span>📦</span>
-            Archived Documents
-        `;
-
-
-        button.onclick =
-            openArchivedDocuments;
-
-
-        addButton.parentNode.insertBefore(
-            button,
-            addButton.nextSibling
-        );
-
-
-    }, 0);
-
-};
 
    </script>
    <script>

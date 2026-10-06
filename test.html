@@ -1354,7 +1354,16 @@ function selectMedicine(name) {
    ========================= */
 
 function openAddMedicine() {
-   alert("openAddMedicine is working");
+
+    alert("openAddMedicine is working");
+
+    console.log("Container:", document.querySelector(".container"));
+
+    alert(
+        document.querySelector(".container")
+        ? "Container found"
+        : "Container NOT found"
+    );
 
     document.querySelector(".container").innerHTML = `
 

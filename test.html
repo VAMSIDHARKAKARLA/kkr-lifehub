@@ -1355,81 +1355,100 @@ function selectMedicine(name) {
 
 function openAddMedicine() {
 
-
     document.getElementById("app").innerHTML = `
 
-        <div class="header">
-            <h2>💊 Add Medicine</h2>
-            <p>Add your medicine details</p>
-        </div>
+        <section class="home-section">
 
-        <div class="card">
+            <h1 class="page-title">
+                💊 Add Medicine
+            </h1>
 
-            <label>Medicine Name</label>
-            <input
-                type="text"
-                id="newMedicineName"
-                placeholder="Enter medicine name"
-            >
+            <p class="page-subtitle">
+                Add and manage your medicine schedule
+            </p>
 
-            <label>Dosage</label>
-            <input
-                type="text"
-                id="medicineDosage"
-                placeholder="Example: 500 mg"
-            >
+            <div class="add-medicine-form">
 
-            <label>Time</label>
-            <input
-                type="time"
-                id="medicineTime"
-            >
+                <div class="add-medicine-field">
+                    <label>Medicine Name</label>
+                    <input
+                        type="text"
+                        id="newMedicineName"
+                        placeholder="Enter medicine name"
+                    >
+                </div>
 
-            <label>Frequency</label>
-            <select id="medicineFrequency">
-                <option value="">Select frequency</option>
-                <option value="Once daily">Once daily</option>
-                <option value="Twice daily">Twice daily</option>
-                <option value="Three times daily">Three times daily</option>
-                <option value="As needed">As needed</option>
-            </select>
+                <div class="add-medicine-field">
+                    <label>Dosage</label>
+                    <input
+                        type="text"
+                        id="medicineDosage"
+                        placeholder="Example: 500 mg"
+                    >
+                </div>
 
-            <label>Start Date</label>
-            <input
-                type="date"
-                id="medicineStartDate"
-            >
+                <div class="add-medicine-field">
+                    <label>Time</label>
+                    <input
+                        type="time"
+                        id="medicineTime"
+                    >
+                </div>
 
-            <label>End Date</label>
-            <input
-                type="date"
-                id="medicineEndDate"
-            >
+                <div class="add-medicine-field">
+                    <label>Frequency</label>
+                    <select id="medicineFrequency">
+                        <option value="">Select frequency</option>
+                        <option value="Once daily">Once daily</option>
+                        <option value="Twice daily">Twice daily</option>
+                        <option value="Three times daily">Three times daily</option>
+                        <option value="As needed">As needed</option>
+                    </select>
+                </div>
 
-            <label>Notes</label>
-            <textarea
-                id="medicineNotes"
-                placeholder="Optional notes"
-            ></textarea>
+                <div class="add-medicine-field">
+                    <label>Start Date</label>
+                    <input
+                        type="date"
+                        id="medicineStartDate"
+                    >
+                </div>
+
+                <div class="add-medicine-field">
+                    <label>End Date</label>
+                    <input
+                        type="date"
+                        id="medicineEndDate"
+                    >
+                </div>
+
+                <div class="add-medicine-field">
+                    <label>Notes</label>
+                    <textarea
+                        id="medicineNotes"
+                        placeholder="Optional notes"
+                    ></textarea>
+                </div>
+
+                <button
+                    class="add-medicine-save"
+                    onclick="prepareAndSaveMedicine()"
+                >
+                    💾 Save Medicine
+                </button>
+
+            </div>
 
             <button
-                onclick="prepareAndSaveMedicine()"
-                style="width:100%; margin-top:15px;"
+                class="add-medicine-back"
+                onclick="openMedicines()"
             >
-                💾 Save Medicine
+                ← Back to Medicines
             </button>
 
-        </div>
-
-        <button
-            onclick="openMedicines()"
-            style="width:100%; margin-top:15px;"
-        >
-            ← Back to Medicines
-        </button>
+        </section>
 
     `;
-
 }
 
 </script>
@@ -1475,6 +1494,87 @@ function openAddMedicine() {
     font-size: 14px;
 
     color: #172033;
+}
+   /* =========================
+   ADD MEDICINE FORM
+   ========================= */
+
+.add-medicine-form {
+    margin-top: 20px;
+    background: #ffffff;
+    border: 1px solid #e1e5ea;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.add-medicine-field {
+    margin-bottom: 16px;
+}
+
+.add-medicine-field label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #344054;
+}
+
+.add-medicine-field input,
+.add-medicine-field select,
+.add-medicine-field textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 13px;
+    border: 1px solid #d0d5dd;
+    border-radius: 13px;
+    outline: none;
+    background: #ffffff;
+    color: #172033;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.add-medicine-field input:focus,
+.add-medicine-field select:focus,
+.add-medicine-field textarea:focus {
+    border-color: #155C68;
+    box-shadow: 0 0 0 3px rgba(21, 92, 104, 0.08);
+}
+
+.add-medicine-field textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.add-medicine-save {
+    width: 100%;
+    margin-top: 5px;
+    padding: 13px;
+    border: none;
+    border-radius: 13px;
+    background: #155C68;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.add-medicine-save:active {
+    transform: scale(0.98);
+}
+
+.add-medicine-back {
+    width: 100%;
+    margin-top: 14px;
+    padding: 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 13px;
+    background: #ffffff;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 

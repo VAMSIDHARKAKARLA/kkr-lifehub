@@ -1350,14 +1350,84 @@ function selectMedicine(name) {
 
 
 /* =========================
-   ADD MEDICINE PLACEHOLDER
+   ADD MEDICINE
    ========================= */
 
 function openAddMedicine() {
 
-    alert(
-        "Add Medicine page will be added next."
-    );
+    document.querySelector(".container").innerHTML = `
+
+        <div class="header">
+            <h2>💊 Add Medicine</h2>
+            <p>Add your medicine details</p>
+        </div>
+
+        <div class="card">
+
+            <label>Medicine Name</label>
+            <input
+                type="text"
+                id="newMedicineName"
+                placeholder="Enter medicine name"
+            >
+
+            <label>Dosage</label>
+            <input
+                type="text"
+                id="medicineDosage"
+                placeholder="Example: 500 mg"
+            >
+
+            <label>Time</label>
+            <input
+                type="time"
+                id="medicineTime"
+            >
+
+            <label>Frequency</label>
+            <select id="medicineFrequency">
+                <option value="">Select frequency</option>
+                <option value="Once daily">Once daily</option>
+                <option value="Twice daily">Twice daily</option>
+                <option value="Three times daily">Three times daily</option>
+                <option value="As needed">As needed</option>
+            </select>
+
+            <label>Start Date</label>
+            <input
+                type="date"
+                id="medicineStartDate"
+            >
+
+            <label>End Date</label>
+            <input
+                type="date"
+                id="medicineEndDate"
+            >
+
+            <label>Notes</label>
+            <textarea
+                id="medicineNotes"
+                placeholder="Optional notes"
+            ></textarea>
+
+            <button
+                onclick="prepareAndSaveMedicine()"
+                style="width:100%; margin-top:15px;"
+            >
+                💾 Save Medicine
+            </button>
+
+        </div>
+
+        <button
+            onclick="openMedicines()"
+            style="width:100%; margin-top:15px;"
+        >
+            ← Back to Medicines
+        </button>
+
+    `;
 
 }
 
@@ -1988,6 +2058,22 @@ function saveMedicine() {
 
     openMedicines();
 
+}
+      function prepareAndSaveMedicine() {
+
+    const name =
+        document.getElementById(
+            "newMedicineName"
+        ).value.trim();
+
+    if (!name) {
+        alert("Please enter medicine name.");
+        return;
+    }
+
+    selectedMedicine = name;
+
+    saveMedicine();
 }
 
 </script>

@@ -28747,23 +28747,7 @@ function refreshLifeHubSecurityState() {
 }
 
 
-const originalSaveSecuritySettings =
-    saveSecuritySettings;
 
-saveSecuritySettings = function() {
-
-    originalSaveSecuritySettings();
-
-    setTimeout(
-        function() {
-
-            refreshLifeHubSecurityState();
-
-        },
-        100
-    );
-
-};
 
    </script>
    <script>
